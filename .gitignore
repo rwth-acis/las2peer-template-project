@@ -1,6 +1,5 @@
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
+/export
+/tmp
+/.las2peer
+/service
+/log
