@@ -148,7 +148,9 @@
 	<!-- general cleanup; don't run this if you want to see unit test results or logging data -->
 	<target name="clean">
 		<delete dir="${tmp}" />
-		<delete dir="${log}" />
+		  <delete includeemptydirs="true">
+		    <fileset dir="${log}" includes="**/*"/>
+		  </delete>
 		<delete dir=".las2peer" />
 	</target>
 	
