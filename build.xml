@@ -1,159 +1,159 @@
 <project name="SampleService" default="SampleService_jar" basedir=".">
-	
-	<presetdef name="javac">
-	    <javac includeantruntime="false" />
-	</presetdef>
-	
-	<property name="src.main" location="java" />
-	<property name="src.junit" location="junit" />
-	
-	<property name="tmp" location="tmp" />
-	<property name="log" location="log" />
-	<property name="service" location="service" />
-	
-	<property name="tmp.classes" location="${tmp}/classes" />
-	<property name="tmp.junit" location="${tmp}/test" />
-	
+
+    <presetdef name="javac">
+        <javac includeantruntime="false" />
+    </presetdef>
+
+    <property name="src.main" location="java" />
+    <property name="src.junit" location="junit" />
+
+    <property name="tmp" location="tmp" />
+    <property name="log" location="log" />
+    <property name="service" location="service" />
+
+    <property name="tmp.classes" location="${tmp}/classes" />
+    <property name="tmp.junit" location="${tmp}/test" />
+
     <property name="junit.report" location="${tmp}/test_reports" />
-	
-	<property name="export" location="export" />
-	<property name="export.doc" location="${export}/doc" />
-	<property name="export.jars" location="${export}/jars" />
-	
-	<property name="lib" location="lib" />
-	<property name="lib.cp" 
-		location="${lib}/las2peer.jar:${lib}/i5-simpleXML-0.1.jar:${lib}/commons-codec-1.7.jar:${lib}/FreePastry-2.1.jar:${lib}/i5-httpServer-0.2.jar:${lib}/junit-4.11.jar:${lib}/xpp3-1.1.4c.jar" />
-	<property name="lib.junit" location="${lib}/junit-4.11.jar" />
-	
-	<target name="init_general">
-		<tstamp/>
-		<mkdir dir="${tmp}" />
-		<mkdir dir="${export}" />
-		<mkdir dir="${service}" />
-	</target>
-	
-	<target name="init_compile" depends="init_general">
-		<mkdir dir="${tmp.classes}" />
-		<mkdir dir="${tmp.junit}" />
-	</target>
-	
-	<target name="init_jars" depends="init_general">
-		<mkdir dir="${export.jars}" />
-	</target>
-	
-	<target name="init_doc" depends="init_general">
-		<mkdir dir="${export.doc}" />
-	</target>
-	
-	<!-- compilation -->
-	<target name="compile_main" depends="init_compile">
-		<javac srcdir="${src.main}"
-		       destdir="${tmp.classes}"
-			   classpath="${lib.cp}"
-			   source="1.7"
-			   target="1.7"
-			   debug="on"
-			   encoding="UTF-8"
-		/>
-		<copy todir="${tmp.classes}">
-			<fileset dir="${src.main}">
-				<include name="**/*.xml" />
-			</fileset>
-		</copy>
-	</target>
-	
-	<target name="compile_junit" depends="init_compile">
-		<javac srcdir="${src.junit}"
-		       destdir="${tmp.junit}"
-			   classpath="${lib.cp}:${tmp.classes}:${lib.junit}"
-			   source="1.7"
-			   target="1.7"
-			   debug="on"
-			   encoding="UTF-8"
-		/>
-		<copy todir="${tmp.junit}">
-			<fileset dir="${src.junit}">
-				<include name="**/*.xml" />
-			</fileset>
-		</copy>
-	</target>
 
-	<target name="compile_all" depends="compile_main, compile_junit" />
+    <property name="export" location="export" />
+    <property name="export.doc" location="${export}/doc" />
+    <property name="export.jars" location="${export}/jars" />
 
-	<target name="SampleService_jar" depends="compile_main">
-		<property name="SampleService.version" value="0.1" />
-		<jar jarfile="${export.jars}/i5.las2peer.services.sampleService-${SampleService.version}.jar">
-			<fileset dir="${tmp.classes}" includes="i5/las2peer/services/sampleService/**" />
-			<manifest>
-				<attribute name="Library-Version" value="${SampleService.version}" />
-				<attribute name="Library-SymbolicName" value="i5.las2peer.services.sampleService" />
-			</manifest>
-		</jar>
-		<!-- Add the same Jar to the service directory !-->
-		<jar jarfile="${service}/i5.las2peer.services.sampleService-${SampleService.version}.jar">
-			<fileset dir="${tmp.classes}" includes="i5/las2peer/services/sampleService/**" />
-			<manifest>
-				<attribute name="Library-Version" value="${SampleService.version}" />
-				<attribute name="Library-SymbolicName" value="i5.las2peer.services.sampleService" />
-			</manifest>
-		</jar>
-	</target>
-	
-	<target name="java_doc" depends="init_doc">
-		<javadoc destdir="${export.doc}"
-				 author="true"
-				 version="true"
-				 use="true"
-			  	 source="1.7"
-				 windowtitle="Sample Service Documentation"
-				 failonerror="yes"
-				 encoding="utf8"
-				 classpath="${lib.cp}:${tmp.classes}"
-		>	            
-			<packageset dir="${src.main}" defaultexcludes="yes">
-				<include name="i5/las2peer/**" />
-			</packageset>
-		</javadoc>
-	</target>
-	
-	<!--   JUNIT testing -->
-	<target name="junit" depends="junit_tests, junit_clean" />
-	
-	<target name="init_junit" depends="init_general">
-		<mkdir dir="${junit.report}" />
-		<mkdir dir="log" />
-	</target>
-	
-	<target name="junit_clean">
-		<delete dir="${tmp.junit}" />
-	</target>
-	
-	 <target name="junit_tests" depends="init_junit, compile_all">
-	                <junit fork="yes" haltonerror="yes" haltonfailure="yes" printsummary="yes">
-						<classpath>
-							<pathelement path="${tmp.classes}" />
-							<pathelement path="${tmp.junit}" />
-							<pathelement path="${lib.cp}" />
-							<pathelement path="${lib.junit}" />
-						</classpath>
-						<formatter type="plain" />	
-						<batchtest fork="yes" todir="${junit.report}">
-								<fileset dir="${tmp.junit}">
-									<include name="**/*Test.class"/>
-								</fileset>
-						</batchtest>
-	                </junit>
-	        </target>
+    <property name="lib" location="lib" />
+    <property name="lib.cp"
+        location="${lib}/las2peer.jar:${lib}/i5-simpleXML-0.1.jar:${lib}/commons-codec-1.7.jar:${lib}/FreePastry-2.1.jar:${lib}/i5-httpServer-0.2.jar:${lib}/junit-4.11.jar:${lib}/xpp3-1.1.4c.jar" />
+    <property name="lib.junit" location="${lib}/junit-4.11.jar" />
 
-	<!-- general cleanup; don't run this if you want to see unit test results or logging data -->
-	<target name="clean">
-		<delete dir="${tmp}" />
-		  <delete includeemptydirs="true">
-		    <fileset dir="${log}" includes="**/*"/>
-		  </delete>
-		<delete dir=".las2peer" />
-	</target>
-	
-	<target name="all" depends="SampleService_jar, junit, java_doc, clean" />
-	
+    <target name="init_general">
+        <tstamp/>
+        <mkdir dir="${tmp}" />
+        <mkdir dir="${export}" />
+        <mkdir dir="${service}" />
+    </target>
+
+    <target name="init_compile" depends="init_general">
+        <mkdir dir="${tmp.classes}" />
+        <mkdir dir="${tmp.junit}" />
+    </target>
+
+    <target name="init_jars" depends="init_general">
+        <mkdir dir="${export.jars}" />
+    </target>
+
+    <target name="init_doc" depends="init_general">
+        <mkdir dir="${export.doc}" />
+    </target>
+
+    <!-- compilation -->
+    <target name="compile_main" depends="init_compile">
+        <javac srcdir="${src.main}"
+            destdir="${tmp.classes}"
+            classpath="${lib.cp}"
+            source="1.7"
+            target="1.7"
+            debug="on"
+            encoding="UTF-8"
+            />
+        <copy todir="${tmp.classes}">
+            <fileset dir="${src.main}">
+                <include name="**/*.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile_junit" depends="init_compile">
+        <javac srcdir="${src.junit}"
+            destdir="${tmp.junit}"
+            classpath="${lib.cp}:${tmp.classes}:${lib.junit}"
+            source="1.7"
+            target="1.7"
+            debug="on"
+            encoding="UTF-8"
+            />
+        <copy todir="${tmp.junit}">
+            <fileset dir="${src.junit}">
+                <include name="**/*.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile_all" depends="compile_main, compile_junit" />
+
+    <target name="SampleService_jar" depends="compile_main">
+        <property name="SampleService.version" value="0.1" />
+        <jar jarfile="${export.jars}/i5.las2peer.services.sampleService-${SampleService.version}.jar">
+            <fileset dir="${tmp.classes}" includes="i5/las2peer/services/sampleService/**" />
+            <manifest>
+                <attribute name="Library-Version" value="${SampleService.version}" />
+                <attribute name="Library-SymbolicName" value="i5.las2peer.services.sampleService" />
+            </manifest>
+        </jar>
+        <!-- Add the same Jar to the service directory !-->
+        <jar jarfile="${service}/i5.las2peer.services.sampleService-${SampleService.version}.jar">
+            <fileset dir="${tmp.classes}" includes="i5/las2peer/services/sampleService/**" />
+            <manifest>
+                <attribute name="Library-Version" value="${SampleService.version}" />
+                <attribute name="Library-SymbolicName" value="i5.las2peer.services.sampleService" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="java_doc" depends="init_doc">
+        <javadoc destdir="${export.doc}"
+            author="true"
+            version="true"
+            use="true"
+            source="1.7"
+            windowtitle="Sample Service Documentation"
+            failonerror="yes"
+            encoding="utf8"
+            classpath="${lib.cp}:${tmp.classes}"
+            >
+            <packageset dir="${src.main}" defaultexcludes="yes">
+                <include name="i5/las2peer/**" />
+            </packageset>
+        </javadoc>
+    </target>
+
+    <!--   JUNIT testing -->
+    <target name="junit" depends="junit_tests, junit_clean" />
+
+    <target name="init_junit" depends="init_general">
+        <mkdir dir="${junit.report}" />
+        <mkdir dir="log" />
+    </target>
+
+    <target name="junit_clean">
+        <delete dir="${tmp.junit}" />
+    </target>
+
+    <target name="junit_tests" depends="init_junit, compile_all">
+        <junit fork="yes" haltonerror="yes" haltonfailure="yes" printsummary="yes">
+            <classpath>
+                <pathelement path="${tmp.classes}" />
+                <pathelement path="${tmp.junit}" />
+                <pathelement path="${lib.cp}" />
+                <pathelement path="${lib.junit}" />
+            </classpath>
+            <formatter type="plain" />
+            <batchtest fork="yes" todir="${junit.report}">
+                <fileset dir="${tmp.junit}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <!-- general cleanup; don't run this if you want to see unit test results or logging data -->
+    <target name="clean">
+        <delete dir="${tmp}" />
+        <delete includeemptydirs="true">
+            <fileset dir="${log}" includes="**/*"/>
+        </delete>
+        <delete dir=".las2peer" />
+    </target>
+
+    <target name="all" depends="SampleService_jar, junit, java_doc, clean" />
+
 </project>
