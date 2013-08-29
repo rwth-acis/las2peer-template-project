@@ -4,8 +4,8 @@
         <javac includeantruntime="false" />
     </presetdef>
 
-    <property name="src.main" location="java" />
-    <property name="src.junit" location="junit" />
+    <property name="src.main" location="src/main" />
+    <property name="src.junit" location="src/test" />
 
     <property name="tmp" location="tmp" />
     <property name="log" location="log" />
