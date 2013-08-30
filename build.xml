@@ -193,7 +193,9 @@
     <!-- general cleanup -->
     <target name="clean">
         <delete dir="${tmp}" />
-        <delete dir="log" />
+        <delete dir="${log}" />
+        <delete dir="${service}" />
+        <delete dir="${export}" />
     </target>
 
     <target name="clean_deps">
