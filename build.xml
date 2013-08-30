@@ -1,4 +1,4 @@
-<project name="SampleService" default="SampleService_jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="SampleService" default="build-service-jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <presetdef name="javac">
         <javac includeantruntime="false" />
@@ -125,7 +125,7 @@
 
     <target name="compile_all" depends="compile_main, compile_junit" />
 
-    <target name="SampleService_jar" depends="compile_main">
+    <target name="build-service-jar" depends="compile_main">
         <property name="SampleService.version" value="0.1" />
         <jar jarfile="${export.jars}/i5.las2peer.service.sampleService-${SampleService.version}.jar">
             <fileset dir="${tmp.classes}" includes="i5/las2peer/service/sampleService/**" />
@@ -205,6 +205,6 @@
 
     <target name="clean_all" depends="clean, clean_deps"/>
 
-    <target name="all" depends="SampleService_jar, junit, java_doc, clean" />
+    <target name="all" depends="build-service-jar, junit, java_doc, clean" />
 
 </project>
