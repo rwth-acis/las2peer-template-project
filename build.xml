@@ -127,19 +127,19 @@
 
     <target name="SampleService_jar" depends="compile_main">
         <property name="SampleService.version" value="0.1" />
-        <jar jarfile="${export.jars}/i5.las2peer.services.sampleService-${SampleService.version}.jar">
-            <fileset dir="${tmp.classes}" includes="i5/las2peer/services/sampleService/**" />
+        <jar jarfile="${export.jars}/i5.las2peer.service.sampleService-${SampleService.version}.jar">
+            <fileset dir="${tmp.classes}" includes="i5/las2peer/service/sampleService/**" />
             <manifest>
                 <attribute name="Library-Version" value="${SampleService.version}" />
-                <attribute name="Library-SymbolicName" value="i5.las2peer.services.sampleService" />
+                <attribute name="Library-SymbolicName" value="i5.las2peer.service.sampleService" />
             </manifest>
         </jar>
         <!-- Add the same Jar to the service directory !-->
-        <jar jarfile="${service}/i5.las2peer.services.sampleService-${SampleService.version}.jar">
-            <fileset dir="${tmp.classes}" includes="i5/las2peer/services/sampleService/**" />
+        <jar jarfile="${service}/i5.las2peer.service.sampleService-${SampleService.version}.jar">
+            <fileset dir="${tmp.classes}" includes="i5/las2peer/service/sampleService/**" />
             <manifest>
                 <attribute name="Library-Version" value="${SampleService.version}" />
-                <attribute name="Library-SymbolicName" value="i5.las2peer.services.sampleService" />
+                <attribute name="Library-SymbolicName" value="i5.las2peer.service.sampleService" />
             </manifest>
         </jar>
     </target>

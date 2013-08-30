@@ -1,4 +1,4 @@
-package i5.las2peer.services.sampleService;
+package i5.las2peer.service.sampleService;
 
 import i5.las2peer.api.Service;
 import i5.las2peer.security.UserAgent;

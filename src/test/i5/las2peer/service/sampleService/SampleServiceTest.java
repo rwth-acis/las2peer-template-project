@@ -1,4 +1,4 @@
-package i5.las2peer.services.sampleService;
+package i5.las2peer.service.sampleService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -25,7 +25,7 @@ public class SampleServiceTest {
 
 	private static final String testPass = "adamspass";
 
-	private static final String testServiceClass = "i5.las2peer.services.sampleService.SampleService";
+	private static final String testServiceClass = "i5.las2peer.service.sampleService.SampleService";
 
 	@Before
 	public void startServer() throws Exception {
