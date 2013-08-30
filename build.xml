@@ -1,5 +1,8 @@
 <project name="service" default="service_jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
+    <property name="service.name" value="sampleService" />
+    <property name="service.version" value="0.1" />
+
     <presetdef name="javac">
         <javac includeantruntime="false" />
     </presetdef>
@@ -126,20 +129,19 @@
     <target name="compile_all" depends="compile_main, compile_junit" />
 
     <target name="service_jar" depends="compile_main">
-        <property name="service.version" value="0.1" />
-        <jar jarfile="${export.jars}/i5.las2peer.services.service-${service.version}.jar">
-            <fileset dir="${tmp.classes}" includes="i5/las2peer/services/service/**" />
+        <jar jarfile="${export.jars}/i5.las2peer.service.${service.name}-${service.version}.jar">
+            <fileset dir="${tmp.classes}" includes="i5/las2peer/service/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
-                <attribute name="Library-SymbolicName" value="i5.las2peer.services.service" />
+                <attribute name="Library-SymbolicName" value="i5.las2peer.service.${service.name}" />
             </manifest>
         </jar>
         <!-- Add the same Jar to the service directory !-->
-        <jar jarfile="${service}/i5.las2peer.services.service-${service.version}.jar">
-            <fileset dir="${tmp.classes}" includes="i5/las2peer/services/service/**" />
+        <jar jarfile="${service}/i5.las2peer.service.${service.name}-${service.version}.jar">
+            <fileset dir="${tmp.classes}" includes="i5/las2peer/service/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
-                <attribute name="Library-SymbolicName" value="i5.las2peer.services.service" />
+                <attribute name="Library-SymbolicName" value="i5.las2peer.service.${service.name}" />
             </manifest>
         </jar>
     </target>
