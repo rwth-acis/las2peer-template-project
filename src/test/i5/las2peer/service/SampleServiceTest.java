@@ -25,7 +25,7 @@ public class SampleServiceTest {
 
     private static final String testPass = "adamspass";
 
-    private static final String testServiceClass = "i5.las2peer.services.sampleService.SampleService";
+    private static final String testServiceClass = "i5.las2peer.service.SampleService";
 
     @Before
     public void startServer() throws Exception {
