@@ -2,6 +2,8 @@
 
     <property name="service.version" value="0.1" />
     <property name="service.name" value="sampleService" />
+    <property name="service.package" value="i5.las2peer.service" />
+    <property name="service.path" value="i5/las2peer/service" />
 
     <presetdef name="javac">
         <javac includeantruntime="false" />
@@ -129,19 +131,19 @@
     <target name="compile_all" depends="compile_main, compile_junit" />
 
     <target name="build-service-jar" depends="compile_main">
-        <jar jarfile="${export.jars}/i5.las2peer.service.${service.name}-${service.version}.jar">
-            <fileset dir="${tmp.classes}" includes="i5/las2peer/service/${service.name}/**" />
+        <jar jarfile="${export.jars}/${service.package}.${service.name}-${service.version}.jar">
+            <fileset dir="${tmp.classes}" includes="${service.path}/${service.name}/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
-                <attribute name="Library-SymbolicName" value="i5.las2peer.service.${service.name}" />
+                <attribute name="Library-SymbolicName" value="${service.package}.${service.name}" />
             </manifest>
         </jar>
         <!-- Add the same Jar to the service directory !-->
-        <jar jarfile="${service}/i5.las2peer.service.${service.name}-${service.version}.jar">
-            <fileset dir="${tmp.classes}" includes="i5/las2peer/service/${service.name}/**" />
+        <jar jarfile="${service}/${service.package}.${service.name}-${service.version}.jar">
+            <fileset dir="${tmp.classes}" includes="${service.path}/${service.name}/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
-                <attribute name="Library-SymbolicName" value="i5.las2peer.service.${service.name}" />
+                <attribute name="Library-SymbolicName" value="${service.package}.${service.name}" />
             </manifest>
         </jar>
     </target>
@@ -158,7 +160,7 @@
             classpath="${lib.cp}:${tmp.classes}"
             >
             <packageset dir="${src.main}" defaultexcludes="yes">
-                <include name="i5/las2peer/**" />
+                <include name="/**" />
             </packageset>
         </javadoc>
     </target>
