@@ -1,9 +1,9 @@
-package i5.las2peer.service.sampleService;
+package i5.las2peer.ServicePackage;
 
 import i5.las2peer.api.Service;
 import i5.las2peer.security.UserAgent;
 
-public class SampleService extends Service {
+public class ServiceClass extends Service {
 
 	public boolean testMethod() {
 		return true;

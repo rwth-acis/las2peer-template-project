@@ -1,4 +1,4 @@
-package i5.las2peer.service.sampleService;
+package i5.las2peer.ServicePackage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SampleServiceTest {
+public class ServiceTest {
 	private static final String HTTP_ADDRESS = "localhost";
 	private static final int HTTP_PORT = HttpConnector.DEFAULT_HTTP_CONNECTOR_PORT;
 
@@ -25,7 +25,7 @@ public class SampleServiceTest {
 
 	private static final String testPass = "adamspass";
 
-	private static final String testServiceClass = "i5.las2peer.service.sampleService.SampleService";
+	private static final String testServiceClass = "i5.las2peer.service.ServicePackage.ServiceClass";
 
 	@Before
 	public void startServer() throws Exception {

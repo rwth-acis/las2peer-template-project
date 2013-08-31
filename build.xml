@@ -1,9 +1,12 @@
-<project name="SampleService" default="build-service-jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="SampleService" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-    <property name="service.version" value="0.1" />
-    <property name="service.name" value="sampleService" />
-    <property name="service.package" value="i5.las2peer.service" />
-    <property name="service.path" value="i5/las2peer/service" />
+    <property file="conf/service.properties"/>
+    <property file="conf/user.properties"/>
+
+    <property name="startup" location="startup" />
+
+    <property name="service_agent.path" value="${startup}/service-agent-${service.name}.xml" />
+    <property name="user_agent.path" value="${startup}/user-agent-${las_user.name}.xml" />
 
     <presetdef name="javac">
         <javac includeantruntime="false" />
@@ -79,6 +82,7 @@
         <mkdir dir="${tmp}" />
         <mkdir dir="${export}" />
         <mkdir dir="${service}" />
+        <mkdir dir="${startup}" />
     </target>
 
     <target name="init_compile" depends="init_general">
@@ -130,20 +134,20 @@
 
     <target name="compile_all" depends="compile_main, compile_junit" />
 
-    <target name="build-service-jar" depends="compile_main">
-        <jar jarfile="${export.jars}/${service.package}.${service.name}-${service.version}.jar">
-            <fileset dir="${tmp.classes}" includes="${service.path}/${service.name}/**" />
+    <target name="jar" depends="compile_main">
+        <jar jarfile="${export.jars}/${service.name}-${service.version}.jar">
+            <fileset dir="${tmp.classes}" includes="${service.path}/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
-                <attribute name="Library-SymbolicName" value="${service.package}.${service.name}" />
+                <attribute name="Library-SymbolicName" value="${service.name}" />
             </manifest>
         </jar>
         <!-- Add the same Jar to the service directory !-->
-        <jar jarfile="${service}/${service.package}.${service.name}-${service.version}.jar">
-            <fileset dir="${tmp.classes}" includes="${service.path}/${service.name}/**" />
+        <jar jarfile="${service}/${service.name}-${service.version}.jar">
+            <fileset dir="${tmp.classes}" includes="${service.path}/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
-                <attribute name="Library-SymbolicName" value="${service.package}.${service.name}" />
+                <attribute name="Library-SymbolicName" value="${service.name}" />
             </manifest>
         </jar>
     </target>
@@ -196,13 +200,13 @@
     </target>
 
     <!-- Generate XML for Services -->
-    <target name="generate_service_agent" depends="jar">
-        <echo message="Writing Service Agent xml to startup/${service.name}.xml"/>
+    <target name="generate_service_agent" depends="jar" unless="dont_overwrite_service_agent">
+        <echo message="Writing Service Agent xml to ${service_agent.path}"/>
         <java classname="i5.las2peer.tools.ServiceAgentGenerator"
             classpathref="libraries"
             failonerror="true"
             fork="true"
-            output="startup/${service.name}.xml"
+            output="${service_agent.path}"
             >
             <arg line="'${service.name}.${service.class}' '${service.password}'"/>
         </java>
@@ -210,12 +214,12 @@
 
     <!-- Generate XML for A User -->
     <target name="generate_user_agent" depends="jar">
-        <echo message="Writing User Agent xml to startup/${las_user.name}.xml"/>
+        <echo message="Writing User Agent xml to ${user_agent.path}"/>
         <java classname="i5.las2peer.tools.UserAgentGenerator"
             classpathref="libraries"
             failonerror="true"
             fork="true"
-            output="startup/${las_user.name}.xml"
+            output="${user_agent.path}"
             >
             <arg line="'${las_user.password}' '${las_user.name}' '${las_user.email}'"/>
         </java>
@@ -238,6 +242,6 @@
 
     <target name="clean_all" depends="clean, clean_deps"/>
 
-    <target name="all" depends="build-service-jar, junit, java_doc, clean" />
+    <target name="all" depends="generate_configs, jar, junit, java_doc, clean" />
 
 </project>
