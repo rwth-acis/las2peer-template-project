@@ -227,6 +227,26 @@
 
     <target name="generate_configs" depends="generate_service_agent, generate_user_agent"/>
 
+    <target name="service_agent" depends="check_service_agent, generate_service_agent"/>
+
+    <target name="check_service_agent">
+        <condition property="dont_overwrite_service_agent">
+            <available file="${service_agent.path}" type="file"/>
+        </condition>
+    </target>
+
+    <!-- Start the Service -->
+    <target name="run" depends="jar, service_agent">
+        <echo message="Starting service ${service.name}"/>
+        <java classname="i5.las2peer.tools.ServiceStarter"
+            classpathref="libraries"
+            failonerror="true"
+            fork="true"
+            >
+            <arg line="-x ${service_agent.path} ${service.password} -b ''"/>
+        </java>
+    </target>
+
     <!-- general cleanup -->
     <target name="clean">
         <delete dir="${tmp}" />
