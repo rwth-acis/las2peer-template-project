@@ -195,6 +195,34 @@
         </junit>
     </target>
 
+    <!-- Generate XML for Services -->
+    <target name="generate_service_agent" depends="jar">
+        <echo message="Writing Service Agent xml to startup/${service.name}.xml"/>
+        <java classname="i5.las2peer.tools.ServiceAgentGenerator"
+            classpathref="libraries"
+            failonerror="true"
+            fork="true"
+            output="startup/${service.name}.xml"
+            >
+            <arg line="'${service.name}.${service.class}' '${service.password}'"/>
+        </java>
+    </target>
+
+    <!-- Generate XML for A User -->
+    <target name="generate_user_agent" depends="jar">
+        <echo message="Writing User Agent xml to startup/${las_user.name}.xml"/>
+        <java classname="i5.las2peer.tools.UserAgentGenerator"
+            classpathref="libraries"
+            failonerror="true"
+            fork="true"
+            output="startup/${las_user.name}.xml"
+            >
+            <arg line="'${las_user.password}' '${las_user.name}' '${las_user.email}'"/>
+        </java>
+    </target>
+
+    <target name="generate_configs" depends="generate_service_agent, generate_user_agent"/>
+
     <!-- general cleanup -->
     <target name="clean">
         <delete dir="${tmp}" />
