@@ -83,6 +83,7 @@
         <mkdir dir="${export}" />
         <mkdir dir="${service}" />
         <mkdir dir="${startup}" />
+        <mkdir dir="${log}" />
     </target>
 
     <target name="init_compile" depends="init_general">
@@ -175,7 +176,6 @@
 
     <target name="init_junit" depends="init_general">
         <mkdir dir="${junit.report}" />
-        <mkdir dir="log" />
     </target>
 
     <target name="junit_clean">
