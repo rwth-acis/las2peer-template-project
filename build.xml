@@ -5,8 +5,8 @@
 
     <property name="startup" location="startup" />
 
-    <property name="service_agent.path" value="${startup}/service-agent-${service.name}.xml" />
-    <property name="user_agent.path" value="${startup}/user-agent-${las_user.name}.xml" />
+    <property name="service_agent.path" value="${startup}/agent-service-${service.name}.xml" />
+    <property name="user_agent.path" value="${startup}/agent-user-${las_user.name}.xml" />
 
     <presetdef name="javac">
         <javac includeantruntime="false" />
