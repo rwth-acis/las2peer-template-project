@@ -67,9 +67,9 @@ Please modify the last line of this file according to the following examples:
 2. add an additional node hosted at another machine with  
       bin/start_network.sh(/bat) -s 9001 IP_OF_THE_FIRST_MACHINE:9001
 
-3. If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like
+3. If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
     bin/start_network.sh(/bat) -s 9001 - uploadAgents waitALittle waitALittle searchEve  
-or for a second node
+or for a second node  
     bin/start_network.sh(/bat) -s 9002 IP_OF_THE_FIRST_MACHINE:9001 waitALittle fetchAgent registerEve
 
 More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
