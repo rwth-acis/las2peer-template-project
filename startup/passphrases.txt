@@ -1,2 +1,0 @@
-agent-service-i5.las2peer.ServicePackage.xml;SampleServicePass
-agent-user-UserA.xml;userAPass

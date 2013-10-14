@@ -6,8 +6,9 @@
     <property name="startup" location="startup" />
 
     <property name="service_agent.path" value="${startup}/agent-service-${service.name}.xml" />
-    <property name="user_agent.path" value="${startup}/agent-user-${las_user.name}.xml" />
-
+    <property name="user_agent.path" value="${startup}/agent-user-${las2peer_user.name}.xml" />
+	<property name="passphrases.path" value="${startup}/passphrases.txt" />
+	
     <presetdef name="javac">
         <javac includeantruntime="false" />
     </presetdef>
@@ -17,7 +18,7 @@
 
     <property name="tmp" location="tmp" />
     <property name="log" location="log" />
-    <property name="service" location="service" />
+    <property name="service" location="lib" />
 
     <property name="tmp.classes" location="${tmp}/classes" />
     <property name="tmp.junit" location="${tmp}/test" />
@@ -81,7 +82,7 @@
         <tstamp/>
         <mkdir dir="${tmp}" />
         <mkdir dir="${export}" />
-        <mkdir dir="${service}" />
+        <!-- currently not needed <mkdir dir="${service}" /> !-->
         <mkdir dir="${startup}" />
         <mkdir dir="${log}" />
     </target>
@@ -200,7 +201,7 @@
     </target>
 
     <!-- Generate XML for Services -->
-    <target name="generate_service_agent" depends="jar" unless="dont_overwrite_service_agent">
+    <target name="generate_service_agent" depends="jar">
         <echo message="Writing Service Agent xml to ${service_agent.path}"/>
         <java classname="i5.las2peer.tools.ServiceAgentGenerator"
             classpathref="libraries"
@@ -221,29 +222,32 @@
             fork="true"
             output="${user_agent.path}"
             >
-            <arg line="'${las_user.password}' '${las_user.name}' '${las_user.email}'"/>
+            <arg line="'${las2peer_user.password}' '${las2peer_user.name}' '${las2peer_user.email}'"/>
         </java>
     </target>
 
-    <target name="generate_configs" depends="generate_service_agent, generate_user_agent"/>
-
-    <target name="service_agent" depends="check_service_agent, generate_service_agent"/>
-
-    <target name="check_service_agent">
-        <condition property="dont_overwrite_service_agent">
-            <available file="${service_agent.path}" type="file"/>
-        </condition>
+    <target name="generate_configs" depends="generate_service_agent, generate_user_agent">
+<echo file="${passphrases.path}" append="false">agent-service-${service.name}.xml;${service.password}
+agent-user-${las2peer_user.name}.xml;${las2peer_user.password}
+</echo>
     </target>
 
-    <!-- Start the Service -->
+    <target name="service_agent" depends="generate_service_agent"/>
+
+    <!-- Start the Service at Port 9010-->
     <target name="run" depends="jar, service_agent">
         <echo message="Starting service ${service.name}"/>
-        <java classname="i5.las2peer.tools.ServiceStarter"
+        <java classname="i5.las2peer.testing.L2pNodeLauncher"
             classpathref="libraries"
             failonerror="true"
             fork="true"
             >
-            <arg line="-x ${service_agent.path} ${service.password} -b ''"/>
+            <arg value="-s"/>
+        	<arg value="9010"/>
+        	<arg value="-"/>
+        	<arg value="uploadStartupDirectory"/>
+        	<arg value="startService('${service.name}.${service.class}','${service.password}')"/>
+        	<arg value="interactive"/>
         </java>
     </target>
 
@@ -251,7 +255,6 @@
     <target name="clean">
         <delete dir="${tmp}" />
         <delete dir="${log}" />
-        <delete dir="${service}" />
         <delete dir="${export}" />
     </target>
 

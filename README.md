@@ -23,13 +23,15 @@ The policy files can be downloaded via Oracle:
 Develop a Service for LAS2peer
 -------------------------------------
 
-1. If you use Eclipse, import the project or just create a new project in the same folder.
-2. Change conf/service.properties according to the service you want to build.
-3. Run "ant get_deps" once to pull all dependencies. (You can skip this but Eclipse will complain about missing libraries until you build the first time)
-4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.ServicePackage.ServiceClass).
-5. Run "ant" to just build the service jar or "ant run" to directly run your service.
+1. If you use Eclipse, import the project or just create a new project in the same folder.  
+2. Change conf/service.properties according to the service you want to build.  
+3. Run "ant get_deps" once to pull all dependencies. (You can skip this but Eclipse will complain about missing libraries until you build the first time)  
+4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.services.ServicePackage.ServiceClass).  
+5. Compile your service with "ant", this will also build the service jar.  
+6. Generate Documentation, run your JUnit tests and generate service and user agent with "ant all".  
+(7. Run your service with "ant run". Currently, this is not advisable since the interactive features of the LAS2peer command line can not be used via the ant script.)
 
-A jar file with your service will be in export/ and a generated service agent XML file in startup/.
+The jar file with your service will be in export/ and lib/ and the generated agent XML files in startup/.
 
 
 Using a Different Build-System / Directory-Structure
