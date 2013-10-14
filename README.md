@@ -29,7 +29,7 @@ Develop a Service for LAS2peer
 4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.services.ServicePackage.ServiceClass).  
 5. Compile your service with "ant", this will also build the service jar.  
 6. Generate Documentation, run your JUnit tests and generate service and user agent with "ant all".  
-(7. Run your service with "ant run". Currently, this is not advisable since the interactive features of the LAS2peer command line can not be used via the ant script.)
+7. (Run your service with "ant run". Currently, this is not advisable since the interactive features of the LAS2peer command line can not be used via the ant script.)
 
 The jar file with your service will be in export/ and lib/ and the generated agent XML files in startup/.
 
@@ -75,13 +75,16 @@ Please add parameters to the last line of this file according to the following e
 More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
 Basically you can use all public (non-static) methods of the class.
 
-You can find detailed log files for each node in the directory log/ afterwards.
-
-
-The End of a Run
-----------------
-
 Each started node will be kept running if the last command executed via command line does not give a "shutdown" command.
 
 You can stop the complete run using Strg-C at any point, of course.
 
+You can find detailed log files for each node in the directory log/ afterwards.
+
+
+Additional Scripts
+----------------
+
+The bin folder contains additional scripts that can be used to generate additional user and service agent XML files.
+Please edit them according to your needs. All XML files have to be added to the startup folder and each file has to start with "agent-".
+Please don't forget to add filename and passphrase to the "passphrases.txt" file.
