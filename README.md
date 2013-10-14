@@ -59,25 +59,20 @@ If you want to join an existing network, you will need to know address and port 
 
 You can just use the helper script located at bin/start_network.sh(/bat).
 
+Please modify the last line of this file according to the following examples:  
 
-So to start a new network, follow this steps:
-
-1. build everything with
-    ant compile_all
-
-2. run the starter script with
+1. start a new network with  
     bin/start_network.sh(/bat) -s 9001 -
 
-3. add an additional node hosted at another machine with
+2. add an additional node hosted at another machine with  
       bin/start_network.sh(/bat) -s 9001 IP_OF_THE_FIRST_MACHINE:9001
 
-
-If you want to execute test methods at the nodes just put their names as additional command line parameters to the start_node.sh script like
-    bin/start_network.sh(/bat) -s 9001 - uploadAgents waitALittle waitALittle searchEve
-and for a second node
+3. If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like
+    bin/start_network.sh(/bat) -s 9001 - uploadAgents waitALittle waitALittle searchEve  
+or for a second node
     bin/start_network.sh(/bat) -s 9002 IP_OF_THE_FIRST_MACHINE:9001 waitALittle fetchAgent registerEve
 
-More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/))..
+More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
 Basically you can use all public (non-static) methods of the class.
 
 You can find detailed log files for each node in the directory log/ afterwards.
