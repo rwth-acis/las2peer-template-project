@@ -1,19 +1,18 @@
 LAS2peer-Sample-Service
 =======================
 
-How to develop a service for LAS2peer
+How to Develop a Service for LAS2peer
 -------------------------------------
 
-1. Get the SampleService Project from here: [LAS2Peer-Sample-Project](https://github.com/rwth-acis/LAS2peer-Sample-Service/archive/master.zip)
-2. If you use Eclipse, import the project or just create a new project in the same folder.
-3. Change conf/service.properties according to the service you want to build.
-4. Run "ant get_deps" once to pull all dependencies. (You can skip this but Eclipse will complain about missing libraries until you build the first time)
-5. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.ServicePackage.ServiceClass).
-6. Run "ant" to just build the service jar or "ant run" to directly run your service.
+1. If you use Eclipse, import the project or just create a new project in the same folder.
+2. Change conf/service.properties according to the service you want to build.
+3. Run "ant get_deps" once to pull all dependencies. (You can skip this but Eclipse will complain about missing libraries until you build the first time)
+4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.ServicePackage.ServiceClass).
+5. Run "ant" to just build the service jar or "ant run" to directly run your service.
 
 A jar file with your service will be in export/ and a generated service agent XML file in startup/
 
-Using a different build system/directory structure
+Using a Different Build-System / Directory-Structure
 -------------------------------------------------
 
 If you really want to use LAS2peer in a different project structure/ with a different build system you can point your build-system to this
@@ -28,7 +27,7 @@ Maven repository: http://role.dbis.rwth-aachen.de:9911/archiva/repository/intern
 For information about the build process look at the "jar" and "generate_configs" tasks in the build.xml file.
 
 
-Simple Node-Starter for testing purposes
+Simple Node-Starter for Testing Purposes
 ----------------------------------------
 
 The class i5.las2peer.testing.L2pNodeLaucher provides a simple way to start a node and launch some testing methods.
@@ -62,7 +61,7 @@ Basically you can use all public (non-static) methods of the class.
 You can find detailed log files for each node in the directory testing/log afterwards.
 
 
-Start a complete network of testing nodes
+Start a Complete Network of Testing Nodes
 -----------------------------------------
 
 As an alternative to starting single nodes for testing purposes (see last section) you can use the start_node.sh script to start a complete network configured by a directory containing one [name].node file.
@@ -99,7 +98,7 @@ To start the the network, use the following command:
 
 
 
-The end of a run
+The End of a Run
 ----------------
 
 Each started node will be kept running if the last command executed either via command line or configuration file does not give a /shutdown/ command.
