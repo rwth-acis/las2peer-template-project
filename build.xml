@@ -1,7 +1,7 @@
 <project name="SampleService" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-    <property file="conf/service.properties"/>
-    <property file="conf/user.properties"/>
+    <property file="ant_configuration/service.properties"/>
+    <property file="ant_configuration/user.properties"/>
 
     <property name="startup" location="startup" />
 
