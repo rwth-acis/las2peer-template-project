@@ -66,11 +66,11 @@ Please add parameters to the last line of this file according to the following e
 1. start a new network with  
 ```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 -```
 
-2. add an additional node hosted at another machine with  
+2. add an additional node with  
 ```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 IP_OF_THE_FIRST_MACHINE:9001```
 
 3. If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
-```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - uploadAgents waitALittle searchEve```  
+```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass')```  
 
 More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
 Basically you can use all public (non-static) methods of the class.

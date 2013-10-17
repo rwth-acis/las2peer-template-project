@@ -252,10 +252,16 @@ agent-user-${las2peer_user.name}.xml;${las2peer_user.password}
     </target>
 
     <!-- general cleanup -->
-    <target name="clean">
-        <delete dir="${tmp}" />
-        <delete dir="${log}" />
+	<target name="clean_before_build">
         <delete dir="${export}" />
+	</target>
+	
+    <target name="clean_after_build">
+        <delete dir="${tmp}" />
+		<delete includeemptydirs="true">
+			<fileset dir="${log}" includes="**/*"/>
+		</delete>
+		<delete dir=".las2peer" />
     </target>
 
     <target name="clean_deps">
@@ -263,8 +269,8 @@ agent-user-${las2peer_user.name}.xml;${las2peer_user.password}
         <delete dir="lib" />
     </target>
 
-    <target name="clean_all" depends="clean, clean_deps"/>
+    <target name="clean_all" depends="clean_after_build, clean_before_build, clean_deps"/>
 
-    <target name="all" depends="generate_configs, jar, junit, java_doc, clean" />
+    <target name="all" depends="clean_before_build, generate_configs, jar, junit, java_doc, clean_after_build" />
 
 </project>
