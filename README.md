@@ -26,7 +26,7 @@ Develop a Service for LAS2peer
 1. If you use Eclipse, import the project or just create a new project in the same folder.  
 2. Change conf/service.properties according to the service you want to build.  
 3. Run "ant get_deps" once to pull all dependencies. (You can skip this but Eclipse will complain about missing libraries until you build the first time)  
-4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.services.ServicePackage.ServiceClass).  
+4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.services.servicePackage.ServiceClass).  
 5. Compile your service with "ant", this will also build the service jar.  
 6. Generate Documentation, run your JUnit tests and generate service and user agent with "ant all".  
 7. (Run your service with "ant run". Currently, this is not advisable since the interactive features of the LAS2peer command line can not be used via the ant script.)
@@ -63,13 +63,16 @@ You can just use the helper script located at bin/start_network.sh(/bat).
 
 Please add parameters to the last line of this file according to the following examples:  
 
-1. start a new network with  
-```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 -```
+1) start a new network with  
 
-2. add an additional node with  
-```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 IP_OF_THE_FIRST_MACHINE:9001```
+```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - interactive```
 
-3. If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
+2) add an additional node with 
+
+```[..] i5.las2peer.testing.L2pNodeLauncher -s 9002 IP_OF_THE_FIRST_MACHINE:9001 - interactive```
+
+3) If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
+
 ```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass')```  
 
 More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
@@ -79,12 +82,22 @@ Each started node will be kept running if the last command executed via command 
 
 You can stop the complete run using Strg-C at any point, of course.
 
-You can find detailed log files for each node in the directory log/ afterwards.
+You can find detailed log files for each node in the directory "log/" afterwards.
 
+After starting your service you can finally execute service methods on an open node using the following commands:
+
+
+a) First you have to register a user agent
+
+```registerUserAgent('UserA','userAPass')```
+
+b) Then you can invoke a service method 
+
+```invoke('i5.las2peer.services.servicePackage.ServiceClass','testMethod2','xyz')```
 
 Additional Scripts
 ----------------
 
 The bin folder contains additional scripts that can be used to generate additional user and service agent XML files.
 Please edit them according to your needs. All XML files have to be added to the startup folder and each file has to start with "agent-".
-Please don't forget to add filename and passphrase to the "passphrases.txt" file.
+Please don't forget to add filename and passphrase to the "startup/passphrases.txt" file.
