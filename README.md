@@ -94,7 +94,7 @@ a) First you have to register a user agent
 
 b) Then you can invoke a service method 
 
-```invoke('i5.las2peer.services.servicePackage.ServiceClass','testMethod2','xyz')```
+``` invoke('i5.las2peer.services.servicePackage.ServiceClass','testMethod2','xyz') ```
 
 Additional Scripts
 ----------------
