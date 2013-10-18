@@ -73,7 +73,7 @@ Please add parameters to the last line of this file according to the following e
 
 3) If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
 
-```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass')```  
+```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass') - interactive```  
 
 More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
 Basically you can use all public (non-static) methods of the class.
@@ -90,6 +90,7 @@ After starting your service you can finally execute service methods on an open n
 a) First you have to register a user agent
 
 ```registerUserAgent('UserA','userAPass')```
+
 
 b) Then you can invoke a service method 
 
