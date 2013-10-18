@@ -89,7 +89,7 @@ After starting your service you can finally execute service methods on an open n
 
 a) First you have to register a user agent
 
-```registerUserAgent('UserA','userAPass')```
+``` registerUserAgent('UserA','userAPass') ```
 
 
 b) Then you can invoke a service method 
