@@ -82,7 +82,6 @@
         <tstamp/>
         <mkdir dir="${tmp}" />
         <mkdir dir="${export}" />
-        <!-- currently not needed <mkdir dir="${service}" /> !-->
         <mkdir dir="${startup}" />
         <mkdir dir="${log}" />
     </target>
