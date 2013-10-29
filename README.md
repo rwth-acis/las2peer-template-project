@@ -29,7 +29,7 @@ Develop a Service for LAS2peer
 4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.services.servicePackage.ServiceClass).  
 5. Compile your service with "ant", this will also build the service jar.  
 6. Generate Documentation, run your JUnit tests and generate service and user agent with "ant all".  
-(if this did not run check that the policy files are working correctly)
+(If this did not run check that the policy files are working correctly)
 7. (Run your service with "ant run". Currently, this is not advisable since the interactive features of the LAS2peer command line can not be used via the ant script.)
 
 The jar file with your service will be in export/ and lib/ and the generated agent XML files in startup/.
