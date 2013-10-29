@@ -29,6 +29,7 @@ Develop a Service for LAS2peer
 4. Implement a service by inheriting from i5.las2peer.api.Service (Or refactor from the existing i5.las2peer.services.servicePackage.ServiceClass).  
 5. Compile your service with "ant", this will also build the service jar.  
 6. Generate Documentation, run your JUnit tests and generate service and user agent with "ant all".  
+(if this did not run check that the policy files are working correctly)
 7. (Run your service with "ant run". Currently, this is not advisable since the interactive features of the LAS2peer command line can not be used via the ant script.)
 
 The jar file with your service will be in export/ and lib/ and the generated agent XML files in startup/.
@@ -73,7 +74,7 @@ Please add parameters to the last line of this file according to the following e
 
 3) If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
 
-```[..] i5.las2peer.testing.L2pNodeLauncher -s 9003 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass') - interactive```  
+    [..] i5.las2peer.testing.L2pNodeLauncher -s 9003 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass') - interactive
 
 More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.testing.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
 Basically you can use all public (non-static) methods of the class.
