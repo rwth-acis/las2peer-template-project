@@ -59,7 +59,7 @@ The class i5.las2peer.testing.L2pNodeLaucher provides a simple way to start a no
 All you have to know is a port, which you can open at your local machine.
 If you want to join an existing network, you will need to know address and port of at least one participant.
 
-You can just use the helper script located at bin/start_network.sh(/bat).
+You can just use the helper script located at **bin/start_network.sh(/bat)**.
 
 Please add parameters to the last line of this file according to the following examples:  
 
