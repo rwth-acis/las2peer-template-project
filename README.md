@@ -66,11 +66,11 @@ Please add parameters to the last line of this file according to the following e
 
 1) start a new network with  
 
-```[..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - interactive```
+    [..] i5.las2peer.testing.L2pNodeLauncher -s 9001 - interactive
 
 2) add an additional node with 
 
-```[..] i5.las2peer.testing.L2pNodeLauncher -s 9002 IP_OF_THE_FIRST_MACHINE:9001 - interactive```
+    [..] i5.las2peer.testing.L2pNodeLauncher -s 9002 IP_OF_THE_FIRST_MACHINE:9001 - interactive
 
 3) If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
 
@@ -90,12 +90,11 @@ After starting your service you can finally execute service methods on an open n
 
 a) First you have to register a user agent
 
-``` registerUserAgent('UserA','userAPass') ```
-
+    [..] registerUserAgent('UserA','userAPass')
 
 b) Then you can invoke a service method 
 
-``` invoke('i5.las2peer.services.servicePackage.ServiceClass','testMethod2','xyz') ```
+    [..] invoke('i5.las2peer.services.servicePackage.ServiceClass','testMethod2','xyz')
 
 Additional Scripts
 ----------------
