@@ -5,4 +5,4 @@ cd ${SCRIPTDIR}/../
 BASE=${PWD}
 export CLASSPATH="${PWD}/lib/*"
 
-java -cp "${CLASSPATH}" i5.las2peer.testing.L2pNodeLauncher -s 9011 - interactive
+java -cp "${CLASSPATH}" i5.las2peer.tools.L2pNodeLauncher -s 9011 - interactive

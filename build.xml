@@ -230,25 +230,6 @@ agent-user-${las2peer_user.name}.xml;${las2peer_user.password}
 </echo>
     </target>
 
-    <target name="service_agent" depends="generate_service_agent"/>
-
-    <!-- Start the Service at Port 9010-->
-    <target name="run" depends="jar, service_agent">
-        <echo message="Starting service ${service.name}"/>
-        <java classname="i5.las2peer.testing.L2pNodeLauncher"
-            classpathref="libraries"
-            failonerror="true"
-            fork="true"
-            >
-            <arg value="-s"/>
-        	<arg value="9010"/>
-        	<arg value="-"/>
-        	<arg value="uploadStartupDirectory"/>
-        	<arg value="startService('${service.name}.${service.class}','${service.password}')"/>
-        	<arg value="interactive"/>
-        </java>
-    </target>
-
     <!-- general cleanup -->
 	<target name="clean_before_build">
         <delete dir="${export}" />
