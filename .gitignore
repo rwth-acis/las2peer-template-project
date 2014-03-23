@@ -4,6 +4,6 @@
 /startup
 /log
 /lib
-config/ivy/ivy.jar
+etc/ivy/ivy.jar
 /service
 /etc/startup
