@@ -6,3 +6,4 @@
 /lib
 config/ivy/ivy.jar
 /service
+/etc/startup

@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class ServiceTest {
 	private static final String HTTP_ADDRESS = "localhost";
-	private static final int HTTP_PORT = HttpConnector.DEFAULT_HTTP_CONNECTOR_PORT;
+	private static final int HTTP_PORT = 8080;
 
 	private LocalNode node;
 	private HttpConnector connector;
