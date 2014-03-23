@@ -24,7 +24,7 @@ Develop a Service for LAS2peer
 -------------------------------------
 
 1. If you use Eclipse, import the project or just create a new project in the same folder.  
-2. Change "ant_configuration/service.properties" and "ant_configuration/user.properties" according to the service you want to build.  
+2. Change "etc/ant_configuration/service.properties" and "etc/ant_configuration/user.properties" according to the service you want to build.  
 3. Run "ant get_deps" once to pull all dependencies (You can skip this but Eclipse will complain about missing libraries until you build the first time).  
 4. The service source code can be found at "i5.las2peer.services.servicePackage.ServiceClass".  
 5. Compile your service with "ant", this will also build the service jar.  

@@ -1,9 +1,9 @@
 <project name="SampleService" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-    <property file="ant_configuration/service.properties"/>
-    <property file="ant_configuration/user.properties"/>
+    <property file="etc/ant_configuration/service.properties"/>
+    <property file="etc/ant_configuration/user.properties"/>
 
-    <property name="startup" location="startup" />
+    <property name="startup" location="etc/startup" />
 
     <property name="service_agent.path" value="${startup}/agent-service-${service.name}.xml" />
     <property name="user_agent.path" value="${startup}/agent-user-${las2peer_user.name}.xml" />
@@ -18,7 +18,7 @@
 
     <property name="tmp" location="tmp" />
     <property name="log" location="log" />
-    <property name="service" location="lib" />
+    <property name="service" location="service" />
 
     <property name="tmp.classes" location="${tmp}/classes" />
     <property name="tmp.junit" location="${tmp}/test" />
@@ -44,7 +44,7 @@
     <!-- Make sure Ivy is available -->
 
     <property name="ivy.install.version" value="2.3.0" />
-    <property name="ivy.jar.dir" value="${basedir}/ivy" />
+    <property name="ivy.jar.dir" value="${basedir}/etc/ivy" />
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
     <property name="ivy.settings.file" value="${ivy.jar.dir}/ivysettings.xml" />
     <property name="ivy.dep.file" value="${ivy.jar.dir}/ivy.xml" />
