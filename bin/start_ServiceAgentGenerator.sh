@@ -5,4 +5,4 @@ cd ${SCRIPTDIR}/../
 BASE=${PWD}
 export CLASSPATH="${PWD}/lib/*"
 
-java -cp "${CLASSPATH}" i5.las2peer.tools.ServiceAgentGenerator i5.las2peer.ServicePackage.ServiceClass SampleServicePass
+java -cp "${CLASSPATH}" i5.las2peer.tools.ServiceAgentGenerator i5.las2peer.servicePackage.ServiceClass SampleServicePass
