@@ -44,7 +44,7 @@ Maven repository: http://role.dbis.rwth-aachen.de:9911/archiva/repository/intern
 <dependency>
     <groupId>i5</groupId>
     <artifactId>las2peer</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.3.6</version>
 </dependency>
 ```
 
@@ -73,7 +73,7 @@ Please add parameters to the last line of this file according to the following e
 
 3) If you want to execute test methods at the nodes just put their names as additional parameters to the start_network.sh(/bat) script like  
 
-    [..] i5.las2peer.tools.L2pNodeLauncher -s 9003 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass') - interactive
+    [..] i5.las2peer.tools.L2pNodeLauncher -s 9003 - uploadStartupDirectory startService('i5.las2peer.services.servicePackage.ServiceClass','SampleServicePass') interactive
 
 More informations about existing test methods can be found in the JavaDoc of the i5.las2peer.tools.L2pNodeLauncher class ([LAS2peer Project](https://github.com/rwth-acis/las2peer/)).
 Basically you can use all public (non-static) methods of the class.
@@ -91,7 +91,7 @@ a) First you have to register a user agent
 
     [..] registerUserAgent('UserA','userAPass')
 
-b) Then you can invoke a service method 
+b) Then you can invoke a service method (use a "-" for separating multiple parameters in the last argument (String only!)
 
     [..] invoke('i5.las2peer.services.servicePackage.ServiceClass','testMethod2','xyz')
 
