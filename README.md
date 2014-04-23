@@ -31,7 +31,7 @@ Develop a Service for LAS2peer
 5. Compile your service with "ant", this will also build the service jar.  
 6. Generate documentation, run your JUnit tests and generate service and user agent with "ant all" (If this did not run check that the policy files are working correctly).  
 
-The jar file with your service will be in "export/" and "lib/" and the generated agent XML files in "startup/".
+The jar file with your service will be in "export/" and "service/" and the generated agent XML files in "etc/startup/".
 
 
 Using a Different Build-System / Directory-Structure
