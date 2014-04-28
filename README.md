@@ -38,20 +38,3 @@ The jar file with your service will be in "export/" and "service/" and the gener
 -------------------------------------
 Please visit the [Wiki](https://github.com/rwth-acis/LAS2peer-Template-Project/wiki/) of this project.
 There you will find guides and tutorials, information on LAS2peer concepts and further interesting LAS2peer knowledge.  
-
-
-(Optional: Using a Different Build-System / Directory-Structure)
--------------------------------------------------
-
-If you really want to use LAS2peer in a different project structure / with a different build system you can point your build-system to this
-Maven repository: http://role.dbis.rwth-aachen.de:9911/archiva/repository/internal/ and add the LAS2peer as dependency for your project:
-
-```
-<dependency>
-    <groupId>i5</groupId>
-    <artifactId>las2peer</artifactId>
-    <version>0.0.3.8</version>
-</dependency>
-```
-
-For information about the build process look at the "jar" and "generate_configs" tasks in the build.xml file.
