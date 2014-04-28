@@ -1,4 +1,4 @@
-<project name="SampleService" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="ServiceTemplate" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
     <property file="etc/ant_configuration/service.properties"/>
     <property file="etc/ant_configuration/user.properties"/>

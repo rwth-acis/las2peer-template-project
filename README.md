@@ -1,8 +1,8 @@
-LAS2peer-Sample-Service
+LAS2peer-Template-Project
 =======================
 
-This project can be used as a starting point for your LAS2peer service. It contains everything needed to start LAS2peer service development,
-you do not need to add any dependencies manually.
+This project can be used as a starting point for your LAS2peer service development.
+It contains everything needed to start LAS2peer service development, you do not need to add any dependencies manually.
 For documentation on the LAS2peer service API, please refer to the [LAS2peer Project](https://github.com/rwth-acis/las2peer/).
 
 Please follow the instructions of this ReadMe to setup your service development environment.
@@ -44,7 +44,7 @@ Maven repository: http://role.dbis.rwth-aachen.de:9911/archiva/repository/intern
 <dependency>
     <groupId>i5</groupId>
     <artifactId>las2peer</artifactId>
-    <version>0.0.3.6</version>
+    <version>0.0.3.8</version>
 </dependency>
 ```
 
@@ -54,7 +54,7 @@ For information about the build process look at the "jar" and "generate_configs"
 Run Your Service
 ----------------------------------------
 
-The class "i5.las2peer.tools.L2pNodeLaucher" provides a simple way to start a node and launch some testing methods.
+The class "i5.las2peer.tools.L2pNodeLauncher" provides a simple way to start a node and launch some testing methods.
 
 All you have to know is a port, which you can open at your local machine.
 If you want to join an existing network, you will need to know address and port of at least one participant.
@@ -80,7 +80,7 @@ Basically you can use all public (non-static) methods of the class.
 
 Each started node will continue to run if the last command executed via command line does not give a "shutdown" command.
 
-You can stop the complete run using Strg-C at any point.
+You can stop the complete run using Ctrl-C at any point.
 
 You can find detailed log files for each node in the directory "log/" afterwards.
 
@@ -105,4 +105,4 @@ Please don't forget to add filename and passphrase to the "startup/passphrases.t
 Tutorials
 ----------------
 
-All LAS2peer related tutorials and additional information on how to develop services currently can be found in the [LAS2peer Tutorial Project](https://github.com/rwth-acis/LAS2peer-Tutorial-Project/).
+All LAS2peer related tutorials and additional information on how to develop services can be found in the [LAS2peer Template Project Wiki](https://github.com/rwth-acis/LAS2peer-Template-Project/wiki/).
