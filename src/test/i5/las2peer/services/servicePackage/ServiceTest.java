@@ -129,7 +129,7 @@ public class ServiceTest {
             ClientResponse result=c.sendRequest("GET", mainPath +"validate", "");
             assertEquals(200, result.getHttpCode());
             assertTrue(result.getResponse().trim().contains("adam")); //login name is part of response
-			System.out.println(result.getResponse().trim());
+			System.out.println("Result of 'testValidateLogin': " + result.getResponse().trim());
 		}
 		catch(Exception e)
 		{
@@ -158,7 +158,7 @@ public class ServiceTest {
             ClientResponse result=c.sendRequest("POST", mainPath +"myMethodPath/testInput", ""); //testInput is the pathParam
             assertEquals(200, result.getHttpCode());
             assertTrue(result.getResponse().trim().contains("testInput")); //"testInput" name is part of response
-			System.out.println(result.getResponse().trim());
+			System.out.println("Result of 'testExampleMethod': " + result.getResponse().trim());
 		}
 		catch(Exception e)
 		{

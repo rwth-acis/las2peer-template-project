@@ -12,7 +12,7 @@ import i5.las2peer.security.UserAgent;
 
 /**
  * 
- * LAS2peer  Service
+ * LAS2peer Service
  * 
  * This is a template for a very basic LAS2peer service
  * that uses the LAS2peer Web-Connector for RESTful access to it.
@@ -56,7 +56,7 @@ public class ServiceClass extends Service {
     public String validateLogin()
     {
     	String returnString = "";
-    	returnString += "You are  " + ((UserAgent) getActiveAgent()).getLoginName() + " and you're login is valid!";
+    	returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and you're login is valid!";
     	return returnString;
     }
     
