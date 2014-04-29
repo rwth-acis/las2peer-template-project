@@ -2,6 +2,6 @@
     <info organisation="i5" module="las2peer-service"/>
     <dependencies>
         <dependency org="i5" name="las2peer" rev="0.0.3.8" />
-        <dependency org="i5" name="i5-httpConnector" rev="0.1.3"/>
+        <dependency org="i5" name="i5-WebConnector" rev="0.0.6"/>
     </dependencies>
 </ivy-module>
