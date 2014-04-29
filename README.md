@@ -31,7 +31,11 @@ The policy files can be downloaded via Oracle:
 5. Compile your service with "ant", this will also build the service jar.  
 6. Generate documentation, run your JUnit tests and generate service and user agent with "ant all" (If this did not run check that the policy files are working correctly).  
 
-The jar file with your service will be in "export/" and "service/" and the generated agent XML files in "etc/startup/".  
+The jar file with your service will be in "export/" and "service/" and the generated agent XML files in "etc/startup/".
+You can find the JUnit reports in the folder "test_reports/".  
+
+If you decide to change the dependencies of your project, please make sure to run "ant clean_all" to remove all previously
+added libraries first.  
 
 
 3. Next Steps
