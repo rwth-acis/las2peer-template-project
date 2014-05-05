@@ -38,7 +38,7 @@ you have to also correct the package declaration and the 'testServiceClass' cons
 5. Generate documentation, run your JUnit tests and generate service and user agent with "ant all" (If this did not run check that the policy files are working correctly).  
 
 The jar file with your service will be in "export/" and "service/" and the generated agent XML files in "etc/startup/".
-You can find the JUnit reports in the folder "test_reports/".  
+You can find the JUnit reports in the folder "export/test_reports/".  
 
 If you decide to change the dependencies of your project, please make sure to run "ant clean_all" to remove all previously
 added libraries first.  
