@@ -33,7 +33,7 @@ Follow these five steps to setup your project:
 3. The service source code can be found at "i5.las2peer.services.servicePackage.ServiceClass".  
 (3.5 Optional: Change "etc/ant_configuration/service.properties" and "etc/ant_configuration/user.properties"
 according to the service you want to build. Rename your build directory structure according to the names you gave in 2.,
-you have to also correct the package deceleration and the 'testServiceClass' constant in your source code files.)  
+you have to also correct the package declaration and the 'testServiceClass' constant in your source code files.)  
 4. Compile your service with "ant", this will also build the service jar.  
 5. Generate documentation, run your JUnit tests and generate service and user agent with "ant all" (If this did not run check that the policy files are working correctly).  
 
