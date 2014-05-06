@@ -1,8 +1,6 @@
-#! /bin/bash
+#!/bin/bash
 
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd ${SCRIPTDIR}/../
-BASE=${PWD}
-export CLASSPATH="${PWD}/lib/*"
+# this scripts generates an user agent as xml file in order to upload it via the startup folder
+# pls run the script form the root folder of your deployment, e. g. ./bin/start_UserAgentGenerator.sh
 
-java -cp "${CLASSPATH}" i5.las2peer.tools.UserAgentGenerator userAPass "User A" usera@mail.com
+java -cp "lib/*" i5.las2peer.tools.UserAgentGenerator userAgentPassword "Username" useremail@example.org
