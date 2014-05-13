@@ -165,7 +165,7 @@
             classpathref="libraries"
             >
             <packageset dir="${src.main}" defaultexcludes="yes">
-                <include name="/**" />
+                <include name="i5/las2peer/**" />
             </packageset>
         </javadoc>
     </target>
