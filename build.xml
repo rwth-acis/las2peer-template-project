@@ -201,7 +201,10 @@
 	
 	
     <!-- XML Agent Generation (Builds Jar first so that Generator is available)-->
-    <target name="generate_service_agent" depends="jar">
+	<available file="${service_agent.path}" property="service_agent_exists"/>
+	<available file="${user_agent.path}" property="user_agent_exists"/>
+	
+    <target name="generate_service_agent" depends="jar" unless="service_agent_exists">
         <echo message="Writing Service Agent xml to ${service_agent.path}"/>
         <java classname="i5.las2peer.tools.ServiceAgentGenerator"
             classpathref="libraries"
@@ -213,7 +216,7 @@
         </java>
     </target>
 	
-    <target name="generate_user_agent" depends="jar">
+    <target name="generate_user_agent" depends="jar" unless="user_agent_exists">
         <echo message="Writing User Agent xml to ${user_agent.path}"/>
         <java classname="i5.las2peer.tools.UserAgentGenerator"
             classpathref="libraries"
