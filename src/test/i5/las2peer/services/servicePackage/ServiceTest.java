@@ -22,7 +22,7 @@ import org.junit.Test;
 /**
  * Example Test Class demonstrating a basic JUnit test structure.
  * 
- * @author Peter de Lange
+ * 
  *
  */
 public class ServiceTest {

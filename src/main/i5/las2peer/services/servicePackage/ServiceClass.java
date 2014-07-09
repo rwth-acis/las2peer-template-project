@@ -17,7 +17,7 @@ import i5.las2peer.security.UserAgent;
  * This is a template for a very basic LAS2peer service
  * that uses the LAS2peer Web-Connector for RESTful access to it.
  * 
- * @author Peter de Lange
+ * 
  *
  */
 @Path("example")
