@@ -167,4 +167,15 @@ public class ServiceTest {
 		}
 		
     }
+
+	/**
+	 * Test the ServiceClass for valid rest mapping.
+	 * Important vor development.
+	 */
+	@Test
+	public void testDebugMapping()
+	{
+		ServiceClass cl = new ServiceClass();
+		assertTrue(cl.debugMapping());
+	}
 }
