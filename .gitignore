@@ -7,3 +7,7 @@
 etc/ivy/ivy.jar
 /service
 /etc/startup
+*.iml
+/.idea
+restMapping.xml
+/out

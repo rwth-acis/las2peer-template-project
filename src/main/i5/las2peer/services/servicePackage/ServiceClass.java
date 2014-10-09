@@ -6,8 +6,6 @@ import i5.las2peer.restMapper.annotations.*;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
 import i5.las2peer.security.UserAgent;
-import i5.las2peer.restMapper.tools.CommandLine;
-
 import java.io.IOException;
 
 /**
@@ -102,5 +100,4 @@ public class ServiceClass extends Service {
     	returnString += "You have entered " + myInput + "!";
     	return returnString;
     }
-    
 }
