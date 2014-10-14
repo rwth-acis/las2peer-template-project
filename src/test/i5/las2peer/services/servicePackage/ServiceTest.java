@@ -170,7 +170,7 @@ public class ServiceTest {
 
 	/**
 	 * Test the ServiceClass for valid rest mapping.
-	 * Important vor development.
+	 * Important for development.
 	 */
 	@Test
 	public void testDebugMapping()
