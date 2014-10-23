@@ -1,6 +1,7 @@
 /export
 /tmp
 /.las2peer
+/node-storage
 /startup
 /log
 /lib
