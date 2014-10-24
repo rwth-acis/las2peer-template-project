@@ -2,13 +2,11 @@ package i5.las2peer.services.servicePackage;
 
 import i5.las2peer.api.Service;
 import i5.las2peer.restMapper.HttpResponse;
-import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.GET;
 import i5.las2peer.restMapper.annotations.POST;
 import i5.las2peer.restMapper.annotations.Path;
 import i5.las2peer.restMapper.annotations.PathParam;
-import i5.las2peer.restMapper.annotations.Produces;
 import i5.las2peer.restMapper.annotations.Version;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
