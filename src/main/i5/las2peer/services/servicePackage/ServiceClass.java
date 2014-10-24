@@ -1,11 +1,14 @@
 package i5.las2peer.services.servicePackage;
 
 import i5.las2peer.api.Service;
+import i5.las2peer.restMapper.HttpResponse;
+import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.GET;
 import i5.las2peer.restMapper.annotations.POST;
 import i5.las2peer.restMapper.annotations.Path;
 import i5.las2peer.restMapper.annotations.PathParam;
+import i5.las2peer.restMapper.annotations.Produces;
 import i5.las2peer.restMapper.annotations.Version;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
@@ -17,6 +20,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import net.minidev.json.JSONObject;
 
 /**
  * LAS2peer Service
@@ -53,10 +58,13 @@ public class ServiceClass extends Service {
 	 */
 	@GET
 	@Path("validate")
-	public String validateLogin() {
+	public HttpResponse validateLogin() {
 		String returnString = "";
 		returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
-		return returnString;
+		
+		HttpResponse res = new HttpResponse(returnString);
+		res.setStatus(200);
+		return res;
 	}
 
 	/**
@@ -67,44 +75,80 @@ public class ServiceClass extends Service {
 	 */
 	@POST
 	@Path("myMethodPath/{input}")
-	public String exampleMethod(@PathParam("input") String myInput) {
+	public HttpResponse exampleMethod(@PathParam("input") String myInput) {
 		String returnString = "";
 		returnString += "You have entered " + myInput + "!";
-		return returnString;
+		
+		HttpResponse res = new HttpResponse(returnString);
+		res.setStatus(200);
+		return res;
+		
 	}
 
 	/**
-	 * Example method that shows how to retrieve a user email address from a database.
+	 * Example method that shows how to retrieve a user email address from a database 
+	 * and return an HTTP response including a JSON object.
 	 * 
-	 * @param username
-	 * @return The email address for the given username or an error message
+	 * WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! 
+	 * IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.
+	 * 
 	 */
 	@GET
 	@Path("getUserEmail/{username}")
-	public String getUserEmail(@PathParam("username") String username) {
+	public HttpResponse getUserEmail(@PathParam("username") String username) {
 		String result = "";
 		Connection conn = null;
 		PreparedStatement stmnt = null;
 		ResultSet rs = null;
 		try {
+			// get connection from connection pool
 			conn = dbm.getConnection();
+			
+			// prepare statement
 			stmnt = conn.prepareStatement("SELECT email FROM users WHERE username = ?;");
 			stmnt.setString(1, username);
+			
+			// retrieve result set
 			rs = stmnt.executeQuery();
+			
+			// process result set
 			if (rs.next()) {
 				result = rs.getString(1);
+				
+				// setup resulting JSON Object
+				JSONObject ro = new JSONObject();
+				ro.put("email", result);
+				
+				// return HTTP Response on success
+				HttpResponse r = new HttpResponse(ro.toJSONString());
+				r.setStatus(200);
+				return r;
+				
 			} else {
 				result = "No result for username " + username;
+				
+				// return HTTP Response on error
+				HttpResponse er = new HttpResponse(result);
+				er.setStatus(404);
+				return er;
 			}
 		} catch (Exception e) {
-			result = "Error occurred: " + e;
+			// return HTTP Response on error
+			HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+			er.setStatus(500);
+			return er;
 		} finally {
-			// free resources if exception or not
+			// free resources
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
+					
+					// return HTTP Response on error
+					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+					er.setStatus(500);
+					return er;
 				}
 			}
 			if (stmnt != null) {
@@ -112,6 +156,11 @@ public class ServiceClass extends Service {
 					stmnt.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
+					
+					// return HTTP Response on error
+					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+					er.setStatus(500);
+					return er;
 				}
 			}
 			if (conn != null) {
@@ -119,22 +168,27 @@ public class ServiceClass extends Service {
 					conn.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
+					
+					// return HTTP Response on error
+					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+					er.setStatus(500);
+					return er;
 				}
 			}
 		}
-		return result;
 	}
 
 	/**
 	 * Example method that shows how to change a user email address in a database.
 	 * 
-	 * @param username
-	 * @param email
-	 * @return Returns a message with the number of rows that were updated or an error message.
+	 * WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! 
+	 * IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.
+	 * 
 	 */
 	@POST
 	@Path("setUserEmail/{username}/{email}")
-	public String setUserEmail(@PathParam("username") String username, @PathParam("email") String email) {
+	public HttpResponse setUserEmail(@PathParam("username") String username, @PathParam("email") String email) {
+		
 		String result = "";
 		Connection conn = null;
 		PreparedStatement stmnt = null;
@@ -146,8 +200,17 @@ public class ServiceClass extends Service {
 			stmnt.setString(2, username);
 			int rows = stmnt.executeUpdate(); // same works for insert
 			result = "Database updated. " + rows + " rows affected";
+			
+			// return 
+			HttpResponse r = new HttpResponse(result);
+			r.setStatus(200);
+			return r;
+			
 		} catch (Exception e) {
-			result = "Error occurred: " + e;
+			// return HTTP Response on error
+			HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+			er.setStatus(500);
+			return er;
 		} finally {
 			// free resources if exception or not
 			if (rs != null) {
@@ -155,6 +218,11 @@ public class ServiceClass extends Service {
 					rs.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
+					
+					// return HTTP Response on error
+					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+					er.setStatus(500);
+					return er;
 				}
 			}
 			if (stmnt != null) {
@@ -162,6 +230,11 @@ public class ServiceClass extends Service {
 					stmnt.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
+					
+					// return HTTP Response on error
+					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+					er.setStatus(500);
+					return er;
 				}
 			}
 			if (conn != null) {
@@ -169,10 +242,14 @@ public class ServiceClass extends Service {
 					conn.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
+					
+					// return HTTP Response on error
+					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
+					er.setStatus(500);
+					return er;
 				}
 			}
 		}
-		return result;
 	}
 
 	/**
