@@ -233,7 +233,7 @@
         </java>
     </target>
     <target name="generate_user_agent2" depends="jar" unless="user_agent_exists2">
-        <echo message="Writing User Agent xml to ${user_agent3.path}"/>
+        <echo message="Writing User Agent xml to ${user_agent2.path}"/>
         <java classname="i5.las2peer.tools.UserAgentGenerator" classpathref="libraries"
             failonerror="true" fork="true" output="${user_agent2.path}">
             <arg line="'${las2peer_user2.password}' '${las2peer_user2.name}' '${las2peer_user2.email}'"/>
