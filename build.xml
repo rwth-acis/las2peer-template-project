@@ -6,7 +6,6 @@
     <property name="startup" location="etc/startup" />
 	
     <property name="service_agent.path" value="${startup}/agent-service-${service.name}.xml" />
-    <property name="user_agent.path" value="${startup}/agent-user-${las2peer_user.name}.xml" />
     <property name="user_agent1.path" value="${startup}/agent-user-${las2peer_user1.name}.xml" />
     <property name="user_agent2.path" value="${startup}/agent-user-${las2peer_user2.name}.xml" />
     <property name="user_agent3.path" value="${startup}/agent-user-${las2peer_user3.name}.xml" />
@@ -57,7 +56,7 @@
             dest="${ivy.jar.file}" usetimestamp="true" skipexisting="true"/>
     </target>
     <!-- Try to load Ivy here from local Ivy directory -->
-    <target name="install-ivy" depends="download-ivy" description="--> install ivy">
+    <target name="install-ivy" depends="download-ivy" description="install ivy">
         <path id="ivy.lib.path">
             <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
         </path>
@@ -66,7 +65,7 @@
 	
 	
     <!-- Get Dependencies from our Maven Repository via Ivy -->
-    <target name="get_deps" depends="install-ivy" description="--> resolve dependencies">
+    <target name="get_deps" depends="install-ivy" description="resolve dependencies">
         <ivy:settings>
             <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
         </ivy:settings>
@@ -135,7 +134,7 @@
 	
 	
 	<!-- Generate Jars -->
-    <target name="jar" depends="compile_main">
+    <target name="jar" depends="compile_main" description="build service jar file">
         <jar jarfile="${export.jars}/${service.name}-${service.version}.jar">
             <fileset dir="${tmp.classes}" includes="${service.path}/**" />
             <manifest>
@@ -175,7 +174,7 @@
 	
 	
     <!-- JUnit Testing -->
-    <target name="junit" depends="junit_tests, junit_clean" />
+    <target name="junit" depends="junit_tests, junit_clean" description="run junit tests" />
 	
     <target name="init_junit" depends="init_general">
         <mkdir dir="${junit.report}" />
@@ -205,7 +204,6 @@
 	
     <!-- XML Agent Generation (Builds Jar first so that Generator is available)-->
 	<available file="${service_agent.path}" property="service_agent_exists"/>
-	<available file="${user_agent.path}" property="user_agent_exists"/>
 	<available file="${user_agent1.path}" property="user_agent_exists1"/>
 	<available file="${user_agent2.path}" property="user_agent_exists2"/>
 	<available file="${user_agent3.path}" property="user_agent_exists3"/>
@@ -218,13 +216,6 @@
         </java>
     </target>
 	
-    <target name="generate_user_agent" depends="jar" unless="user_agent_exists">
-        <echo message="Writing User Agent xml to ${user_agent.path}"/>
-        <java classname="i5.las2peer.tools.UserAgentGenerator" classpathref="libraries"
-            failonerror="true" fork="true" output="${user_agent.path}">
-            <arg line="'${las2peer_user.password}' '${las2peer_user.name}' '${las2peer_user.email}'"/>
-        </java>
-    </target>
     <target name="generate_user_agent1" depends="jar" unless="user_agent_exists1">
         <echo message="Writing User Agent xml to ${user_agent1.path}"/>
         <java classname="i5.las2peer.tools.UserAgentGenerator" classpathref="libraries"
@@ -247,9 +238,8 @@
         </java>
     </target>
 	
-    <target name="generate_configs" depends="generate_service_agent, generate_user_agent, generate_user_agent1, generate_user_agent2, generate_user_agent3">
+    <target name="generate_configs" depends="generate_service_agent, generate_user_agent1, generate_user_agent2, generate_user_agent3">
 		<echo file="${passphrases.path}" append="false">agent-service-${service.name}.xml;${service.password}
-agent-user-${las2peer_user.name}.xml;${las2peer_user.password}
 agent-user-${las2peer_user1.name}.xml;${las2peer_user1.password}
 agent-user-${las2peer_user2.name}.xml;${las2peer_user2.password}
 agent-user-${las2peer_user3.name}.xml;${las2peer_user3.password}
