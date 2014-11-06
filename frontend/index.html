@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2014 Advanced Community Information Systems (ACIS) Group, 
+Chair of Computer Science 5 (Databases & Information Systems), RWTH Aachen University, Germany
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the ACIS Group nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>LAS2peer Template Service - Frontend Example</title>
+	<!-- import jQuery for AJAX calls -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<!-- import client lib for service -->
+	<script type="text/javascript" src="js/client.js"></script>
+</head>
+<body>
+	
+	<script type="text/javascript">
+		
+		var client = new TemplateServiceClient("http://localhost:8080/");
+		
+		function getExample() {
+			client.getMethod(
+				function(data,type) {
+					// this is the success callback
+					console.log(data);
+					console.log(type);
+					$("#getExampleOutput").html(data);
+				},
+				function(error) {
+					// this is the error callback
+					console.log(error);
+					$("#getExampleOutput").html(error);
+				}
+			);
+		}
+		
+		function postExample(input) {
+			client.postMethod(input,
+				function(data,type) {
+					// this is the success callback
+					console.log(data);
+					console.log(type);
+					$("#postExampleOutput").html(data);
+				},
+				function(error) {
+					// this is the error callback
+					console.log(error);
+					$("#postExampleOutput").html(error);
+				}
+			);
+		}
+		
+	</script>
+	
+	<input type="submit" onclick="getExample();" value="click me!"/>
+	<p id="getExampleOutput"></p>
+	<input type="submit" onclick="postExample('Check this out!');" value="click me, too!"/>
+	<p id="postExampleOutput"></p>
+	
+</body>
+</html>
