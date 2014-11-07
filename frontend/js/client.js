@@ -29,6 +29,9 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/**
+* Instantiates a new TemplateServiceClient, given its endpoint URL.
+*/
 function TemplateServiceClient(endpointUrl) {
 	// care for trailing slash in endpoint URL
 	if(endpointUrl.endsWith("/")) {
@@ -38,6 +41,9 @@ function TemplateServiceClient(endpointUrl) {
 	}
 };
 
+/**
+* An example function demonstrating a GET request on resource <endpointUrl>/example/validate
+*/
 TemplateServiceClient.prototype.getMethod = function(successCallback, errorCallback) {
 	this.sendRequest("GET",
 		"example/validate",
@@ -49,6 +55,9 @@ TemplateServiceClient.prototype.getMethod = function(successCallback, errorCallb
 	);
 };
 
+/**
+* An example function demonstrating a POST request on resource <endpointUrl>/example/myMethodPath/<input>
+*/
 TemplateServiceClient.prototype.postMethod = function(input, successCallback, errorCallback) {
 	this.sendRequest("POST",
 		"example/myMethodPath/" + input,
@@ -60,6 +69,18 @@ TemplateServiceClient.prototype.postMethod = function(input, successCallback, er
 	);
 };
 
+/**
+* sends an AJAX request to a resource.
+* Parameters:
+*   - method: the HTTP method used
+*	- relativePath: the path relative to the client's endpoint URL
+*   - content: the content to be sent in the HTTP request's body
+*   - mime: the MIME-type of the content
+*   - customHeaders: a JSON string with additional header parameters to be sent
+*   - successCallback: a callback function invoked in case the request succeeded. Expects two parameters "data" and "type", where "data" represents the content of the response and "type" describes the MIME-type of the response
+*   - errorCallback: a callback function invoked in case the request failed. Expects one parameter "error" representing the error occurred.
+*   
+*/
 TemplateServiceClient.prototype.sendRequest = function(method, relativePath, content, mime, customHeaders, successCallback, errorCallback) {
 	var mtype = "text/plain; charset=UTF-8"
 	if(mime !== 'undefined') {
@@ -95,6 +116,9 @@ TemplateServiceClient.prototype.sendRequest = function(method, relativePath, con
 	$.ajax(ajaxObj);
 };
 
+/**
+* Convenience function to check if a String ends with a given suffix.
+*/
 String.prototype.endsWith = function(suffix) {
 	return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };

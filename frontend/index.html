@@ -42,8 +42,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<script type="text/javascript">
 		
+		// create new instance of TemplateServiceClient, given its endpoint URL
 		var client = new TemplateServiceClient("http://localhost:8080/");
 		
+		// function defined as response to a click on the first button (see below)
 		function getExample() {
 			client.getMethod(
 				function(data,type) {
@@ -60,6 +62,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			);
 		}
 		
+		// function defined as response to a click on the second button (see below)
 		function postExample(input) {
 			client.postMethod(input,
 				function(data,type) {
@@ -80,7 +83,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	<input type="submit" onclick="getExample();" value="click me!"/>
 	<p id="getExampleOutput"></p>
-	<input type="submit" onclick="postExample('Check this out!');" value="click me, too!"/>
+	<input type="submit" onclick="postExample('Check-this-out!');" value="click me, too!"/>
 	<p id="postExampleOutput"></p>
 	
 </body>
