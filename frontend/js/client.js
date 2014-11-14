@@ -87,8 +87,21 @@ TemplateServiceClient.prototype.sendRequest = function(method, relativePath, con
 		mtype = mime;
 	}
 	
+	var rurl = this._serviceEndpoint + "/" + relativePath;
+	
+	if(!this.isAnonymous()){
+		console.log("Authenticated request");
+		if(rurl.indexOf("\?") > 0){	
+			rurl += "&access_token=" + window.localStorage["access_token"];
+		} else {
+			rurl += "?access_token=" + window.localStorage["access_token"];
+		}
+	} else {
+		console.log("Anonymous request... ");
+	}
+	
 	var ajaxObj = {
-		url: this._serviceEndpoint + "/" + relativePath,
+		url: rurl,
 		type: method.toUpperCase(),
 		data: content,
 		contentType: mtype,
@@ -114,6 +127,17 @@ TemplateServiceClient.prototype.sendRequest = function(method, relativePath, con
 	}
 	
 	$.ajax(ajaxObj);
+};
+
+/**
+* determines if user is authenticated via OpenID Connect or not.
+*/
+TemplateServiceClient.prototype.isAnonymous = function(){
+	if (oidc_userinfo !== undefined){
+		return false;
+	} else {
+		return true;
+	}
 };
 
 /**

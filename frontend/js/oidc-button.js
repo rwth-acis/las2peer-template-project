@@ -107,12 +107,6 @@ try{
 			} else {
 				nofill = true;				
 			}
-
-
-			//console.log("OpenID Connect Server: " + oidc_server);
-			//console.log("OpenID Connect Client ID: " + oidc_clientid);
-			//console.log("OpenID Connect Scope: " + oidc_scope);
-			//console.log("OpenID Connect Callback: " + oidc_callback);
 			
 			// with all necessary fields defined, retrieve OpenID Connect Server configuration
 			getProviderConfig(oidc_server,function(c){
@@ -239,6 +233,7 @@ function getUserInfo(cb){
 			cb(userinfo);
 		},
 		error: function (resp) {
+			delete window.localStorage["access_token"];
 			cb(resp.responseJSON);
 		}
 	  }
@@ -259,7 +254,7 @@ function getIdToken() {
 		try {
 			result = jws.parseJWS(window.localStorage["id_token"]);
 		} catch (ex) {
-			console.log("Warning: " + ex);
+			//console.log("Warning: " + ex);
 		}
 
 		return jws.parsedJWS;
