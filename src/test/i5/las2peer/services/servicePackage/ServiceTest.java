@@ -114,7 +114,7 @@ public class ServiceTest {
 	
 	/**
 	 * 
-	 * Tests the validate method.
+	 * Tests the validation method.
 	 * 
 	 */
 	@Test
@@ -126,7 +126,7 @@ public class ServiceTest {
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("GET", mainPath +"validate", "");
+            ClientResponse result=c.sendRequest("GET", mainPath +"validation", "");
             assertEquals(200, result.getHttpCode());
             assertTrue(result.getResponse().trim().contains("adam")); //login name is part of response
 			System.out.println("Result of 'testValidateLogin': " + result.getResponse().trim());
@@ -155,7 +155,7 @@ public class ServiceTest {
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("POST", mainPath +"myMethodPath/testInput", ""); //testInput is the pathParam
+            ClientResponse result=c.sendRequest("POST", mainPath +"myResourcePath/testInput", ""); //testInput is the pathParam
             assertEquals(200, result.getHttpCode());
             assertTrue(result.getResponse().trim().contains("testInput")); //"testInput" name is part of response
 			System.out.println("Result of 'testExampleMethod': " + result.getResponse().trim());
