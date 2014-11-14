@@ -55,7 +55,7 @@ public class ServiceClass extends Service {
 	 * 
 	 */
 	@GET
-	@Path("validate")
+	@Path("validation")
 	public HttpResponse validateLogin() {
 		String returnString = "";
 		returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
@@ -72,7 +72,7 @@ public class ServiceClass extends Service {
 	 * 
 	 */
 	@POST
-	@Path("myMethodPath/{input}")
+	@Path("myResourcePath/{input}")
 	public HttpResponse exampleMethod(@PathParam("input") String myInput) {
 		String returnString = "";
 		returnString += "You have entered " + myInput + "!";
@@ -92,7 +92,7 @@ public class ServiceClass extends Service {
 	 * 
 	 */
 	@GET
-	@Path("getUserEmail/{username}")
+	@Path("userEmail/{username}")
 	public HttpResponse getUserEmail(@PathParam("username") String username) {
 		String result = "";
 		Connection conn = null;
@@ -184,7 +184,7 @@ public class ServiceClass extends Service {
 	 * 
 	 */
 	@POST
-	@Path("setUserEmail/{username}/{email}")
+	@Path("userEmail/{username}/{email}")
 	public HttpResponse setUserEmail(@PathParam("username") String username, @PathParam("email") String email) {
 		
 		String result = "";
