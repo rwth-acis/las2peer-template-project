@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Copyright (c) 2014 Advanced Community Information Systems (ACIS) Group, 
+Copyright (c) 2014 Advanced Community Information Systems (ACIS) Group,
 Chair of Computer Science 5 (Databases & Information Systems), RWTH Aachen University, Germany
 All rights reserved.
 
@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LAS2peer Template Service - Frontend Example</title>
-  
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -47,15 +47,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 </head>
 <body>
-  
+
   <!-- Fixed navbar -->
   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
-		  <span class="icon-bar"></span>
-		  <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">My App</a>
@@ -67,35 +67,35 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </ul>
         <!-- OpenID Connect Button: add HTML element representing button -->
         <span id="signinButton">
-        <span class="oidc-signin navbar-btn navbar-right btn-default"
-          data-callback="signinCallback"
-          data-name="OpenID Connect"
-          data-logo="logo.png"
-          data-size="sm"
-          data-server="http://api.learning-layers.eu/o/oauth2"
-          data-clientid="YOUR OIDC CLIENT ID HERE"
-          data-scope="openid email profile">
-        </span>
+          <span class="oidc-signin navbar-btn navbar-right btn-default"
+                data-callback="signinCallback"
+                data-name="OpenID Connect"
+                data-logo="logo.png"
+                data-size="sm"
+                data-server="http://api.learning-layers.eu/o/oauth2"
+                data-clientid="YOUR OIDC CLIENT ID HERE"
+                data-scope="openid email profile">
+          </span>
         </span>
       </div><!--/.nav-collapse -->
     </div>
   </div>
-  
+
   <!-- Container for actual page content -->
   <div class="container" style="margin-top:60px">
-	<h2 class="authenticated hidden">Hello, <span id="uname"></span>!</h2>
-	<button onclick="getExample();" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"> Click me!</span></button>
+    <h2 class="authenticated hidden">Hello, <span id="uname"></span>!</h2>
+    <button onclick="getExample();" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"> Click me!</span></button>
     <p id="getExampleOutput"></p>
     <button onclick="postExample('Yeeehaaaa!');" class="btn btn-default"><span class="glyphicon glyphicon-hand-right"> Click me, too!</span></button>
     <p id="postExampleOutput"></p>
   </div>
-  
+
   <!-- import jQuery for AJAX calls (must) -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
   <!-- import Bootstrap for responsive UI (must) -->
   <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  
+
   <!-- import JWS and JSRSASIGN (must) -->
   <script type="text/javascript" src="js/jws-2.0.min.js"></script>
   <script type="text/javascript" src="js/jsrsasign/ext/base64-min.js"></script>
@@ -110,44 +110,43 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <script type="text/javascript" src="js/jsrsasign/rsasign-1.2.min.js"></script>
   <script type="text/javascript" src="js/jsrsasign/x509-1.1.min.js"></script>
   <script type="text/javascript" src="js/jsrsasign/crypto-1.1.min.js"></script>
-  
+
   <!-- import OpenID Connect Button -->
   <script type="text/javascript">
-    
+
     (function() {
       var po = document.createElement('script');
       po.type = 'text/javascript';
       po.async = true;
       po.src = 'js/oidc-button.js';
-      var s = document.getElementsByTagName('script')[0]; 
+      var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(po, s);
     })();
-    
+
     // OpenID Connect Button: implement a callback function
     function signinCallback(result) {
       if(result === "success"){
         // authenticated
-		
-		// OpenID Connect user info
-		console.log(oidc_userinfo);
-		$("#uname").html(oidc_userinfo.name);
-		$(".authenticated").removeClass("hidden");
+
+        // OpenID Connect user info
+        console.log(oidc_userinfo);
+        $("#uname").html(oidc_userinfo.name);
+        $(".authenticated").removeClass("hidden");
       } else {
         // anonymous
       }
     }
-    
+
   </script>
-  
+
   <!-- import client library for service -->
   <script type="text/javascript" src="js/client.js"></script>
-  
+
   <!-- instantiate and use the client library -->
   <script type="text/javascript">
-    
     // create new instance of TemplateServiceClient, given its endpoint URL
     var client = new TemplateServiceClient("http://localhost:8080/");
-    
+
     // function defined as response to a click on the first button (see below)
     function getExample() {
       client.getMethod(
@@ -163,7 +162,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         }
       );
     }
-    
+
     // function defined as response to a click on the second button (see below)
     function postExample(input) {
       client.postMethod(input,
@@ -179,8 +178,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         }
       );
     }
-    
+
   </script>
-  
 </body>
 </html>
