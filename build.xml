@@ -1,12 +1,9 @@
 <project name="LAS2peer-Template-Project" default="all" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
     
     <property file="etc/ant_configuration/user.properties"/>
+    <property file="etc/ant_configuration/service.properties"/>
     
     <property name="startup" location="etc/startup" />
-    
-    <property name="service.version" value="0.1" />
-    <property name="service.name" value="i5.las2peer.services.servicePackage" />
-    <property name="service.path" value="i5/las2peer/services/servicePackage" />
     
     <property name="user_agent1.path" value="${startup}/agent-user-${las2peer_user1.name}.xml" />
     <property name="user_agent2.path" value="${startup}/agent-user-${las2peer_user2.name}.xml" />
