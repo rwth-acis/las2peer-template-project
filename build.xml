@@ -69,11 +69,12 @@
             <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
         </ivy:settings>
         <ivy:retrieve type="jar" />
+    	<ivy:retrieve type="bundle" />
     </target>
 	
 	
 	<!-- Initialization (Folder Creation)-->
-    <target name="init_general">
+    <target name="init_general" depends="clean_before_build">
         <tstamp/>
         <mkdir dir="${tmp}" />
         <mkdir dir="${export}" />
