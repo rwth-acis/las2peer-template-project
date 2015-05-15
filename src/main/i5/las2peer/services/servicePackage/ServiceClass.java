@@ -2,12 +2,19 @@ package i5.las2peer.services.servicePackage;
 
 import i5.las2peer.api.Service;
 import i5.las2peer.restMapper.HttpResponse;
+import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.GET;
 import i5.las2peer.restMapper.annotations.POST;
 import i5.las2peer.restMapper.annotations.Path;
 import i5.las2peer.restMapper.annotations.PathParam;
+import i5.las2peer.restMapper.annotations.Produces;
 import i5.las2peer.restMapper.annotations.Version;
+import i5.las2peer.restMapper.annotations.swagger.ApiInfo;
+import i5.las2peer.restMapper.annotations.swagger.ApiResponse;
+import i5.las2peer.restMapper.annotations.swagger.ApiResponses;
+import i5.las2peer.restMapper.annotations.swagger.ResourceListApi;
+import i5.las2peer.restMapper.annotations.swagger.Summary;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
 import i5.las2peer.security.Context;
@@ -27,11 +34,28 @@ import net.minidev.json.JSONObject;
  * This is a template for a very basic LAS2peer service
  * that uses the LAS2peer Web-Connector for RESTful access to it.
  * 
+ * Note:
+ * If you plan on using Swagger you should adapt the information below
+ * in the ApiInfo annotation to suit your project.
+ * If you do not intend to provide a Swagger documentation of your service API,
+ * the entire ApiInfo annotation should be removed.
+ * 
  */
 @Path("example")
 @Version("0.1")
+@ApiInfo(
+		  title="LAS2peer Template Service",
+		  description="A LAS2peer Template Service for demonstration purposes.",
+		  termsOfServiceUrl="http://your-terms-of-service-url.com",
+		  contact="john.doe@provider.com",
+		  license="your software license name",
+		  licenseUrl="http://your-software-license-url.com"
+		)
 public class ServiceClass extends Service {
 
+	/*
+	 * Database configuration
+	 */
 	private String jdbcDriverClassName;
 	private String jdbcLogin;
 	private String jdbcPass;
@@ -39,6 +63,13 @@ public class ServiceClass extends Service {
 	private String jdbcSchema;
 	private DatabaseManager dbm;
 
+	/*
+	 * WebConnector configuration (required by Swagger)
+	 */
+	private String webconnectorProtocol = "http";
+	private String webconnectorIpAdress = "localhost";
+	private String webconnectorPort = "8080";
+	
 	public ServiceClass() {
 		// read and set properties values
 		// IF THE SERVICE CLASS NAME IS CHANGED, THE PROPERTIES FILE NAME NEED TO BE CHANGED TOO!
@@ -47,6 +78,10 @@ public class ServiceClass extends Service {
 		dbm = new DatabaseManager(jdbcDriverClassName, jdbcLogin, jdbcPass, jdbcUrl, jdbcSchema);
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////////
+	//  Service methods.
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	/**
 	 * Simple function to validate a user login.
 	 * Basically it only serves as a "calling point" and does not really validate a user
@@ -56,6 +91,13 @@ public class ServiceClass extends Service {
 	 */
 	@GET
 	@Path("validation")
+	@Produces(MediaType.TEXT_PLAIN)
+    @ResourceListApi(description = "User Validation")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Validation Confirmation"),
+    		@ApiResponse(code = 401, message = "Unauthorized")
+    })
+    @Summary("Simple function to validate a user login.")
 	public HttpResponse validateLogin() {
 		String returnString = "";
 		returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
@@ -64,15 +106,22 @@ public class ServiceClass extends Service {
 		res.setStatus(200);
 		return res;
 	}
-
+	
 	/**
-	 * Another example method.
+	 * Example method that returns a phrase containing the received input.
 	 * 
 	 * @param myInput
 	 * 
 	 */
 	@POST
 	@Path("myResourcePath/{input}")
+	@Produces(MediaType.TEXT_PLAIN)
+    @ResourceListApi(description = "Sample Resource")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Input Phrase"),
+    		@ApiResponse(code = 401, message = "Unauthorized")
+    })
+    @Summary("Example method that returns a phrase containing the received input.")
 	public HttpResponse exampleMethod(@PathParam("input") String myInput) {
 		String returnString = "";
 		returnString += "You have entered " + myInput + "!";
@@ -93,6 +142,17 @@ public class ServiceClass extends Service {
 	 */
 	@GET
 	@Path("userEmail/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+    @ResourceListApi(description = "Email Address Administration")
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "User Email"),
+    		@ApiResponse(code = 401, message = "Unauthorized"),
+    		@ApiResponse(code = 404, message = "User not found"),
+    		@ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    @Summary("Example method that retrieves a user email address from a database."
+    		+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
+    		+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
 	public HttpResponse getUserEmail(@PathParam("username") String username) {
 		String result = "";
 		Connection conn = null;
@@ -185,6 +245,15 @@ public class ServiceClass extends Service {
 	 */
 	@POST
 	@Path("userEmail/{username}/{email}")
+	@Produces(MediaType.TEXT_PLAIN)
+    @ApiResponses(value = {
+    		@ApiResponse(code = 200, message = "Update Confirmation"),
+    		@ApiResponse(code = 401, message = "Unauthorized"),
+    		@ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    @Summary("Example method that changes a user email address in a database."
+    		+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
+    		+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
 	public HttpResponse setUserEmail(@PathParam("username") String username, @PathParam("email") String email) {
 		
 		String result = "";
@@ -250,6 +319,10 @@ public class ServiceClass extends Service {
 		}
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////////
+	//  Methods required by the LAS2peer framework.
+	////////////////////////////////////////////////////////////////////////////////////////
+	
 	/**
 	 * Method for debugging purposes.
 	 * Here the concept of restMapping validation is shown.
@@ -292,5 +365,60 @@ public class ServiceClass extends Service {
 		}
 		return result;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	//  Methods providing a Swagger documentation of the service API.
+	////////////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Returns a listing of all annotated top level resources
+	 * for purposes of the Swagger documentation.
+	 * 
+	 * Note:
+	 * If you do not intend to use Swagger for the documentation
+	 * of your Service API, this method may be removed.
+	 * 
+	 * @return Listing of all top level resources.
+	 */
+    @GET
+    @Path("api-docs")
+    @Produces(MediaType.APPLICATION_JSON)
+    public HttpResponse getSwaggerResourceListing(){
+      return RESTMapper.getSwaggerResourceListing(this.getClass());
+    }
+
+    /**
+     * Returns the API documentation for a specific annotated top level resource
+     * for purposes of the Swagger documentation.
+     * 
+	 * Note:
+	 * If you do not intend to use Swagger for the documentation
+	 * of your Service API, this method may be removed.
+	 * 
+	 * Trouble shooting:
+	 * Please make sure that the endpoint URL below is  
+	 * correct with respect to your service.
+	 * 
+     * @param tlr A top level resource name.
+     * @return The resource's documentation.
+     */
+    @GET
+    @Path("api-docs/{tlr}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public HttpResponse getSwaggerApiDeclaration(@PathParam("tlr") String tlr){
+    	HttpResponse res;
+    	Class<ServiceClass> c = ServiceClass.class;
+    	if (!c.isAnnotationPresent(Path.class)){
+    		res = new HttpResponse("Swagger API declaration not available. Service path is not defined.");
+    		res.setStatus(404);
+    	} else{
+    		Path path = (Path) c.getAnnotation(Path.class);
+    		String endpoint = webconnectorProtocol + "://" + webconnectorIpAdress + ":"
+    				+ webconnectorPort + path.value() + "/";
+    		System.out.println(endpoint);
+    		res = RESTMapper.getSwaggerApiDeclaration(this.getClass(), tlr, endpoint);
+    	}
+    	return res;
+    }
 
 }
