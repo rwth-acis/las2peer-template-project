@@ -37,7 +37,7 @@ public class ServiceTest {
 	private static UserAgent testAgent;
 	private static final String testPass = "adamspass";
 	
-	private static final String testServiceClass = ServiceClass.class.getCanonicalName();
+	private static final String testTemplateService = TemplateService.class.getCanonicalName();
 	
 	private static final String mainPath = "example/";
 	
@@ -57,7 +57,7 @@ public class ServiceTest {
 		node.storeAgent(MockAgentFactory.getAdam());
 		node.launch();
 		
-		ServiceAgent testService = ServiceAgent.generateNewAgent(testServiceClass, "a pass");
+		ServiceAgent testService = ServiceAgent.generateNewAgent(testTemplateService, "a pass");
 		testService.unlockPrivateKey("a pass");
 		
 		node.registerReceiver(testService);
@@ -169,13 +169,13 @@ public class ServiceTest {
     }
 
 	/**
-	 * Test the ServiceClass for valid rest mapping.
+	 * Test the TemplateService for valid rest mapping.
 	 * Important for development.
 	 */
 	@Test
 	public void testDebugMapping()
 	{
-		ServiceClass cl = new ServiceClass();
+		TemplateService cl = new TemplateService();
 		assertTrue(cl.debugMapping());
 	}
 }
