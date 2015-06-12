@@ -241,7 +241,6 @@ agent-user-${las2peer_user3.name}.xml;${las2peer_user3.password}
 	
     <target name="clean_after_build">
         <delete dir="${tmp}"/>
-		<delete dir=".las2peer"/>
     </target>
 	
     <target name="clean_deps">
@@ -250,6 +249,7 @@ agent-user-${las2peer_user3.name}.xml;${las2peer_user3.password}
 	
     <target name="clean_all" depends="clean_after_build, clean_before_build, clean_deps">
 		<delete dir="${log}"/>
+		<delete dir="node-storage"/>
     </target>
 	
     <target name="all" depends="clean_before_build, generate_configs, junit, java_doc, clean_after_build" />

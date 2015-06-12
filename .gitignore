@@ -12,3 +12,4 @@ etc/ivy/ivy.jar
 /.idea
 restMapping.xml
 /out
+/output/
