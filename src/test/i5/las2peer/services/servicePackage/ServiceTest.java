@@ -66,7 +66,6 @@ public class ServiceTest {
 		logStream = new ByteArrayOutputStream ();
 		
 		connector = new WebConnector(true,HTTP_PORT,false,1000);
-		connector.setSocketTimeout(10000);
 		connector.setLogStream(new PrintStream (logStream));
 		connector.start ( node );
         Thread.sleep(1000); //wait a second for the connector to become ready
