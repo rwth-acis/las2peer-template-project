@@ -55,7 +55,7 @@
             dest="${ivy.jar.file}" usetimestamp="true" skipexisting="true"/>
     </target>
     <!-- Try to load Ivy here from local Ivy directory -->
-    <target name="install-ivy" depends="download-ivy" description="--> install ivy">
+    <target name="install-ivy" depends="download-ivy">
         <path id="ivy.lib.path">
             <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
         </path>
@@ -68,8 +68,7 @@
         <ivy:settings>
             <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
         </ivy:settings>
-        <ivy:retrieve type="jar" />
-    	<ivy:retrieve type="bundle" />
+        <ivy:retrieve type="jar, bundle" />
     </target>
 	
 	
@@ -130,7 +129,7 @@
 	
 	
 	<!-- Generate Jars -->
-    <target name="jar" depends="compile_main">
+    <target name="jar" depends="compile_main" description="--> jar">
         <jar jarfile="${export.jars}/${service.name}-${service.version}.jar">
             <fileset dir="${tmp.classes}" includes="${service.path}/**" />
             <manifest>
@@ -170,7 +169,7 @@
 	
 	
     <!-- JUnit Testing -->
-    <target name="junit" depends="junit_tests, junit_clean" description="--> execute all junit tests"/>
+    <target name="junit" depends="junit_tests, junit_clean" description="--> execute all junit tests" />
 	
     <target name="init_junit" depends="init_general">
         <mkdir dir="${junit.report}" />
@@ -243,7 +242,7 @@ agent-user-${las2peer_user3.name}.xml;${las2peer_user3.password}
         <delete dir="${tmp}"/>
     </target>
 	
-    <target name="clean_deps">
+    <target name="clean_deps" description="--> remove all dependencies">
         <delete dir="${lib}"/>
     </target>
 	
