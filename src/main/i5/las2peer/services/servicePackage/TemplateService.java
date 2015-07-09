@@ -113,9 +113,7 @@ public class TemplateService extends Service {
 		String returnString = "";
 		returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
 
-		HttpResponse res = new HttpResponse(returnString);
-		res.setStatus(HttpURLConnection.HTTP_OK);
-		return res;
+		return new HttpResponse(returnString, HttpURLConnection.HTTP_OK);
 	}
 
 	/**
@@ -137,10 +135,7 @@ public class TemplateService extends Service {
 		String returnString = "";
 		returnString += "You have entered " + myInput + "!";
 
-		HttpResponse res = new HttpResponse(returnString);
-		res.setStatus(HttpURLConnection.HTTP_OK);
-		return res;
-
+		return new HttpResponse(returnString, HttpURLConnection.HTTP_OK);
 	}
 
 	/**
@@ -158,7 +153,7 @@ public class TemplateService extends Service {
 			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "User Email"),
 			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized"),
 			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "User not found"),
-			@ApiResponse(code = 500, message = "Internal Server Error")
+			@ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = "Internal Server Error")
 	})
 	@ApiOperation(value = "Email Address Administration",
 			notes = "Example method that retrieves a user email address from a database."
@@ -189,23 +184,16 @@ public class TemplateService extends Service {
 				ro.put("email", result);
 
 				// return HTTP Response on success
-				HttpResponse r = new HttpResponse(ro.toJSONString());
-				r.setStatus(HttpURLConnection.HTTP_OK);
-				return r;
-
+				return new HttpResponse(ro.toJSONString(), HttpURLConnection.HTTP_OK);
 			} else {
 				result = "No result for username " + username;
 
 				// return HTTP Response on error
-				HttpResponse er = new HttpResponse(result);
-				er.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
-				return er;
+				return new HttpResponse(result, HttpURLConnection.HTTP_NOT_FOUND);
 			}
 		} catch (Exception e) {
 			// return HTTP Response on error
-			HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-			er.setStatus(500);
-			return er;
+			return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 		} finally {
 			// free resources
 			if (rs != null) {
@@ -215,9 +203,7 @@ public class TemplateService extends Service {
 					Context.logError(this, e.getMessage());
 
 					// return HTTP Response on error
-					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-					er.setStatus(500);
-					return er;
+					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 				}
 			}
 			if (stmnt != null) {
@@ -227,9 +213,7 @@ public class TemplateService extends Service {
 					Context.logError(this, e.getMessage());
 
 					// return HTTP Response on error
-					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-					er.setStatus(500);
-					return er;
+					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 				}
 			}
 			if (conn != null) {
@@ -239,9 +223,7 @@ public class TemplateService extends Service {
 					Context.logError(this, e.getMessage());
 
 					// return HTTP Response on error
-					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-					er.setStatus(500);
-					return er;
+					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 				}
 			}
 		}
@@ -260,7 +242,7 @@ public class TemplateService extends Service {
 	@ApiResponses(value = {
 			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Update Confirmation"),
 			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized"),
-			@ApiResponse(code = 500, message = "Internal Server Error")
+			@ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = "Internal Server Error")
 	})
 	@ApiOperation(value = "setUserEmail",
 			notes = "Example method that changes a user email address in a database."
@@ -281,15 +263,10 @@ public class TemplateService extends Service {
 			result = "Database updated. " + rows + " rows affected";
 
 			// return
-			HttpResponse r = new HttpResponse(result);
-			r.setStatus(HttpURLConnection.HTTP_OK);
-			return r;
-
+			return new HttpResponse(result, HttpURLConnection.HTTP_OK);
 		} catch (Exception e) {
 			// return HTTP Response on error
-			HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-			er.setStatus(500);
-			return er;
+			return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 		} finally {
 			// free resources if exception or not
 			if (rs != null) {
@@ -299,9 +276,7 @@ public class TemplateService extends Service {
 					Context.logError(this, e.getMessage());
 
 					// return HTTP Response on error
-					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-					er.setStatus(500);
-					return er;
+					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 				}
 			}
 			if (stmnt != null) {
@@ -311,9 +286,7 @@ public class TemplateService extends Service {
 					Context.logError(this, e.getMessage());
 
 					// return HTTP Response on error
-					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-					er.setStatus(500);
-					return er;
+					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 				}
 			}
 			if (conn != null) {
@@ -323,9 +296,7 @@ public class TemplateService extends Service {
 					Context.logError(this, e.getMessage());
 
 					// return HTTP Response on error
-					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
-					er.setStatus(500);
-					return er;
+					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 				}
 			}
 		}
@@ -357,8 +328,9 @@ public class TemplateService extends Service {
 		XMLCheck validator = new XMLCheck();
 		ValidationResult result = validator.validate(xml);
 
-		if (result.isValid())
+		if (result.isValid()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -404,7 +376,7 @@ public class TemplateService extends Service {
 			return new HttpResponse(Json.mapper().writeValueAsString(swagger), HttpURLConnection.HTTP_OK);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
-			return new HttpResponse(e.getMessage(), 500);
+			return new HttpResponse(e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
 		}
 	}
 
