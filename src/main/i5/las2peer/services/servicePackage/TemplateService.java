@@ -1,31 +1,40 @@
 package i5.las2peer.services.servicePackage;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import i5.las2peer.api.Service;
 import i5.las2peer.restMapper.HttpResponse;
 import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
-import i5.las2peer.restMapper.annotations.GET;
-import i5.las2peer.restMapper.annotations.POST;
-import i5.las2peer.restMapper.annotations.Path;
-import i5.las2peer.restMapper.annotations.PathParam;
-import i5.las2peer.restMapper.annotations.Produces;
 import i5.las2peer.restMapper.annotations.Version;
-import i5.las2peer.restMapper.annotations.swagger.ApiInfo;
-import i5.las2peer.restMapper.annotations.swagger.ApiResponse;
-import i5.las2peer.restMapper.annotations.swagger.ApiResponses;
-import i5.las2peer.restMapper.annotations.swagger.ResourceListApi;
-import i5.las2peer.restMapper.annotations.swagger.Summary;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
 import i5.las2peer.security.Context;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.services.servicePackage.database.DatabaseManager;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Contact;
+import io.swagger.annotations.Info;
+import io.swagger.annotations.License;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.jaxrs.Reader;
+import io.swagger.models.Swagger;
+import io.swagger.util.Json;
 import net.minidev.json.JSONObject;
 
 /**
@@ -41,16 +50,25 @@ import net.minidev.json.JSONObject;
  * the entire ApiInfo annotation should be removed.
  * 
  */
-@Path("example")
-@Version("0.1")
-@ApiInfo(
-		  title="LAS2peer Template Service",
-		  description="A LAS2peer Template Service for demonstration purposes.",
-		  termsOfServiceUrl="http://your-terms-of-service-url.com",
-		  contact="john.doe@provider.com",
-		  license="your software license name",
-		  licenseUrl="http://your-software-license-url.com"
-		)
+@Path("/example")
+@Version("0.1") // this annotation is used by the XML mapper
+@Api
+@SwaggerDefinition(
+		info = @Info(
+				title = "LAS2peer Template Service",
+				version = "0.1",
+				description = "A LAS2peer Template Service for demonstration purposes.",
+				termsOfService = "http://your-terms-of-service-url.com",
+				contact = @Contact(
+						name = "John Doe",
+						url = "provider.com",
+						email = "john.doe@provider.com"
+				),
+				license = @License(
+						name = "your software license name",
+						url = "http://your-software-license-url.com"
+				)
+		))
 public class TemplateService extends Service {
 
 	/*
@@ -63,13 +81,6 @@ public class TemplateService extends Service {
 	private String jdbcSchema;
 	private DatabaseManager dbm;
 
-	/*
-	 * WebConnector configuration (required by Swagger)
-	 */
-	private String webconnectorProtocol = "http";
-	private String webconnectorIpAdress = "localhost";
-	private String webconnectorPort = "8080";
-	
 	public TemplateService() {
 		// read and set properties values
 		// IF THE SERVICE CLASS NAME IS CHANGED, THE PROPERTIES FILE NAME NEED TO BE CHANGED TOO!
@@ -78,10 +89,10 @@ public class TemplateService extends Service {
 		dbm = new DatabaseManager(jdbcDriverClassName, jdbcLogin, jdbcPass, jdbcUrl, jdbcSchema);
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////
-	//  Service methods.
-	////////////////////////////////////////////////////////////////////////////////////////
-	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	// Service methods.
+	// //////////////////////////////////////////////////////////////////////////////////////
+
 	/**
 	 * Simple function to validate a user login.
 	 * Basically it only serves as a "calling point" and does not really validate a user
@@ -90,23 +101,23 @@ public class TemplateService extends Service {
 	 * 
 	 */
 	@GET
-	@Path("validation")
+	@Path("/validation")
 	@Produces(MediaType.TEXT_PLAIN)
-    @ResourceListApi(description = "User Validation")
-    @ApiResponses(value = {
-    		@ApiResponse(code = 200, message = "Validation Confirmation"),
-    		@ApiResponse(code = 401, message = "Unauthorized")
-    })
-    @Summary("Simple function to validate a user login.")
+	@ApiOperation(value = "User Validation",
+			notes = "Simple function to validate a user login.")
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Validation Confirmation"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized")
+	})
 	public HttpResponse validateLogin() {
 		String returnString = "";
 		returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
-		
+
 		HttpResponse res = new HttpResponse(returnString);
-		res.setStatus(200);
+		res.setStatus(HttpURLConnection.HTTP_OK);
 		return res;
 	}
-	
+
 	/**
 	 * Example method that returns a phrase containing the received input.
 	 * 
@@ -114,22 +125,22 @@ public class TemplateService extends Service {
 	 * 
 	 */
 	@POST
-	@Path("myResourcePath/{input}")
+	@Path("/myResourcePath/{input}")
 	@Produces(MediaType.TEXT_PLAIN)
-    @ResourceListApi(description = "Sample Resource")
-    @ApiResponses(value = {
-    		@ApiResponse(code = 200, message = "Input Phrase"),
-    		@ApiResponse(code = 401, message = "Unauthorized")
-    })
-    @Summary("Example method that returns a phrase containing the received input.")
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Input Phrase"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized")
+	})
+	@ApiOperation(value = "Sample Resource",
+			notes = "Example method that returns a phrase containing the received input.")
 	public HttpResponse exampleMethod(@PathParam("input") String myInput) {
 		String returnString = "";
 		returnString += "You have entered " + myInput + "!";
-		
+
 		HttpResponse res = new HttpResponse(returnString);
-		res.setStatus(200);
+		res.setStatus(HttpURLConnection.HTTP_OK);
 		return res;
-		
+
 	}
 
 	/**
@@ -141,18 +152,18 @@ public class TemplateService extends Service {
 	 * 
 	 */
 	@GET
-	@Path("userEmail/{username}")
+	@Path("/userEmail/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-    @ResourceListApi(description = "Email Address Administration")
-    @ApiResponses(value = {
-    		@ApiResponse(code = 200, message = "User Email"),
-    		@ApiResponse(code = 401, message = "Unauthorized"),
-    		@ApiResponse(code = 404, message = "User not found"),
-    		@ApiResponse(code = 500, message = "Internal Server Error")
-    })
-    @Summary("Example method that retrieves a user email address from a database."
-    		+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
-    		+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "User Email"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized"),
+			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "User not found"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
+	@ApiOperation(value = "Email Address Administration",
+			notes = "Example method that retrieves a user email address from a database."
+					+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
+					+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
 	public HttpResponse getUserEmail(@PathParam("username") String username) {
 		String result = "";
 		Connection conn = null;
@@ -161,33 +172,33 @@ public class TemplateService extends Service {
 		try {
 			// get connection from connection pool
 			conn = dbm.getConnection();
-			
+
 			// prepare statement
 			stmnt = conn.prepareStatement("SELECT email FROM users WHERE username = ?;");
 			stmnt.setString(1, username);
-			
+
 			// retrieve result set
 			rs = stmnt.executeQuery();
-			
+
 			// process result set
 			if (rs.next()) {
 				result = rs.getString(1);
-				
+
 				// setup resulting JSON Object
 				JSONObject ro = new JSONObject();
 				ro.put("email", result);
-				
+
 				// return HTTP Response on success
 				HttpResponse r = new HttpResponse(ro.toJSONString());
-				r.setStatus(200);
+				r.setStatus(HttpURLConnection.HTTP_OK);
 				return r;
-				
+
 			} else {
 				result = "No result for username " + username;
-				
+
 				// return HTTP Response on error
 				HttpResponse er = new HttpResponse(result);
-				er.setStatus(404);
+				er.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
 				return er;
 			}
 		} catch (Exception e) {
@@ -202,7 +213,7 @@ public class TemplateService extends Service {
 					rs.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
-					
+
 					// return HTTP Response on error
 					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
 					er.setStatus(500);
@@ -214,7 +225,7 @@ public class TemplateService extends Service {
 					stmnt.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
-					
+
 					// return HTTP Response on error
 					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
 					er.setStatus(500);
@@ -226,7 +237,7 @@ public class TemplateService extends Service {
 					conn.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
-					
+
 					// return HTTP Response on error
 					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
 					er.setStatus(500);
@@ -244,18 +255,19 @@ public class TemplateService extends Service {
 	 * 
 	 */
 	@POST
-	@Path("userEmail/{username}/{email}")
+	@Path("/userEmail/{username}/{email}")
 	@Produces(MediaType.TEXT_PLAIN)
-    @ApiResponses(value = {
-    		@ApiResponse(code = 200, message = "Update Confirmation"),
-    		@ApiResponse(code = 401, message = "Unauthorized"),
-    		@ApiResponse(code = 500, message = "Internal Server Error")
-    })
-    @Summary("Example method that changes a user email address in a database."
-    		+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
-    		+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
+	@ApiResponses(value = {
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Update Confirmation"),
+			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
+	@ApiOperation(value = "setUserEmail",
+			notes = "Example method that changes a user email address in a database."
+					+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
+					+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
 	public HttpResponse setUserEmail(@PathParam("username") String username, @PathParam("email") String email) {
-		
+
 		String result = "";
 		Connection conn = null;
 		PreparedStatement stmnt = null;
@@ -267,12 +279,12 @@ public class TemplateService extends Service {
 			stmnt.setString(2, username);
 			int rows = stmnt.executeUpdate(); // same works for insert
 			result = "Database updated. " + rows + " rows affected";
-			
-			// return 
+
+			// return
 			HttpResponse r = new HttpResponse(result);
-			r.setStatus(200);
+			r.setStatus(HttpURLConnection.HTTP_OK);
 			return r;
-			
+
 		} catch (Exception e) {
 			// return HTTP Response on error
 			HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
@@ -285,7 +297,7 @@ public class TemplateService extends Service {
 					rs.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
-					
+
 					// return HTTP Response on error
 					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
 					er.setStatus(500);
@@ -297,7 +309,7 @@ public class TemplateService extends Service {
 					stmnt.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
-					
+
 					// return HTTP Response on error
 					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
 					er.setStatus(500);
@@ -309,7 +321,7 @@ public class TemplateService extends Service {
 					conn.close();
 				} catch (Exception e) {
 					Context.logError(this, e.getMessage());
-					
+
 					// return HTTP Response on error
 					HttpResponse er = new HttpResponse("Internal error: " + e.getMessage());
 					er.setStatus(500);
@@ -319,10 +331,10 @@ public class TemplateService extends Service {
 		}
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////
-	//  Methods required by the LAS2peer framework.
-	////////////////////////////////////////////////////////////////////////////////////////
-	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	// Methods required by the LAS2peer framework.
+	// //////////////////////////////////////////////////////////////////////////////////////
+
 	/**
 	 * Method for debugging purposes.
 	 * Here the concept of restMapping validation is shown.
@@ -365,60 +377,35 @@ public class TemplateService extends Service {
 		}
 		return result;
 	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////
-	//  Methods providing a Swagger documentation of the service API.
-	////////////////////////////////////////////////////////////////////////////////////////
-	
-	/**
-	 * Returns a listing of all annotated top level resources
-	 * for purposes of the Swagger documentation.
-	 * 
-	 * Note:
-	 * If you do not intend to use Swagger for the documentation
-	 * of your Service API, this method may be removed.
-	 * 
-	 * @return Listing of all top level resources.
-	 */
-    @GET
-    @Path("api-docs")
-    @Produces(MediaType.APPLICATION_JSON)
-    public HttpResponse getSwaggerResourceListing(){
-      return RESTMapper.getSwaggerResourceListing(this.getClass());
-    }
 
-    /**
-     * Returns the API documentation for a specific annotated top level resource
-     * for purposes of the Swagger documentation.
-     * 
+	// //////////////////////////////////////////////////////////////////////////////////////
+	// Methods providing a Swagger documentation of the service API.
+	// //////////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * Returns the API documentation of all annotated resources
+	 * for purposes of Swagger documentation.
+	 * 
 	 * Note:
 	 * If you do not intend to use Swagger for the documentation
-	 * of your Service API, this method may be removed.
+	 * of your service API, this method may be removed.
 	 * 
-	 * Trouble shooting:
-	 * Please make sure that the endpoint URL below is  
-	 * correct with respect to your service.
-	 * 
-     * @param tlr A top level resource name.
-     * @return The resource's documentation.
-     */
-    @GET
-    @Path("api-docs/{tlr}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public HttpResponse getSwaggerApiDeclaration(@PathParam("tlr") String tlr){
-    	HttpResponse res;
-    	Class<TemplateService> c = TemplateService.class;
-    	if (!c.isAnnotationPresent(Path.class)){
-    		res = new HttpResponse("Swagger API declaration not available. Service path is not defined.");
-    		res.setStatus(404);
-    	} else{
-    		Path path = (Path) c.getAnnotation(Path.class);
-    		String endpoint = webconnectorProtocol + "://" + webconnectorIpAdress + ":"
-    				+ webconnectorPort + path.value() + "/";
-    		System.out.println(endpoint);
-    		res = RESTMapper.getSwaggerApiDeclaration(this.getClass(), tlr, endpoint);
-    	}
-    	return res;
-    }
+	 * @return The resource's documentation.
+	 */
+	@GET
+	@Path("/swagger.json")
+	@Produces(MediaType.APPLICATION_JSON)
+	public HttpResponse getSwaggerJSON() {
+		Swagger swagger = new Reader(new Swagger()).read(this.getClass());
+		if (swagger == null) {
+			return new HttpResponse("Swagger API declaration not available!", HttpURLConnection.HTTP_NOT_FOUND);
+		}
+		try {
+			return new HttpResponse(Json.mapper().writeValueAsString(swagger), HttpURLConnection.HTTP_OK);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return new HttpResponse(e.getMessage(), 500);
+		}
+	}
 
 }

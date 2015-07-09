@@ -18,30 +18,26 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
 /**
  * Example Test Class demonstrating a basic JUnit test structure.
- * 
- * 
  *
  */
 public class ServiceTest {
-	
+
 	private static final String HTTP_ADDRESS = "http://127.0.0.1";
 	private static final int HTTP_PORT = WebConnector.DEFAULT_HTTP_PORT;
-	
+
 	private static LocalNode node;
 	private static WebConnector connector;
 	private static ByteArrayOutputStream logStream;
-	
+
 	private static UserAgent testAgent;
 	private static final String testPass = "adamspass";
-	
+
 	private static final String testTemplateService = TemplateService.class.getCanonicalName();
-	
-	private static final String mainPath = "example/";
-	
-	
+
+	private static final String mainPath = "/example/";
+
 	/**
 	 * Called before the tests start.
 	 * 
@@ -51,41 +47,39 @@ public class ServiceTest {
 	 */
 	@BeforeClass
 	public static void startServer() throws Exception {
-		
-		//start node
+
+		// start node
 		node = LocalNode.newNode();
 		node.storeAgent(MockAgentFactory.getAdam());
 		node.launch();
-		
+
 		ServiceAgent testService = ServiceAgent.generateNewAgent(testTemplateService, "a pass");
 		testService.unlockPrivateKey("a pass");
-		
+
 		node.registerReceiver(testService);
-		
-		//start connector
-		logStream = new ByteArrayOutputStream ();
-		
-		connector = new WebConnector(true,HTTP_PORT,false,1000);
-		connector.setLogStream(new PrintStream (logStream));
-		connector.start ( node );
-        Thread.sleep(1000); //wait a second for the connector to become ready
+
+		// start connector
+		logStream = new ByteArrayOutputStream();
+
+		connector = new WebConnector(true, HTTP_PORT, false, 1000);
+		connector.setLogStream(new PrintStream(logStream));
+		connector.start(node);
+		Thread.sleep(1000); // wait a second for the connector to become ready
 		testAgent = MockAgentFactory.getAdam();
-		
-        connector.updateServiceList();
-        //avoid timing errors: wait for the repository manager to get all services before continuing
-        try
-        {
-            System.out.println("waiting..");
-            Thread.sleep(10000);
-        }
-        catch(InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-		
+
+		connector.updateServiceList();
+		// avoid timing errors: wait for the repository manager to get all services before continuing
+		try
+		{
+			System.out.println("waiting..");
+			Thread.sleep(10000);
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
-	
-	
+
 	/**
 	 * Called after the tests have finished.
 	 * Shuts down the server and prints out the connector log file for reference.
@@ -93,24 +87,23 @@ public class ServiceTest {
 	 * @throws Exception
 	 */
 	@AfterClass
-	public static void shutDownServer () throws Exception {
-		
+	public static void shutDownServer() throws Exception {
+
 		connector.stop();
 		node.shutDown();
-		
-        connector = null;
-        node = null;
-        
-        LocalNode.reset();
-		
+
+		connector = null;
+		node = null;
+
+		LocalNode.reset();
+
 		System.out.println("Connector-Log:");
 		System.out.println("--------------");
-		
+
 		System.out.println(logStream.toString());
-		
-    }
-	
-	
+
+	}
+
 	/**
 	 * 
 	 * Tests the validation method.
@@ -121,24 +114,22 @@ public class ServiceTest {
 	{
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
-		
+
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("GET", mainPath +"validation", "");
+			ClientResponse result = c.sendRequest("GET", mainPath + "validation", "");
             assertEquals(200, result.getHttpCode());
-            assertTrue(result.getResponse().trim().contains("adam")); //login name is part of response
+			assertTrue(result.getResponse().trim().contains("adam")); // login name is part of response
 			System.out.println("Result of 'testValidateLogin': " + result.getResponse().trim());
-		}
-		catch(Exception e)
+		} catch (Exception e)
 		{
 			e.printStackTrace();
-			fail ( "Exception: " + e );
+			fail("Exception: " + e);
 		}
-		
-    }
-	
-	
+
+	}
+
 	/**
 	 * 
 	 * Test the example method that consumes one path parameter
@@ -150,22 +141,20 @@ public class ServiceTest {
 	{
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
-		
+
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-            ClientResponse result=c.sendRequest("POST", mainPath +"myResourcePath/testInput", ""); //testInput is the pathParam
-            assertEquals(200, result.getHttpCode());
-            assertTrue(result.getResponse().trim().contains("testInput")); //"testInput" name is part of response
+			ClientResponse result = c.sendRequest("POST", mainPath + "myResourcePath/testInput", ""); // testInput is
+																										// the pathParam
+			assertEquals(200, result.getHttpCode());
+			assertTrue(result.getResponse().trim().contains("testInput")); // "testInput" name is part of response
 			System.out.println("Result of 'testExampleMethod': " + result.getResponse().trim());
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
-			fail ( "Exception: " + e );
+			fail("Exception: " + e);
 		}
-		
-    }
+	}
 
 	/**
 	 * Test the TemplateService for valid rest mapping.
@@ -177,4 +166,5 @@ public class ServiceTest {
 		TemplateService cl = new TemplateService();
 		assertTrue(cl.debugMapping());
 	}
+
 }
