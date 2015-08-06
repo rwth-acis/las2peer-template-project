@@ -36,7 +36,7 @@ public class ServiceTest {
 
 	private static final String testTemplateService = TemplateService.class.getCanonicalName();
 
-	private static final String mainPath = "/example/";
+	private static final String mainPath = "example/";
 
 	/**
 	 * Called before the tests start.
