@@ -37,7 +37,6 @@ public class StorageTest {
 			// start storage service node as standalone network
 			storageServiceNode = new PastryNodeImpl(STORAGE_SERVICE_NODE_PORT, null, STORAGE_MODE.memory, false, null,
 					null);
-			storageServiceNode.setLogfilePrefix("./log/l2p-node_");
 			storageServiceNode.launch();
 			// start storage service
 			storageService = ServiceAgent.generateNewAgent(StorageService.class.getName(), "test-service-pass");

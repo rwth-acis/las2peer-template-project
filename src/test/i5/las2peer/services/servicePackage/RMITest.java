@@ -36,7 +36,6 @@ public class RMITest {
 			// start foreign service node as standalone network
 			foreignServiceNode = new PastryNodeImpl(FOREIGN_SERVICE_NODE_PORT, null, STORAGE_MODE.memory, false, null,
 					null);
-			foreignServiceNode.setLogfilePrefix("./log/l2p-node_");
 			foreignServiceNode.launch();
 			// start foreign service
 			foreignService = ServiceAgent.generateNewAgent(RMIForeignService.class.getName(), "test-service-pass");
@@ -50,7 +49,6 @@ public class RMITest {
 			// start developer defined service that uses the foreign service for RMI calls
 			myServiceNode = new PastryNodeImpl(MY_SERVICE_NODE_PORT,
 					strAddr + ":" + FOREIGN_SERVICE_NODE_PORT, STORAGE_MODE.memory, false, null, null);
-			myServiceNode.setLogfilePrefix("./log/l2p-node_");
 			myServiceNode.launch();
 			// start developer defined service
 			myService = ServiceAgent.generateNewAgent(RMIMyService.class.getName(), "test-service-pass");
