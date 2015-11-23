@@ -39,7 +39,7 @@ public class StorageTest {
 					null);
 			storageServiceNode.launch();
 			// start storage service
-			storageService = ServiceAgent.generateNewAgent(StorageService.class.getName(), "test-service-pass");
+			storageService = ServiceAgent.createServiceAgent(StorageService.class.getName(), "test-service-pass");
 			storageService.unlockPrivateKey("test-service-pass");
 			storageServiceNode.registerReceiver(storageService);
 		} catch (Exception e) {

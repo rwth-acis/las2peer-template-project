@@ -38,7 +38,7 @@ public class RMITest {
 					null);
 			foreignServiceNode.launch();
 			// start foreign service
-			foreignService = ServiceAgent.generateNewAgent(RMIForeignService.class.getName(), "test-service-pass");
+			foreignService = ServiceAgent.createServiceAgent(RMIForeignService.class.getName(), "test-service-pass");
 			foreignService.unlockPrivateKey("test-service-pass");
 			foreignServiceNode.registerReceiver(foreignService);
 			// to link both nodes get the address the foreign service node listens to
@@ -51,7 +51,7 @@ public class RMITest {
 					strAddr + ":" + FOREIGN_SERVICE_NODE_PORT, STORAGE_MODE.memory, false, null, null);
 			myServiceNode.launch();
 			// start developer defined service
-			myService = ServiceAgent.generateNewAgent(RMIMyService.class.getName(), "test-service-pass");
+			myService = ServiceAgent.createServiceAgent(RMIMyService.class.getName(), "test-service-pass");
 			myService.unlockPrivateKey("test-service-pass");
 			myServiceNode.registerReceiver(myService);
 		} catch (Exception e) {
