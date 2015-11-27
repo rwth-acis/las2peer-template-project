@@ -7,7 +7,7 @@
     <dependencies>
         <dependency org="i5" name="las2peer" rev="0.5-SNAPSHOT" changing="true" />
         <dependency org="i5" name="las2peer-web-connector" rev="0.5-SNAPSHOT" changing="true" />
-        <dependency org="junit" name="junit" rev="4.11"/>
+        <dependency org="junit" name="junit" rev="4.12"/>
 		<dependency org="mysql" name="mysql-connector-java" rev="5.1.6" />
 		<dependency org="org.apache.commons" name="commons-pool2" rev="2.2"/>
 		<dependency org="org.apache.commons" name="commons-dbcp2" rev="2.0"/>
