@@ -3,6 +3,8 @@ package i5.las2peer.services.servicePackage.rmi;
 import java.io.Serializable;
 
 import i5.las2peer.api.Service;
+import i5.las2peer.logging.L2pLogger;
+import i5.las2peer.logging.NodeObserver.Event;
 
 /**
  * This is the developer defined service used for the RMI call example. It represents your own LAS2peer service that
@@ -31,7 +33,7 @@ public class RMIMyService extends Service {
 			}
 		} catch (Exception e) {
 			// one may want to handle some exceptions differently
-			e.printStackTrace();
+			L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 		}
 		return null;
 	}
@@ -51,7 +53,7 @@ public class RMIMyService extends Service {
 			}
 		} catch (Exception e) {
 			// one may want to handle some exceptions differently
-			e.printStackTrace();
+			L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 		}
 		return null;
 	}

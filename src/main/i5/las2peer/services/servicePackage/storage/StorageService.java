@@ -1,8 +1,11 @@
 package i5.las2peer.services.servicePackage.storage;
 
 import java.io.Serializable;
+import java.util.logging.Level;
 
 import i5.las2peer.api.Service;
+import i5.las2peer.logging.L2pLogger;
+import i5.las2peer.logging.NodeObserver.Event;
 import i5.las2peer.persistency.Envelope;
 
 /**
@@ -10,6 +13,9 @@ import i5.las2peer.persistency.Envelope;
  *
  */
 public class StorageService extends Service {
+
+	// instantiate the logger class
+	private final L2pLogger logger = L2pLogger.getInstance(StorageService.class.getName());
 
 	/**
 	 * This method stores an object inside the LAS2peer network storage. The type of the object is not limited, any
@@ -25,7 +31,8 @@ public class StorageService extends Service {
 				// fetch existing container object from network storage
 				env = getContext().getStoredObject(MyStorageObject.class, identifier);
 			} catch (Exception e) {
-				System.out.println("Network storage container not found. Creating new one." + e);
+				// write info message to logfile and console
+				logger.log(Level.INFO, "Network storage container not found. Creating new one. " + e.toString());
 				// create new container object with current ServiceAgent as owner
 				env = Envelope.createClassIdEnvelope(object, identifier, getAgent());
 			}
@@ -40,8 +47,10 @@ public class StorageService extends Service {
 			// close local instance to prevent unauthorized reading while waiting for garbage collection
 			env.close();
 		} catch (Exception e) {
-			System.err.println("Can't persist to network storage! " + e);
-			e.printStackTrace();
+			// write error to logfile and console
+			logger.log(Level.SEVERE, "Can't persist to network storage!", e);
+			// create and publish a monitoring message
+			L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 		}
 	}
 
@@ -64,8 +73,10 @@ public class StorageService extends Service {
 			env.close();
 			return retrieved;
 		} catch (Exception e) {
-			System.err.println("Can't fetch from network storage!" + e);
-			e.printStackTrace();
+			// write error to logfile and console
+			logger.log(Level.SEVERE, "Can't fetch from network storage!", e);
+			// create and publish a monitoring message
+			L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 		}
 		return null;
 	}

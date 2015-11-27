@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,15 +14,17 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import i5.las2peer.api.Service;
+import i5.las2peer.logging.L2pLogger;
+import i5.las2peer.logging.NodeObserver.Event;
 import i5.las2peer.restMapper.HttpResponse;
 import i5.las2peer.restMapper.MediaType;
 import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.Version;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
-import i5.las2peer.security.Context;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.services.servicePackage.database.DatabaseManager;
+import i5.las2peer.services.servicePackage.storage.StorageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -65,6 +68,9 @@ import net.minidev.json.JSONObject;
 				)
 		))
 public class TemplateService extends Service {
+
+	// instantiate the logger class
+	private final L2pLogger logger = L2pLogger.getInstance(StorageService.class.getName());
 
 	/*
 	 * Database configuration
@@ -195,7 +201,10 @@ public class TemplateService extends Service {
 				try {
 					rs.close();
 				} catch (Exception e) {
-					Context.logError(this, e.getMessage());
+					// write error to logfile and console
+					logger.log(Level.SEVERE, e.toString(), e);
+					// create and publish a monitoring message
+					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 
 					// return HTTP Response on error
 					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
@@ -205,7 +214,10 @@ public class TemplateService extends Service {
 				try {
 					stmnt.close();
 				} catch (Exception e) {
-					Context.logError(this, e.getMessage());
+					// write error to logfile and console
+					logger.log(Level.SEVERE, e.toString(), e);
+					// create and publish a monitoring message
+					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 
 					// return HTTP Response on error
 					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
@@ -215,7 +227,10 @@ public class TemplateService extends Service {
 				try {
 					conn.close();
 				} catch (Exception e) {
-					Context.logError(this, e.getMessage());
+					// write error to logfile and console
+					logger.log(Level.SEVERE, e.toString(), e);
+					// create and publish a monitoring message
+					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 
 					// return HTTP Response on error
 					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
@@ -268,7 +283,10 @@ public class TemplateService extends Service {
 				try {
 					rs.close();
 				} catch (Exception e) {
-					Context.logError(this, e.getMessage());
+					// write error to logfile and console
+					logger.log(Level.SEVERE, e.toString(), e);
+					// create and publish a monitoring message
+					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 
 					// return HTTP Response on error
 					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
@@ -278,7 +296,10 @@ public class TemplateService extends Service {
 				try {
 					stmnt.close();
 				} catch (Exception e) {
-					Context.logError(this, e.getMessage());
+					// write error to logfile and console
+					logger.log(Level.SEVERE, e.toString(), e);
+					// create and publish a monitoring message
+					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 
 					// return HTTP Response on error
 					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
@@ -288,7 +309,10 @@ public class TemplateService extends Service {
 				try {
 					conn.close();
 				} catch (Exception e) {
-					Context.logError(this, e.getMessage());
+					// write error to logfile and console
+					logger.log(Level.SEVERE, e.toString(), e);
+					// create and publish a monitoring message
+					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 
 					// return HTTP Response on error
 					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
@@ -308,7 +332,7 @@ public class TemplateService extends Service {
 	 * Otherwise the service will not be accessible by the WebConnector.
 	 * Best to do it in the unit tests.
 	 * To avoid being overlooked/ignored the method is implemented here and not in the test section.
-	 * @return  true, if mapping correct
+	 * @return true, if mapping correct
 	 */
 	public boolean debugMapping() {
 		String XML_LOCATION = "./restMapping.xml";
@@ -317,7 +341,10 @@ public class TemplateService extends Service {
 		try {
 			RESTMapper.writeFile(XML_LOCATION, xml);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// write error to logfile and console
+			logger.log(Level.SEVERE, e.toString(), e);
+			// create and publish a monitoring message
+			L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 		}
 
 		XMLCheck validator = new XMLCheck();
@@ -339,8 +366,10 @@ public class TemplateService extends Service {
 		try {
 			result = RESTMapper.getMethodsAsXML(this.getClass());
 		} catch (Exception e) {
-
-			e.printStackTrace();
+			// write error to logfile and console
+			logger.log(Level.SEVERE, e.toString(), e);
+			// create and publish a monitoring message
+			L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
 		}
 		return result;
 	}
