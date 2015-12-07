@@ -40,7 +40,7 @@ public class StorageService extends Service {
 			env.open(getAgent());
 			// place the new object inside container
 			env.updateContent(object);
-			// sign content with current ServiceAgent
+			// sign content with current ServiceAgent to grant exclusive writing access (see wiki for details)
 			env.addSignature(getAgent());
 			// upload the updated storage container back to the network
 			env.store();
