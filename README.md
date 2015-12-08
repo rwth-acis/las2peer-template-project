@@ -19,8 +19,6 @@ Please put the files to '[...]/lib/security/' of your java runtime installation 
 
 The policy files can be downloaded via Oracle:
 
-[JCE for Java 7](http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html "JCE-7")
-
 [JCE for Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html "JCE-8")
 
 
