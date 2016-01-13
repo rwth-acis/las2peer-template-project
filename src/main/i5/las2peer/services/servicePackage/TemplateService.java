@@ -1,6 +1,7 @@
 package i5.las2peer.services.servicePackage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,6 +35,7 @@ import io.swagger.annotations.Info;
 import io.swagger.annotations.License;
 import io.swagger.annotations.SwaggerDefinition;
 import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
 
 /**
  * LAS2peer Service
@@ -111,9 +113,30 @@ public class TemplateService extends Service {
 			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized")
 	})
 	public HttpResponse validateLogin() {
-		String returnString = "";
-		returnString += "You are " + ((UserAgent) getActiveAgent()).getLoginName() + " and your login is valid!";
-
+		UserAgent userAgent = (UserAgent) getContext().getMainAgent();
+		// take username as default name
+		String name = userAgent.getLoginName();
+		// try to fetch firstname/lastname from userdata received from OpenID
+		Serializable userData = userAgent.getUserData();
+		if (userData != null) {
+			Object jsonUserData = JSONValue.parse(userData.toString());
+			if (jsonUserData instanceof JSONObject) {
+				JSONObject obj = (JSONObject) jsonUserData;
+				Object firstname = obj.get("given_name");
+				Object lastname = obj.get("family_name");
+				if (firstname != null && lastname != null) {
+					name = ((String) firstname) + " " + ((String) lastname) + " (" + name + ")";
+				} else if (firstname != null) {
+					name = ((String) firstname) + " (" + name + ")";
+				} else if (lastname != null) {
+					name = ((String) lastname) + " (" + name + ")";
+				}
+			} else {
+				logger.warning("Parsing user data failed! Got '" + jsonUserData.getClass().getName() + "' instead of "
+						+ JSONObject.class.getName() + " expected!");
+			}
+		}
+		String returnString = "You are " + name + " and your login is valid!";
 		return new HttpResponse(returnString, HttpURLConnection.HTTP_OK);
 	}
 
