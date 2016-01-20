@@ -1,15 +1,6 @@
-#! /bin/bash
+#!/bin/bash
 
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd ${SCRIPTDIR}/../
-BASE=${PWD}
-export CLASSPATH="${PWD}/lib/*"
+# this scripts generates a xml file for the specified ServiceClass with the desired ServicePass
+# pls run the script form the root folder of your deployment, e. g. ./bin/start_ServiceAgentGenerator.sh
 
-if [[ "$#" -ne 2 ]]; then
-	echo "Syntax error!"
-	echo ""
-    echo "Usage: start_ServiceAgentGenerator <service.canonical.class.name> <service.password>";
-else
-	java -cp "${CLASSPATH}" i5.las2peer.tools.ServiceAgentGenerator $1 $2
-fi
-
+java -cp "lib/*" i5.las2peer.tools.ServiceAgentGenerator "$@"
