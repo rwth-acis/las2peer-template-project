@@ -9,6 +9,9 @@ For documentation on the LAS2peer service API, please refer to the [LAS2peer Pro
 
 Please follow the instructions of this ReadMe to setup your basic service development environment.  
 
+Jenkins: [![Build Status](http://layers.dbis.rwth-aachen.de/jenkins/buildStatus/icon?job=LAS2peer Template Project)](http://layers.dbis.rwth-aachen.de/jenkins/job/LAS2peer%20Template%20Project/)
+
+Travis CI: [![Build Status](https://travis-ci.org/rwth-acis/LAS2peer-Template-Project.svg?branch=master)](https://travis-ci.org/rwth-acis/LAS2peer-Template-Project)
 
 1. Enable Strong Encryption
 -------------------------------------
