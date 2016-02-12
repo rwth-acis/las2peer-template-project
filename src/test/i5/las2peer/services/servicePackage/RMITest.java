@@ -12,6 +12,7 @@ import org.mpisws.p2p.transport.multiaddress.MultiInetSocketAddress;
 
 import i5.las2peer.p2p.PastryNodeImpl;
 import i5.las2peer.p2p.PastryNodeImpl.STORAGE_MODE;
+import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.services.servicePackage.rmi.RMIForeignService;
 import i5.las2peer.services.servicePackage.rmi.RMIMyService;
@@ -38,7 +39,7 @@ public class RMITest {
 					null);
 			foreignServiceNode.launch();
 			// start foreign service
-			foreignService = ServiceAgent.createServiceAgent(RMIForeignService.class.getName(), "test-service-pass");
+			foreignService = ServiceAgent.createServiceAgent(new ServiceNameVersion(RMIForeignService.class.getName(),"1.0"), "test-service-pass");
 			foreignService.unlockPrivateKey("test-service-pass");
 			foreignServiceNode.registerReceiver(foreignService);
 			// to link both nodes get the address the foreign service node listens to
@@ -51,7 +52,7 @@ public class RMITest {
 					strAddr + ":" + FOREIGN_SERVICE_NODE_PORT, STORAGE_MODE.memory, false, null, null);
 			myServiceNode.launch();
 			// start developer defined service
-			myService = ServiceAgent.createServiceAgent(RMIMyService.class.getName(), "test-service-pass");
+			myService = ServiceAgent.createServiceAgent(new ServiceNameVersion(RMIMyService.class.getName(),"1.0"), "test-service-pass");
 			myService.unlockPrivateKey("test-service-pass");
 			myServiceNode.registerReceiver(myService);
 		} catch (Exception e) {
@@ -72,7 +73,7 @@ public class RMITest {
 		// trigger method call in developer defined service
 		try {
 			String result = (String) myServiceNode.invokeLocally(myService.getId(),
-					RMIMyService.class.getCanonicalName(), "callRMIOne", new Serializable[] {});
+					new ServiceNameVersion(RMIMyService.class.getName(),"1.0"), "callRMIOne", new Serializable[] {});
 			System.out.println("The RMI call returned: " + result);
 			assertEquals(result, RMIForeignService.TEST_STRING);
 		} catch (Exception e) {
@@ -85,7 +86,7 @@ public class RMITest {
 		// trigger method call in developer defined service
 		try {
 			int result = (int) myServiceNode.invokeLocally(myService.getId(),
-					RMIMyService.class.getCanonicalName(), "callRMITwo", new Serializable[] {});
+					new ServiceNameVersion(RMIMyService.class.getName(),"1.0"), "callRMITwo", new Serializable[] {});
 			System.out.println("The RMI call returned: " + result);
 			assertEquals(result, RMIMyService.TEST_RESULT);
 		} catch (Exception e) {

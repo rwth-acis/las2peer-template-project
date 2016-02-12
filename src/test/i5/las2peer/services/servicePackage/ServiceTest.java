@@ -12,8 +12,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import i5.las2peer.p2p.LocalNode;
+import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
+import i5.las2peer.services.servicePackage.rmi.RMIMyService;
 import i5.las2peer.testing.MockAgentFactory;
 import i5.las2peer.webConnector.WebConnector;
 import i5.las2peer.webConnector.client.ClientResponse;
@@ -35,7 +37,8 @@ public class ServiceTest {
 	private static UserAgent testAgent;
 	private static final String testPass = "adamspass";
 
-	private static final String testTemplateService = TemplateService.class.getCanonicalName();
+	// during testing, the specified service version does not matter
+	private static final ServiceNameVersion testTemplateService = new ServiceNameVersion(TemplateService.class.getCanonicalName(),"1.0");
 
 	private static final String mainPath = "example/";
 

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import i5.las2peer.p2p.PastryNodeImpl;
 import i5.las2peer.p2p.PastryNodeImpl.STORAGE_MODE;
+import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.services.servicePackage.storage.MyStorageObject;
 import i5.las2peer.services.servicePackage.storage.StorageService;
@@ -39,7 +40,7 @@ public class StorageTest {
 					null);
 			storageServiceNode.launch();
 			// start storage service
-			storageService = ServiceAgent.createServiceAgent(StorageService.class.getName(), "test-service-pass");
+			storageService = ServiceAgent.createServiceAgent(new ServiceNameVersion(StorageService.class.getName(),"1.0"), "test-service-pass");
 			storageService.unlockPrivateKey("test-service-pass");
 			storageServiceNode.registerReceiver(storageService);
 		} catch (Exception e) {
@@ -60,11 +61,11 @@ public class StorageTest {
 		String identifier = TEST_STORAGE_ID + new Random().nextInt();
 		// this is the test object that will be persisted
 		MyStorageObject exampleObj = new MyStorageObject("Hello world!");
-		storageServiceNode.invokeLocally(storageService.getId(), StorageService.class.getCanonicalName(),
+		storageServiceNode.invokeLocally(storageService.getId(), new ServiceNameVersion(StorageService.class.getCanonicalName(),"1.0"),
 				"persistObject", new Serializable[] { identifier, exampleObj });
 		// retrieve test object again from network
 		MyStorageObject result = (MyStorageObject) storageServiceNode.invokeLocally(storageService.getId(),
-				StorageService.class.getCanonicalName(), "fetchObject", new Serializable[] { identifier });
+				new ServiceNameVersion(StorageService.class.getCanonicalName(),"1.0"), "fetchObject", new Serializable[] { identifier });
 		System.out.println("Success! Received test object with message: " + result.getMsg());
 		assertEquals(exampleObj.getMsg(), result.getMsg());
 	}
