@@ -54,7 +54,9 @@ public class ServiceTest {
 
 		// start node
 		node = LocalNode.newNode();
-		node.storeAgent(MockAgentFactory.getAdam());
+		testAgent = MockAgentFactory.getAdam();
+		testAgent.unlockPrivateKey(testPass); // agent must be unlocked in order to be stored 
+		node.storeAgent(testAgent);
 		node.launch();
 
 		ServiceAgent testService = ServiceAgent.createServiceAgent(testTemplateService, "a pass");
@@ -69,7 +71,7 @@ public class ServiceTest {
 		connector.setLogStream(new PrintStream(logStream));
 		connector.start(node);
 		Thread.sleep(1000); // wait a second for the connector to become ready
-		testAgent = MockAgentFactory.getAdam();
+		testAgent = MockAgentFactory.getAdam(); // get a locked agent
 
 		connector.updateServiceList();
 		// avoid timing errors: wait for the repository manager to get all services before continuing
