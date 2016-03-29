@@ -28,7 +28,7 @@ The policy files can be downloaded via Oracle:
 2. Quick Setup of your Service Development Environment
 -------------------------------------
 *If you never used LAS2peer before, it is recommended that you first visit the
-[Step by Step - First Service](https://github.com/rwth-acis/LAS2peer-Template-Project/wiki/Step-By-Step_First-Service)
+[Step by Step - First Service](https://github.com/rwth-acis/LAS2peer-Template-Project/wiki/Step-By-Step:-First-Service)
 tutorial for a more detailed guidance on how to use this template.*  
 
 Follow these five steps to setup your project:  
