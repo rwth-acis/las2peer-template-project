@@ -64,7 +64,7 @@
     
     
     <!-- Get Dependencies from our Maven Repository via Ivy -->
-    <target name="get_deps" depends="install-ivy" description="--> resolve dependencies">
+    <target name="get_deps" depends="install-ivy, init_deps" description="--> resolve dependencies">
         <ivy:settings>
             <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
         </ivy:settings>
@@ -74,6 +74,11 @@
     
     
     <!-- Initialization (Folder Creation)-->
+	<target name="init_deps">
+        <mkdir dir="${lib}" />
+        <mkdir dir="${service}" />
+    </target>
+	
     <target name="init_general">
         <tstamp/>
         <mkdir dir="${tmp}" />
