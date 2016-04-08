@@ -42,7 +42,7 @@
     
     
     <!-- Ivy Installation (Tool to fetch Libraries) -->
-    <property name="ivy.install.version" value="2.3.0" />
+    <property name="ivy.install.version" value="2.4.0" />
     <property name="ivy.jar.dir" value="${basedir}/etc/ivy" />
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
     <property name="ivy.settings.file" value="${ivy.jar.dir}/ivysettings.xml" />
