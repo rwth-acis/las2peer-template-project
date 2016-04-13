@@ -1,11 +1,7 @@
 package i5.las2peer.services.servicePackage;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.logging.Level;
 
 import javax.ws.rs.GET;
@@ -23,9 +19,6 @@ import i5.las2peer.restMapper.RESTMapper;
 import i5.las2peer.restMapper.annotations.Version;
 import i5.las2peer.restMapper.tools.ValidationResult;
 import i5.las2peer.restMapper.tools.XMLCheck;
-import i5.las2peer.security.UserAgent;
-import i5.las2peer.services.servicePackage.database.DatabaseManager;
-import i5.las2peer.services.servicePackage.storage.StorageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -34,9 +27,9 @@ import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
 import io.swagger.annotations.License;
 import io.swagger.annotations.SwaggerDefinition;
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONValue;
 
+
+// TODO Describe your own service
 /**
  * LAS2peer Service
  * 
@@ -50,7 +43,8 @@ import net.minidev.json.JSONValue;
  * the entire ApiInfo annotation should be removed.
  * 
  */
-@Path("/example")
+// TODO Adjust the following configuration
+@Path("/template")
 @Version("0.1") // this annotation is used by the XML mapper
 @Api
 @SwaggerDefinition(
@@ -69,279 +63,65 @@ import net.minidev.json.JSONValue;
 						url = "http://your-software-license-url.com"
 				)
 		))
+
+// TODO Your own Serviceclass
 public class TemplateService extends Service {
 
 	// instantiate the logger class
-	private final L2pLogger logger = L2pLogger.getInstance(StorageService.class.getName());
+	private final L2pLogger logger = L2pLogger.getInstance(TemplateService.class.getName());
 
-	/*
-	 * Database configuration
-	 */
-	private String jdbcDriverClassName;
-	private String jdbcLogin;
-	private String jdbcPass;
-	private String jdbcUrl;
-	private String jdbcSchema;
-	private DatabaseManager dbm;
 
 	public TemplateService() {
 		// read and set properties values
 		// IF THE SERVICE CLASS NAME IS CHANGED, THE PROPERTIES FILE NAME NEED TO BE CHANGED TOO!
 		setFieldValues();
-		// instantiate a database manager to handle database connection pooling and credentials
-		dbm = new DatabaseManager(jdbcDriverClassName, jdbcLogin, jdbcPass, jdbcUrl, jdbcSchema);
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////////////
 	// Service methods.
 	// //////////////////////////////////////////////////////////////////////////////////////
-
+	
+	
+	// TODO OWN METHODS
+	
 	/**
-	 * Simple function to validate a user login.
-	 * Basically it only serves as a "calling point" and does not really validate a user
-	 * (since this is done previously by LAS2peer itself, the user does not reach this method
-	 * if he or she is not authenticated).
+	 * Template of a get function.
 	 * 
+	 * @return HttpResponse with the returnString
 	 */
 	@GET
-	@Path("/validation")
+	@Path("/get")
 	@Produces(MediaType.TEXT_PLAIN)
-	@ApiOperation(value = "User Validation",
-			notes = "Simple function to validate a user login.")
+	@ApiOperation(value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
+			notes = "REPLACE THIS WITH YOUR NOTES TO THE FUNCTION")
 	@ApiResponses(value = {
-			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Validation Confirmation"),
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "REPLACE THIS WITH YOUR OK MESSAGE"),
 			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized")
 	})
-	public HttpResponse validateLogin() {
-		UserAgent userAgent = (UserAgent) getContext().getMainAgent();
-		// take username as default name
-		String name = userAgent.getLoginName();
-		// try to fetch firstname/lastname from userdata received from OpenID
-		Serializable userData = userAgent.getUserData();
-		if (userData != null) {
-			Object jsonUserData = JSONValue.parse(userData.toString());
-			if (jsonUserData instanceof JSONObject) {
-				JSONObject obj = (JSONObject) jsonUserData;
-				Object firstname = obj.get("given_name");
-				Object lastname = obj.get("family_name");
-				if (firstname != null && lastname != null) {
-					name = ((String) firstname) + " " + ((String) lastname) + " (" + name + ")";
-				} else if (firstname != null) {
-					name = ((String) firstname) + " (" + name + ")";
-				} else if (lastname != null) {
-					name = ((String) lastname) + " (" + name + ")";
-				}
-			} else {
-				logger.warning("Parsing user data failed! Got '" + jsonUserData.getClass().getName() + "' instead of "
-						+ JSONObject.class.getName() + " expected!");
-			}
-		}
-		String returnString = "You are " + name + " and your login is valid!";
+	public HttpResponse getTemplate() {
+		String returnString = "result";
 		return new HttpResponse(returnString, HttpURLConnection.HTTP_OK);
 	}
 
 	/**
-	 * Example method that returns a phrase containing the received input.
+	 * Template of a post function.
 	 * 
-	 * @param myInput
-	 * 
+	 * @param myInput The post input the user will provide.
+	 * @return HttpResponse with the returnString
 	 */
 	@POST
-	@Path("/myResourcePath/{input}")
+	@Path("/post/{input}")
 	@Produces(MediaType.TEXT_PLAIN)
 	@ApiResponses(value = {
-			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Input Phrase"),
+			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "REPLACE THIS WITH YOUR OK MESSAGE"),
 			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized")
 	})
-	@ApiOperation(value = "Sample Resource",
+	@ApiOperation(value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
 			notes = "Example method that returns a phrase containing the received input.")
-	public HttpResponse exampleMethod(@PathParam("input") String myInput) {
+	public HttpResponse postTemplate(@PathParam("input") String myInput) {
 		String returnString = "";
-		returnString += "You have entered " + myInput + "!";
-
+		returnString += "Input " + myInput;
 		return new HttpResponse(returnString, HttpURLConnection.HTTP_OK);
-	}
-
-	/**
-	 * Example method that shows how to retrieve a user email address from a database 
-	 * and return an HTTP response including a JSON object.
-	 * 
-	 * WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! 
-	 * IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.
-	 * 
-	 */
-	@GET
-	@Path("/userEmail/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@ApiResponses(value = {
-			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "User Email"),
-			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized"),
-			@ApiResponse(code = HttpURLConnection.HTTP_NOT_FOUND, message = "User not found"),
-			@ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = "Internal Server Error")
-	})
-	@ApiOperation(value = "Email Address Administration",
-			notes = "Example method that retrieves a user email address from a database."
-					+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
-					+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
-	public HttpResponse getUserEmail(@PathParam("username") String username) {
-		String result = "";
-		Connection conn = null;
-		PreparedStatement stmnt = null;
-		ResultSet rs = null;
-		try {
-			// get connection from connection pool
-			conn = dbm.getConnection();
-
-			// prepare statement
-			stmnt = conn.prepareStatement("SELECT email FROM users WHERE username = ?;");
-			stmnt.setString(1, username);
-
-			// retrieve result set
-			rs = stmnt.executeQuery();
-
-			// process result set
-			if (rs.next()) {
-				result = rs.getString(1);
-
-				// setup resulting JSON Object
-				JSONObject ro = new JSONObject();
-				ro.put("email", result);
-
-				// return HTTP Response on success
-				return new HttpResponse(ro.toJSONString(), HttpURLConnection.HTTP_OK);
-			} else {
-				result = "No result for username " + username;
-
-				// return HTTP Response on error
-				return new HttpResponse(result, HttpURLConnection.HTTP_NOT_FOUND);
-			}
-		} catch (Exception e) {
-			// return HTTP Response on error
-			return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-		} finally {
-			// free resources
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e) {
-					// write error to logfile and console
-					logger.log(Level.SEVERE, e.toString(), e);
-					// create and publish a monitoring message
-					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
-
-					// return HTTP Response on error
-					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-				}
-			}
-			if (stmnt != null) {
-				try {
-					stmnt.close();
-				} catch (Exception e) {
-					// write error to logfile and console
-					logger.log(Level.SEVERE, e.toString(), e);
-					// create and publish a monitoring message
-					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
-
-					// return HTTP Response on error
-					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					// write error to logfile and console
-					logger.log(Level.SEVERE, e.toString(), e);
-					// create and publish a monitoring message
-					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
-
-					// return HTTP Response on error
-					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Example method that shows how to change a user email address in a database.
-	 * 
-	 * WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! 
-	 * IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.
-	 * 
-	 */
-	@POST
-	@Path("/userEmail/{username}/{email}")
-	@Produces(MediaType.TEXT_PLAIN)
-	@ApiResponses(value = {
-			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Update Confirmation"),
-			@ApiResponse(code = HttpURLConnection.HTTP_UNAUTHORIZED, message = "Unauthorized"),
-			@ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = "Internal Server Error")
-	})
-	@ApiOperation(value = "setUserEmail",
-			notes = "Example method that changes a user email address in a database."
-					+ " WARNING: THIS METHOD IS ONLY FOR DEMONSTRATIONAL PURPOSES!!! "
-					+ "IT WILL REQUIRE RESPECTIVE DATABASE TABLES IN THE BACKEND, WHICH DON'T EXIST IN THE TEMPLATE.")
-	public HttpResponse setUserEmail(@PathParam("username") String username, @PathParam("email") String email) {
-
-		String result = "";
-		Connection conn = null;
-		PreparedStatement stmnt = null;
-		ResultSet rs = null;
-		try {
-			conn = dbm.getConnection();
-			stmnt = conn.prepareStatement("UPDATE users SET email = ? WHERE username = ?;");
-			stmnt.setString(1, email);
-			stmnt.setString(2, username);
-			int rows = stmnt.executeUpdate(); // same works for insert
-			result = "Database updated. " + rows + " rows affected";
-
-			// return
-			return new HttpResponse(result, HttpURLConnection.HTTP_OK);
-		} catch (Exception e) {
-			// return HTTP Response on error
-			return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-		} finally {
-			// free resources if exception or not
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception e) {
-					// write error to logfile and console
-					logger.log(Level.SEVERE, e.toString(), e);
-					// create and publish a monitoring message
-					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
-
-					// return HTTP Response on error
-					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-				}
-			}
-			if (stmnt != null) {
-				try {
-					stmnt.close();
-				} catch (Exception e) {
-					// write error to logfile and console
-					logger.log(Level.SEVERE, e.toString(), e);
-					// create and publish a monitoring message
-					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
-
-					// return HTTP Response on error
-					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (Exception e) {
-					// write error to logfile and console
-					logger.log(Level.SEVERE, e.toString(), e);
-					// create and publish a monitoring message
-					L2pLogger.logEvent(this, Event.SERVICE_ERROR, e.toString());
-
-					// return HTTP Response on error
-					return new HttpResponse("Internal error: " + e.getMessage(), HttpURLConnection.HTTP_INTERNAL_ERROR);
-				}
-			}
-		}
 	}
 
 	// //////////////////////////////////////////////////////////////////////////////////////

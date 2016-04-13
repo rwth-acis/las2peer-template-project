@@ -32,13 +32,17 @@
             <include name="**/*.jar"/>
             <exclude name="junit-*.jar"/>
         </fileset>
+    	<fileset dir="${service}">
+    	    <include name="**/*.jar"/>
+    	    <exclude name="i5.las2peer.services.*.jar"/>
+    	</fileset>
     </path>
     
     <property name="lib.junit" location="${lib}/junit-4.12.jar" />
     
     
     <!-- Ivy Installation (Tool to fetch Libraries) -->
-    <property name="ivy.install.version" value="2.3.0" />
+    <property name="ivy.install.version" value="2.4.0" />
     <property name="ivy.jar.dir" value="${basedir}/etc/ivy" />
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
     <property name="ivy.settings.file" value="${ivy.jar.dir}/ivysettings.xml" />
@@ -60,15 +64,21 @@
     
     
     <!-- Get Dependencies from our Maven Repository via Ivy -->
-    <target name="get_deps" depends="install-ivy" description="--> resolve dependencies">
+    <target name="get_deps" depends="install-ivy, init_deps" description="--> resolve dependencies">
         <ivy:settings>
             <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
         </ivy:settings>
-        <ivy:retrieve type="jar, bundle" />
+    	<ivy:retrieve type="jar, bundle" conf="platform" pattern="${lib}/[artifact]-[revision].[ext]"/>
+    	<ivy:retrieve type="jar, bundle" conf="bundle" pattern="${service}/[artifact]-[revision].[ext]"/>
     </target>
     
     
     <!-- Initialization (Folder Creation)-->
+	<target name="init_deps">
+        <mkdir dir="${lib}" />
+        <mkdir dir="${service}" />
+    </target>
+	
     <target name="init_general">
         <tstamp/>
         <mkdir dir="${tmp}" />
@@ -160,6 +170,7 @@ pause
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
                 <attribute name="Library-SymbolicName" value="${service.name}" />
+            	<attribute name="Import-Library" value="${service.dependencies}" />
             </manifest>
         </jar>
         <!-- Add the same Jar to the Service Directory !-->
@@ -168,6 +179,7 @@ pause
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
                 <attribute name="Library-SymbolicName" value="${service.name}" />
+            	<attribute name="Import-Library" value="${service.dependencies}" />
             </manifest>
         </jar>
     </target>

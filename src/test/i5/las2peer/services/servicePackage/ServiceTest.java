@@ -15,7 +15,6 @@ import i5.las2peer.p2p.LocalNode;
 import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
-import i5.las2peer.services.servicePackage.rmi.RMIMyService;
 import i5.las2peer.testing.MockAgentFactory;
 import i5.las2peer.webConnector.WebConnector;
 import i5.las2peer.webConnector.client.ClientResponse;
@@ -40,7 +39,7 @@ public class ServiceTest {
 	// during testing, the specified service version does not matter
 	private static final ServiceNameVersion testTemplateService = new ServiceNameVersion(TemplateService.class.getCanonicalName(),"1.0");
 
-	private static final String mainPath = "example/";
+	private static final String mainPath = "template/";
 
 	/**
 	 * Called before the tests start.
@@ -116,7 +115,7 @@ public class ServiceTest {
 	 * 
 	 */
 	@Test
-	public void testValidateLogin()
+	public void testGet()
 	{
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
@@ -124,10 +123,10 @@ public class ServiceTest {
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-			ClientResponse result = c.sendRequest("GET", mainPath + "validation", "");
+			ClientResponse result = c.sendRequest("GET", mainPath + "get", "");
             assertEquals(200, result.getHttpCode());
-			assertTrue(result.getResponse().trim().contains("adam")); // login name is part of response
-			System.out.println("Result of 'testValidateLogin': " + result.getResponse().trim());
+			assertTrue(result.getResponse().trim().contains("result")); // YOUR RESULT VALUE HERE
+			System.out.println("Result of 'testGet': " + result.getResponse().trim());
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -143,7 +142,7 @@ public class ServiceTest {
 	 * 
 	 */
 	@Test
-	public void testExampleMethod()
+	public void testPost()
 	{
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
@@ -151,11 +150,11 @@ public class ServiceTest {
 		try
 		{
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
-			ClientResponse result = c.sendRequest("POST", mainPath + "myResourcePath/testInput", ""); // testInput is
+			ClientResponse result = c.sendRequest("POST", mainPath + "post/testInput", ""); // testInput is
 																										// the pathParam
 			assertEquals(200, result.getHttpCode());
 			assertTrue(result.getResponse().trim().contains("testInput")); // "testInput" name is part of response
-			System.out.println("Result of 'testExampleMethod': " + result.getResponse().trim());
+			System.out.println("Result of 'testPost': " + result.getResponse().trim());
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Exception: " + e);
