@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import i5.las2peer.p2p.LocalNode;
-import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
@@ -36,9 +35,6 @@ public class ServiceTest {
 	private static UserAgent testAgent;
 	private static final String testPass = "adamspass";
 
-	// during testing, the specified service version does not matter
-	private static final ServiceNameVersion testTemplateService = new ServiceNameVersion(TemplateService.class.getCanonicalName(),"1.0");
-
 	private static final String mainPath = "template/";
 
 	/**
@@ -54,11 +50,12 @@ public class ServiceTest {
 		// start node
 		node = LocalNode.newNode();
 		testAgent = MockAgentFactory.getAdam();
-		testAgent.unlockPrivateKey(testPass); // agent must be unlocked in order to be stored 
+		testAgent.unlockPrivateKey(testPass); // agent must be unlocked in order to be stored
 		node.storeAgent(testAgent);
 		node.launch();
 
-		ServiceAgent testService = ServiceAgent.createServiceAgent(testTemplateService, "a pass");
+		// during testing, the specified service version does not matter
+		ServiceAgent testService = ServiceAgent.createServiceAgent(TemplateService.class.getName(), "a pass");
 		testService.unlockPrivateKey("a pass");
 
 		node.registerReceiver(testService);
@@ -74,20 +71,17 @@ public class ServiceTest {
 
 		connector.updateServiceList();
 		// avoid timing errors: wait for the repository manager to get all services before continuing
-		try
-		{
+		try {
 			System.out.println("waiting..");
 			Thread.sleep(10000);
-		} catch (InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
 	}
 
 	/**
-	 * Called after the tests have finished.
-	 * Shuts down the server and prints out the connector log file for reference.
+	 * Called after the tests have finished. Shuts down the server and prints out the connector log file for reference.
 	 * 
 	 * @throws Exception
 	 */
@@ -115,20 +109,17 @@ public class ServiceTest {
 	 * 
 	 */
 	@Test
-	public void testGet()
-	{
+	public void testGet() {
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
 
-		try
-		{
+		try {
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
 			ClientResponse result = c.sendRequest("GET", mainPath + "get", "");
-            assertEquals(200, result.getHttpCode());
+			assertEquals(200, result.getHttpCode());
 			assertTrue(result.getResponse().trim().contains("result")); // YOUR RESULT VALUE HERE
 			System.out.println("Result of 'testGet': " + result.getResponse().trim());
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Exception: " + e);
 		}
@@ -137,21 +128,18 @@ public class ServiceTest {
 
 	/**
 	 * 
-	 * Test the example method that consumes one path parameter
-	 * which we give the value "testInput" in this test.
+	 * Test the example method that consumes one path parameter which we give the value "testInput" in this test.
 	 * 
 	 */
 	@Test
-	public void testPost()
-	{
+	public void testPost() {
 		MiniClient c = new MiniClient();
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
 
-		try
-		{
+		try {
 			c.setLogin(Long.toString(testAgent.getId()), testPass);
 			ClientResponse result = c.sendRequest("POST", mainPath + "post/testInput", ""); // testInput is
-																										// the pathParam
+																							// the pathParam
 			assertEquals(200, result.getHttpCode());
 			assertTrue(result.getResponse().trim().contains("testInput")); // "testInput" name is part of response
 			System.out.println("Result of 'testPost': " + result.getResponse().trim());
@@ -162,12 +150,10 @@ public class ServiceTest {
 	}
 
 	/**
-	 * Test the TemplateService for valid rest mapping.
-	 * Important for development.
+	 * Test the TemplateService for valid rest mapping. Important for development.
 	 */
 	@Test
-	public void testDebugMapping()
-	{
+	public void testDebugMapping() {
 		TemplateService cl = new TemplateService();
 		assertTrue(cl.debugMapping());
 	}
