@@ -3,14 +3,6 @@ package i5.las2peer.services.servicePackage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import i5.las2peer.p2p.LocalNode;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
@@ -18,6 +10,13 @@ import i5.las2peer.testing.MockAgentFactory;
 import i5.las2peer.webConnector.WebConnector;
 import i5.las2peer.webConnector.client.ClientResponse;
 import i5.las2peer.webConnector.client.MiniClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Example Test Class demonstrating a basic JUnit test structure.
@@ -68,15 +67,6 @@ public class ServiceTest {
 		connector.start(node);
 		Thread.sleep(1000); // wait a second for the connector to become ready
 		testAgent = MockAgentFactory.getAdam(); // get a locked agent
-
-		connector.updateServiceList();
-		// avoid timing errors: wait for the repository manager to get all services before continuing
-		try {
-			System.out.println("waiting..");
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 	}
 
@@ -147,15 +137,6 @@ public class ServiceTest {
 			e.printStackTrace();
 			fail("Exception: " + e);
 		}
-	}
-
-	/**
-	 * Test the TemplateService for valid rest mapping. Important for development.
-	 */
-	@Test
-	public void testDebugMapping() {
-		TemplateService cl = new TemplateService();
-		assertTrue(cl.debugMapping());
 	}
 
 }
