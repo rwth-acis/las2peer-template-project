@@ -13,3 +13,4 @@ etc/ivy/ivy.jar
 restMapping.xml
 /out
 /output/
+/etc/las2peer.policy
