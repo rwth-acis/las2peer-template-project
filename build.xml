@@ -273,6 +273,7 @@ agent-user-${las2peer_user3.name}.xml;${las2peer_user3.password}
         <delete dir="${export}" />
         <delete dir="${lib}" />
         <delete dir="${service}" />
+    	<delete dir="${startup}" />
     </target>
     
     <target name="clean_all" depends="clean" description="--> clean all data">
