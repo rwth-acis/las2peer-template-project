@@ -1,5 +1,6 @@
 package i5.las2peer.services.servicePackage;
 
+import i5.las2peer.api.Context;
 import i5.las2peer.logging.L2pLogger;
 import i5.las2peer.restMapper.RESTService;
 import i5.las2peer.restMapper.annotations.ServicePath;
@@ -24,9 +25,9 @@ import javax.ws.rs.core.Response;
 
 // TODO Describe your own service
 /**
- * LAS2peer Service
+ * las2peer Service
  * 
- * This is a template for a very basic LAS2peer service that uses the LAS2peer Web-Connector for RESTful access to it.
+ * This is a template for a very basic las2peer service that uses the las2peer Web-Connector for RESTful access to it.
  * 
  * Note: If you plan on using Swagger you should adapt the information below in the ApiInfo annotation to suit your
  * project. If you do not intend to provide a Swagger documentation of your service API, the entire ApiInfo annotation
@@ -52,9 +53,9 @@ public class TemplateService extends RESTService {
 	@Api
 	@SwaggerDefinition(
 			info = @Info(
-					title = "LAS2peer Template Service",
+					title = "las2peer Template Service",
 					version = "0.1",
-					description = "A LAS2peer Template Service for demonstration purposes.",
+					description = "A las2peer Template Service for demonstration purposes.",
 					termsOfService = "http://your-terms-of-service-url.com",
 					contact = @Contact(
 							name = "John Doe",
@@ -67,6 +68,9 @@ public class TemplateService extends RESTService {
 	public static class RootResource {
 		// instantiate the logger class
 		private final L2pLogger logger = L2pLogger.getInstance(TemplateService.class.getName());
+
+		// get access to the service class
+		private final TemplateService service = (TemplateService) Context.getCurrent().getService();
 
 		/**
 		 * Template of a get function.
