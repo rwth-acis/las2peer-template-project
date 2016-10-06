@@ -1,18 +1,18 @@
-![LAS2peer](https://github.com/rwth-acis/LAS2peer/blob/master/img/logo/bitmap/las2peer-logo-128x128.png)
-LAS2peer-Template-Project
-=======================
+![las2peer](https://raw.githubusercontent.com/rwth-acis/las2peer/master/img/logo/bitmap/las2peer-logo-128x128.png)
 
-This project can be used as a starting point for your LAS2peer service development.
-It contains everything needed to start LAS2peer service development, you do not need to add any dependencies manually.  
+# las2peer-Template-Project
 
-For documentation on the LAS2peer service API, please refer to the [LAS2peer Project](https://github.com/rwth-acis/las2peer/).
+[![Build Status](https://travis-ci.org/rwth-acis/las2peer-Template-Project.svg?branch=master)](https://travis-ci.org/rwth-acis/las2peer-Template-Project)
+
+This project can be used as a starting point for your las2peer service development.
+It contains everything needed to start las2peer service development, you do not need to add any dependencies manually.  
+
+For documentation on the las2peer service API, please refer to the [wiki](https://github.com/rwth-acis/las2peer-Template-Project/wiki).
 
 Please follow the instructions of this ReadMe to setup your basic service development environment.  
 
-Travis CI: [![Build Status](https://travis-ci.org/rwth-acis/las2peer-Template-Project.svg?branch=master)](https://travis-ci.org/rwth-acis/LAS2peer-Template-Project)
 
-1. Enable Strong Encryption
--------------------------------------
+## 1. Enable Strong Encryption
 
 If you use an Oracle Java version, you have to enable strong encryption for this software.
 
@@ -23,10 +23,10 @@ The policy files can be downloaded via Oracle:
 [JCE for Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html "JCE-8")
 
 
-2. Quick Setup of your Service Development Environment
--------------------------------------
-*If you never used LAS2peer before, it is recommended that you first visit the
-[Step by Step - First Service](https://github.com/rwth-acis/LAS2peer-Template-Project/wiki/Step-By-Step:-First-Service)
+## 2. Quick Setup of your Service Development Environment
+
+*If you never used las2peer before, it is recommended that you first visit the
+[Step by Step - First Service](https://github.com/rwth-acis/las2peer-Template-Project/wiki/Step-By-Step:-First-Service)
 tutorial for a more detailed guidance on how to use this template.*  
 
 Follow these five steps to setup your project:  
@@ -46,7 +46,7 @@ If you decide to change the dependencies of your project, please make sure to ru
 added libraries first.  
 
 
-3. Next Steps
--------------------------------------
-Please visit the [Wiki](https://github.com/rwth-acis/LAS2peer-Template-Project/wiki/) of this project.
-There you will find guides and tutorials, information on LAS2peer concepts and further interesting LAS2peer knowledge.  
+## 3. Next Steps
+
+Please visit the [Wiki](https://github.com/rwth-acis/las2peer-Template-Project/wiki/) of this project.
+There you will find guides and tutorials, information on las2peer concepts and further interesting las2peer knowledge.  
