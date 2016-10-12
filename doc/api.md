@@ -36,7 +36,4 @@ __Operations:__
 
 * ...
 
-Next Resource
---
-
 ...
