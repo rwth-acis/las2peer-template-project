@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import i5.las2peer.p2p.LocalNode;
+import i5.las2peer.p2p.ServiceNameVersion;
 import i5.las2peer.security.ServiceAgent;
 import i5.las2peer.security.UserAgent;
 import i5.las2peer.testing.MockAgentFactory;
@@ -54,7 +55,8 @@ public class ServiceTest {
 		node.launch();
 
 		// during testing, the specified service version does not matter
-		ServiceAgent testService = ServiceAgent.createServiceAgent(TemplateService.class.getName(), "a pass");
+		ServiceAgent testService = ServiceAgent.createServiceAgent(
+				ServiceNameVersion.fromString(TemplateService.class.getName() + "@1.0"), "a pass");
 		testService.unlockPrivateKey("a pass");
 
 		node.registerReceiver(testService);
