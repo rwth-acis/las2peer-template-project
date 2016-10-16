@@ -9,8 +9,8 @@
 		<artifact type="jar" ext="jar" conf="*"/>
 	</publications>
     <dependencies>
-        <dependency org="i5" name="las2peer" rev="0.6-SNAPSHOT" changing="true" conf="platform->*" />
-        <dependency org="i5" name="las2peer-web-connector" rev="0.6-SNAPSHOT" changing="true" conf="platform->*" />
+        <dependency org="i5" name="las2peer" rev="0.6.1" changing="true" conf="platform->*" />
+        <dependency org="i5" name="las2peer-web-connector" rev="0.6.1" changing="true" conf="platform->*" />
         <dependency org="junit" name="junit" rev="4.12" conf="platform->default" />
         <!-- Add service dependencies here. Don't forget to add all libraries to /etc/ant_configuration/service.properties -->
 		<!-- example:
