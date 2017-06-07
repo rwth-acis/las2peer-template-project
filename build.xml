@@ -1,5 +1,8 @@
 <project name="las2peer-Template-Project" default="all" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
     
+    <!-- select the las2peer (core) version you want to use -->
+	<property name="core.version" value="0.7.0" />
+    
     <property file="etc/ant_configuration/user.properties"/>
     <property file="etc/ant_configuration/service.properties"/>
     

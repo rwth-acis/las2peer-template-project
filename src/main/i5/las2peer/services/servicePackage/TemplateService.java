@@ -1,5 +1,15 @@
 package i5.las2peer.services.servicePackage;
 
+import java.net.HttpURLConnection;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import i5.las2peer.api.Context;
 import i5.las2peer.logging.L2pLogger;
 import i5.las2peer.restMapper.RESTService;
@@ -12,16 +22,6 @@ import io.swagger.annotations.Contact;
 import io.swagger.annotations.Info;
 import io.swagger.annotations.License;
 import io.swagger.annotations.SwaggerDefinition;
-
-import java.net.HttpURLConnection;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 // TODO Describe your own service
 /**
@@ -36,18 +36,13 @@ import javax.ws.rs.core.Response;
  */
 // TODO Adjust the following configuration
 @ServicePath("template")
-// TODO Your own Serviceclass
+// TODO Your own service class
 public class TemplateService extends RESTService {
 
 	@Override
 	protected void initResources() {
+		// list your REST resources here
 		getResourceConfig().register(RootResource.class);
-	}
-
-	public TemplateService() {
-		// read and set properties values
-		// IF THE SERVICE CLASS NAME IS CHANGED, THE PROPERTIES FILE NAME NEED TO BE CHANGED TOO!
-		setFieldValues();
 	}
 
 	@Api
@@ -66,11 +61,12 @@ public class TemplateService extends RESTService {
 							url = "http://your-software-license-url.com")))
 	@Path("/")
 	public static class RootResource {
+
 		// instantiate the logger class
 		private final L2pLogger logger = L2pLogger.getInstance(TemplateService.class.getName());
 
 		// get access to the service class
-		private final TemplateService service = (TemplateService) Context.getCurrent().getService();
+		private final TemplateService service = (TemplateService) Context.get().getService();
 
 		/**
 		 * Template of a get function.
@@ -86,9 +82,10 @@ public class TemplateService extends RESTService {
 		@ApiResponses(
 				value = { @ApiResponse(
 						code = HttpURLConnection.HTTP_OK,
-						message = "REPLACE THIS WITH YOUR OK MESSAGE"), @ApiResponse(
-						code = HttpURLConnection.HTTP_UNAUTHORIZED,
-						message = "Unauthorized") })
+						message = "REPLACE THIS WITH YOUR OK MESSAGE"),
+						@ApiResponse(
+								code = HttpURLConnection.HTTP_UNAUTHORIZED,
+								message = "Unauthorized") })
 		public Response getTemplate() {
 			String returnString = "result";
 			return Response.ok().entity(returnString).build();
@@ -106,9 +103,10 @@ public class TemplateService extends RESTService {
 		@ApiResponses(
 				value = { @ApiResponse(
 						code = HttpURLConnection.HTTP_OK,
-						message = "REPLACE THIS WITH YOUR OK MESSAGE"), @ApiResponse(
-						code = HttpURLConnection.HTTP_UNAUTHORIZED,
-						message = "Unauthorized") })
+						message = "REPLACE THIS WITH YOUR OK MESSAGE"),
+						@ApiResponse(
+								code = HttpURLConnection.HTTP_UNAUTHORIZED,
+								message = "Unauthorized") })
 		@ApiOperation(
 				value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
 				notes = "Example method that returns a phrase containing the received input.")
@@ -117,8 +115,9 @@ public class TemplateService extends RESTService {
 			returnString += "Input " + myInput;
 			return Response.ok().entity(returnString).build();
 		}
+
 	}
 
-	// TODO OWN METHODS
+	// TODO your own service methods, e. g. for RMI
 
 }
