@@ -1,6 +1,7 @@
 package i5.las2peer.services.servicePackage;
 
 import java.net.HttpURLConnection;
+import java.util.logging.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import i5.las2peer.api.Context;
-import i5.las2peer.logging.L2pLogger;
 import i5.las2peer.restMapper.RESTService;
 import i5.las2peer.restMapper.annotations.ServicePath;
 import io.swagger.annotations.Api;
@@ -63,7 +63,7 @@ public class TemplateService extends RESTService {
 	public static class RootResource {
 
 		// instantiate the logger class
-		private final L2pLogger logger = L2pLogger.getInstance(TemplateService.class.getName());
+		private final Logger logger = Context.get().getLogger(this.getClass());
 
 		// get access to the service class
 		private final TemplateService service = (TemplateService) Context.get().getService();
