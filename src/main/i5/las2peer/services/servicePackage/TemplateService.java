@@ -1,7 +1,6 @@
 package i5.las2peer.services.servicePackage;
 
 import java.net.HttpURLConnection;
-import java.util.logging.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,7 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import i5.las2peer.api.Context;
 import i5.las2peer.restMapper.RESTService;
 import i5.las2peer.restMapper.annotations.ServicePath;
 import io.swagger.annotations.Api;
@@ -35,89 +33,71 @@ import io.swagger.annotations.SwaggerDefinition;
  * 
  */
 // TODO Adjust the following configuration
+@Api
+@SwaggerDefinition(
+		info = @Info(
+				title = "las2peer Template Service",
+				version = "0.1",
+				description = "A las2peer Template Service for demonstration purposes.",
+				termsOfService = "http://your-terms-of-service-url.com",
+				contact = @Contact(
+						name = "John Doe",
+						url = "provider.com",
+						email = "john.doe@provider.com"),
+				license = @License(
+						name = "your software license name",
+						url = "http://your-software-license-url.com")))
 @ServicePath("template")
 // TODO Your own service class
 public class TemplateService extends RESTService {
 
-	@Override
-	protected void initResources() {
-		// list your REST resources here
-		getResourceConfig().register(RootResource.class);
+	/**
+	 * Template of a get function.
+	 * 
+	 * @return HttpResponse with the returnString
+	 */
+	@GET
+	@Path("/get")
+	@Produces(MediaType.TEXT_PLAIN)
+	@ApiOperation(
+			value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
+			notes = "REPLACE THIS WITH YOUR NOTES TO THE FUNCTION")
+	@ApiResponses(
+			value = { @ApiResponse(
+					code = HttpURLConnection.HTTP_OK,
+					message = "REPLACE THIS WITH YOUR OK MESSAGE"),
+					@ApiResponse(
+							code = HttpURLConnection.HTTP_UNAUTHORIZED,
+							message = "Unauthorized") })
+	public Response getTemplate() {
+		String returnString = "result";
+		return Response.ok().entity(returnString).build();
 	}
 
-	@Api
-	@SwaggerDefinition(
-			info = @Info(
-					title = "las2peer Template Service",
-					version = "0.1",
-					description = "A las2peer Template Service for demonstration purposes.",
-					termsOfService = "http://your-terms-of-service-url.com",
-					contact = @Contact(
-							name = "John Doe",
-							url = "provider.com",
-							email = "john.doe@provider.com"),
-					license = @License(
-							name = "your software license name",
-							url = "http://your-software-license-url.com")))
-	@Path("/")
-	public static class RootResource {
-
-		// instantiate the logger class
-		private final Logger logger = Context.get().getLogger(this.getClass());
-
-		// get access to the service class
-		private final TemplateService service = (TemplateService) Context.get().getService();
-
-		/**
-		 * Template of a get function.
-		 * 
-		 * @return HttpResponse with the returnString
-		 */
-		@GET
-		@Path("/get")
-		@Produces(MediaType.TEXT_PLAIN)
-		@ApiOperation(
-				value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
-				notes = "REPLACE THIS WITH YOUR NOTES TO THE FUNCTION")
-		@ApiResponses(
-				value = { @ApiResponse(
-						code = HttpURLConnection.HTTP_OK,
-						message = "REPLACE THIS WITH YOUR OK MESSAGE"),
-						@ApiResponse(
-								code = HttpURLConnection.HTTP_UNAUTHORIZED,
-								message = "Unauthorized") })
-		public Response getTemplate() {
-			String returnString = "result";
-			return Response.ok().entity(returnString).build();
-		}
-
-		/**
-		 * Template of a post function.
-		 * 
-		 * @param myInput The post input the user will provide.
-		 * @return HttpResponse with the returnString
-		 */
-		@POST
-		@Path("/post/{input}")
-		@Produces(MediaType.TEXT_PLAIN)
-		@ApiResponses(
-				value = { @ApiResponse(
-						code = HttpURLConnection.HTTP_OK,
-						message = "REPLACE THIS WITH YOUR OK MESSAGE"),
-						@ApiResponse(
-								code = HttpURLConnection.HTTP_UNAUTHORIZED,
-								message = "Unauthorized") })
-		@ApiOperation(
-				value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
-				notes = "Example method that returns a phrase containing the received input.")
-		public Response postTemplate(@PathParam("input") String myInput) {
-			String returnString = "";
-			returnString += "Input " + myInput;
-			return Response.ok().entity(returnString).build();
-		}
-
+	/**
+	 * Template of a post function.
+	 * 
+	 * @param myInput The post input the user will provide.
+	 * @return HttpResponse with the returnString
+	 */
+	@POST
+	@Path("/post/{input}")
+	@Produces(MediaType.TEXT_PLAIN)
+	@ApiResponses(
+			value = { @ApiResponse(
+					code = HttpURLConnection.HTTP_OK,
+					message = "REPLACE THIS WITH YOUR OK MESSAGE"),
+					@ApiResponse(
+							code = HttpURLConnection.HTTP_UNAUTHORIZED,
+							message = "Unauthorized") })
+	@ApiOperation(
+			value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
+			notes = "Example method that returns a phrase containing the received input.")
+	public Response postTemplate(@PathParam("input") String myInput) {
+		String returnString = "";
+		returnString += "Input " + myInput;
+		return Response.ok().entity(returnString).build();
 	}
 
 	// TODO your own service methods, e. g. for RMI
-
 }
