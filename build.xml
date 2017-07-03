@@ -1,7 +1,7 @@
 <project name="las2peer-Template-Project" default="all" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
     
     <!-- select the las2peer (core) version you want to use -->
-	<property name="core.version" value="0.7.0" />
+	<!-- <property name="core.version" value="0.7.0" /> (set in service.properties) -->
     
     <property file="etc/ant_configuration/user.properties"/>
     <property file="etc/ant_configuration/service.properties"/>
@@ -29,15 +29,15 @@
     <property name="junit.report" location="${export}/test_reports" />
 
     <property name="lib" location="lib" />
+	<property name="servicelib" location="servicebundle" />
     
     <path id="libraries">
         <fileset dir="${lib}">
             <include name="**/*.jar"/>
             <exclude name="junit-*.jar"/>
         </fileset>
-    	<fileset dir="${service}">
+    	<fileset dir="${servicelib}">
     	    <include name="**/*.jar"/>
-    	    <exclude name="i5.las2peer.services.*.jar"/>
     	</fileset>
     </path>
     
@@ -72,14 +72,14 @@
             <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
         </ivy:settings>
     	<ivy:retrieve type="jar, bundle" conf="platform" pattern="${lib}/[artifact]-[revision].[ext]"/>
-    	<ivy:retrieve type="jar, bundle" conf="bundle" pattern="${service}/[artifact]-[revision].[ext]"/>
+    	<ivy:retrieve type="jar, bundle" conf="bundle" pattern="${servicelib}/[artifact]-[revision].[ext]"/>
     </target>
     
     
     <!-- Initialization (Folder Creation)-->
 	<target name="init_deps">
         <mkdir dir="${lib}" />
-        <mkdir dir="${service}" />
+        <mkdir dir="${servicelib}" />
     </target>
 	
     <target name="init_general">
@@ -88,6 +88,7 @@
         <mkdir dir="${export}" />
         <mkdir dir="${startup}" />
         <mkdir dir="${log}" />
+    	<mkdir dir="${service}" />
     </target>
     
     <target name="init_compile" depends="init_general, get_deps">
@@ -168,6 +169,7 @@ pause
     <!-- Generate Jars -->
     <target name="jar" depends="compile_main" description="--> jar">
         <jar jarfile="${export.jars}/${service.name}-${service.version}.jar">
+        	<zipgroupfileset dir="${servicelib}" includes="**/*.jar" />
             <fileset dir="${tmp.classes}" includes="${service.path}/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
@@ -177,6 +179,7 @@ pause
         </jar>
         <!-- Add the same Jar to the Service Directory !-->
         <jar jarfile="${service}/${service.name}-${service.version}.jar">
+        	<zipgroupfileset dir="${servicelib}" includes="**/*.jar" />
             <fileset dir="${tmp.classes}" includes="${service.path}/**" />
             <manifest>
                 <attribute name="Library-Version" value="${service.version}" />
@@ -275,6 +278,7 @@ agent-user-${las2peer_user3.name}.xml;${las2peer_user3.password}
         <delete dir="${tmp}" />
         <delete dir="${export}" />
         <delete dir="${lib}" />
+    	<delete dir="${servicelib}" />
         <delete dir="${service}" />
     	<delete dir="${startup}" />
     </target>

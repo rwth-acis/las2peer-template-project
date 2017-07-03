@@ -1,7 +1,7 @@
 <ivy-module version="2.0">
     <info organisation="i5" module="${ant.project.name}" />
     <configurations defaultconf="bundle->*">
-        <conf name="bundle" description="Additional dependencies loaded dynamically" />
+        <conf name="bundle" description="Service dependencies bundled with the service" visibility="private" />
         <conf name="platform" description="Jars needded for the las2peer platform" visibility="private" />
     </configurations>
     <publications>
@@ -18,7 +18,7 @@
         <!-- Add service dependencies here -->
         <!-- All dependencies with (default) conf="bundle->*" are packaged into the service jar -->
         <!-- example:
-        <dependency org="net.minidev" name="json-smart" rev="1.3.1" />
+        <dependency org="net.minidev" name="json-smart" rev="1.3.1" conf="bundle->*" />
         -->
     </dependencies>
 </ivy-module>
