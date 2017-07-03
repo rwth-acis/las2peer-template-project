@@ -10,7 +10,7 @@
     </publications>
     <dependencies>
         <!-- las2peer core -->
-        <dependency org="i5" name="las2peer" rev="${core.version}" changing="true" conf="platform->*" />
+        <dependency org="i5" name="las2peer-bundle" rev="${core.version}" changing="true" conf="platform->*" />
         <!-- JUnit -->
         <dependency org="junit" name="junit" rev="4.12" conf="platform->*" />
 
