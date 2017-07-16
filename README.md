@@ -1,4 +1,4 @@
-![las2peer](https://raw.githubusercontent.com/rwth-acis/las2peer/master/img/logo/bitmap/las2peer-logo-128x128.png)
+![las2peer](https://rwth-acis.github.io/las2peer/logo/vector/las2peer-logo.svg)
 
 # las2peer-Template-Project
 

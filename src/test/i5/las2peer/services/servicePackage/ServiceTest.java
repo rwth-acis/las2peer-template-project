@@ -3,14 +3,6 @@ package i5.las2peer.services.servicePackage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import i5.las2peer.p2p.LocalNode;
-import i5.las2peer.p2p.ServiceNameVersion;
-import i5.las2peer.security.ServiceAgent;
-import i5.las2peer.security.UserAgent;
-import i5.las2peer.testing.MockAgentFactory;
-import i5.las2peer.webConnector.WebConnector;
-import i5.las2peer.webConnector.client.ClientResponse;
-import i5.las2peer.webConnector.client.MiniClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -18,6 +10,15 @@ import java.io.PrintStream;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import i5.las2peer.api.p2p.ServiceNameVersion;
+import i5.las2peer.connectors.webConnector.WebConnector;
+import i5.las2peer.connectors.webConnector.client.ClientResponse;
+import i5.las2peer.connectors.webConnector.client.MiniClient;
+import i5.las2peer.p2p.LocalNode;
+import i5.las2peer.security.ServiceAgentImpl;
+import i5.las2peer.security.UserAgentImpl;
+import i5.las2peer.testing.MockAgentFactory;
 
 /**
  * Example Test Class demonstrating a basic JUnit test structure.
@@ -32,7 +33,7 @@ public class ServiceTest {
 	private static WebConnector connector;
 	private static ByteArrayOutputStream logStream;
 
-	private static UserAgent testAgent;
+	private static UserAgentImpl testAgent;
 	private static final String testPass = "adamspass";
 
 	private static final String mainPath = "template/";
@@ -50,14 +51,14 @@ public class ServiceTest {
 		// start node
 		node = LocalNode.newNode();
 		testAgent = MockAgentFactory.getAdam();
-		testAgent.unlockPrivateKey(testPass); // agent must be unlocked in order to be stored
+		testAgent.unlock(testPass); // agent must be unlocked in order to be stored
 		node.storeAgent(testAgent);
 		node.launch();
 
 		// during testing, the specified service version does not matter
-		ServiceAgent testService = ServiceAgent.createServiceAgent(
-				ServiceNameVersion.fromString(TemplateService.class.getName() + "@1.0"), "a pass");
-		testService.unlockPrivateKey("a pass");
+		ServiceAgentImpl testService = ServiceAgentImpl
+				.createServiceAgent(ServiceNameVersion.fromString(TemplateService.class.getName() + "@1.0"), "a pass");
+		testService.unlock("a pass");
 
 		node.registerReceiver(testService);
 
@@ -106,7 +107,7 @@ public class ServiceTest {
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
 
 		try {
-			c.setLogin(Long.toString(testAgent.getId()), testPass);
+			c.setLogin(testAgent.getIdentifier(), testPass);
 			ClientResponse result = c.sendRequest("GET", mainPath + "get", "");
 			assertEquals(200, result.getHttpCode());
 			assertTrue(result.getResponse().trim().contains("result")); // YOUR RESULT VALUE HERE
@@ -129,7 +130,7 @@ public class ServiceTest {
 		c.setAddressPort(HTTP_ADDRESS, HTTP_PORT);
 
 		try {
-			c.setLogin(Long.toString(testAgent.getId()), testPass);
+			c.setLogin(testAgent.getIdentifier(), testPass);
 			ClientResponse result = c.sendRequest("POST", mainPath + "post/testInput", ""); // testInput is
 																							// the pathParam
 			assertEquals(200, result.getHttpCode());
