@@ -16,6 +16,7 @@ import i5.las2peer.connectors.webConnector.WebConnector;
 import i5.las2peer.connectors.webConnector.client.ClientResponse;
 import i5.las2peer.connectors.webConnector.client.MiniClient;
 import i5.las2peer.p2p.LocalNode;
+import i5.las2peer.p2p.LocalNodeManager;
 import i5.las2peer.security.ServiceAgentImpl;
 import i5.las2peer.security.UserAgentImpl;
 import i5.las2peer.testing.MockAgentFactory;
@@ -49,7 +50,7 @@ public class ServiceTest {
 	public static void startServer() throws Exception {
 
 		// start node
-		node = LocalNode.newNode();
+		node = new LocalNodeManager().newNode();
 		testAgent = MockAgentFactory.getAdam();
 		testAgent.unlock(testPass); // agent must be unlocked in order to be stored
 		node.storeAgent(testAgent);
@@ -86,8 +87,6 @@ public class ServiceTest {
 
 		connector = null;
 		node = null;
-
-		LocalNode.reset();
 
 		System.out.println("Connector-Log:");
 		System.out.println("--------------");
