@@ -14,13 +14,14 @@ Please follow the instructions of this ReadMe to setup your basic service develo
 
 ## 1. Enable Strong Encryption
 
-If you use an Oracle Java version, you have to enable strong encryption for this software.
+This step is **not** required with the following Java versions:
+* any **Java 9**, **Java 8u162** or later, **Java 7u181** or later, **Java 6u191** or later
+
+If you use an older Oracle Java version, you have to enable strong encryption for this software.
 
 Please put the files to '[...]/lib/security/' of your java runtime installation (replacing the existing files).
 
-The policy files can be downloaded via Oracle:
-
-[JCE for Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html "JCE-8")
+The policy files can be downloaded via Oracle: [JCE for Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html "JCE-8")
 
 
 ## 2. Quick Setup of your Service Development Environment
