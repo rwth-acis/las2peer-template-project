@@ -1,4 +1,4 @@
-package i5.las2peer.services.servicePackage;
+package i5.las2peer.services.templateService;
 
 import java.net.HttpURLConnection;
 
@@ -23,13 +23,13 @@ import io.swagger.annotations.SwaggerDefinition;
 
 // TODO Describe your own service
 /**
- * las2peer Service
+ * las2peer-Template-Service
  * 
- * This is a template for a very basic las2peer service that uses the las2peer Web-Connector for RESTful access to it.
+ * This is a template for a very basic las2peer service that uses the las2peer WebConnector for RESTful access to it.
  * 
- * Note: If you plan on using Swagger you should adapt the information below in the ApiInfo annotation to suit your
- * project. If you do not intend to provide a Swagger documentation of your service API, the entire ApiInfo annotation
- * should be removed.
+ * Note: If you plan on using Swagger you should adapt the information below in the SwaggerDefinition annotation to suit
+ * your project. If you do not intend to provide a Swagger documentation of your service API, the entire Api and
+ * SwaggerDefinition annotation should be removed.
  * 
  */
 // TODO Adjust the following configuration
@@ -37,7 +37,7 @@ import io.swagger.annotations.SwaggerDefinition;
 @SwaggerDefinition(
 		info = @Info(
 				title = "las2peer Template Service",
-				version = "0.1",
+				version = "1.0",
 				description = "A las2peer Template Service for demonstration purposes.",
 				termsOfService = "http://your-terms-of-service-url.com",
 				contact = @Contact(
@@ -47,14 +47,14 @@ import io.swagger.annotations.SwaggerDefinition;
 				license = @License(
 						name = "your software license name",
 						url = "http://your-software-license-url.com")))
-@ServicePath("template")
+@ServicePath("/template")
 // TODO Your own service class
 public class TemplateService extends RESTService {
 
 	/**
 	 * Template of a get function.
 	 * 
-	 * @return HttpResponse with the returnString
+	 * @return Returns an HTTP response with plain text string content.
 	 */
 	@GET
 	@Path("/get")
@@ -65,10 +65,7 @@ public class TemplateService extends RESTService {
 	@ApiResponses(
 			value = { @ApiResponse(
 					code = HttpURLConnection.HTTP_OK,
-					message = "REPLACE THIS WITH YOUR OK MESSAGE"),
-					@ApiResponse(
-							code = HttpURLConnection.HTTP_UNAUTHORIZED,
-							message = "Unauthorized") })
+					message = "REPLACE THIS WITH YOUR OK MESSAGE") })
 	public Response getTemplate() {
 		String returnString = "result";
 		return Response.ok().entity(returnString).build();
@@ -78,7 +75,7 @@ public class TemplateService extends RESTService {
 	 * Template of a post function.
 	 * 
 	 * @param myInput The post input the user will provide.
-	 * @return HttpResponse with the returnString
+	 * @return Returns an HTTP response with plain text string content derived from the path input param.
 	 */
 	@POST
 	@Path("/post/{input}")
@@ -86,10 +83,7 @@ public class TemplateService extends RESTService {
 	@ApiResponses(
 			value = { @ApiResponse(
 					code = HttpURLConnection.HTTP_OK,
-					message = "REPLACE THIS WITH YOUR OK MESSAGE"),
-					@ApiResponse(
-							code = HttpURLConnection.HTTP_UNAUTHORIZED,
-							message = "Unauthorized") })
+					message = "REPLACE THIS WITH YOUR OK MESSAGE") })
 	@ApiOperation(
 			value = "REPLACE THIS WITH AN APPROPRIATE FUNCTION NAME",
 			notes = "Example method that returns a phrase containing the received input.")
@@ -100,4 +94,5 @@ public class TemplateService extends RESTService {
 	}
 
 	// TODO your own service methods, e. g. for RMI
+
 }
