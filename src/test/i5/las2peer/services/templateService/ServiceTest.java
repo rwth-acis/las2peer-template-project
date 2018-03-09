@@ -53,13 +53,7 @@ public class ServiceTest {
 
 		// start service
 		// during testing, the specified service version does not matter
-		// XXX starting with las2peer v0.7.3 this block can be simplified with:
-		// node.startService(new ServiceNameVersion(TemplateService.class.getName(), "1.0"), "a pass");
-		ServiceAgentImpl testService = ServiceAgentImpl
-				.createServiceAgent(new ServiceNameVersion(TemplateService.class.getName(), "1.0"), "a pass");
-		testService.unlock("a pass");
-		node.storeAgent(testService);
-		node.registerReceiver(testService);
+		node.startService(new ServiceNameVersion(TemplateService.class.getName(), "1.0"), "a pass");
 
 		// start connector
 		connector = new WebConnector(true, 0, false, 0); // port 0 means use system defined port
