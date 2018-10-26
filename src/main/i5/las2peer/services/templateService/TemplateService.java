@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import i5.las2peer.api.Context;
+import i5.las2peer.api.security.UserAgent;
 import i5.las2peer.restMapper.RESTService;
 import i5.las2peer.restMapper.annotations.ServicePath;
 import io.swagger.annotations.Api;
@@ -54,7 +56,7 @@ public class TemplateService extends RESTService {
 	/**
 	 * Template of a get function.
 	 * 
-	 * @return Returns an HTTP response with plain text string content.
+	 * @return Returns an HTTP response with the username as string content.
 	 */
 	@GET
 	@Path("/get")
@@ -67,8 +69,9 @@ public class TemplateService extends RESTService {
 					code = HttpURLConnection.HTTP_OK,
 					message = "REPLACE THIS WITH YOUR OK MESSAGE") })
 	public Response getTemplate() {
-		String returnString = "result";
-		return Response.ok().entity(returnString).build();
+		UserAgent userAgent = (UserAgent) Context.getCurrent().getMainAgent();
+		String name = userAgent.getLoginName();
+		return Response.ok().entity(name).build();
 	}
 
 	/**
