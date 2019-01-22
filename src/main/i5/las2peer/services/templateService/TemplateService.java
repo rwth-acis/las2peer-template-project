@@ -39,7 +39,7 @@ import io.swagger.annotations.SwaggerDefinition;
 @SwaggerDefinition(
 		info = @Info(
 				title = "las2peer Template Service",
-				version = "1.0",
+				version = "1.0.0",
 				description = "A las2peer Template Service for demonstration purposes.",
 				termsOfService = "http://your-terms-of-service-url.com",
 				contact = @Contact(
