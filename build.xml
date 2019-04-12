@@ -47,8 +47,23 @@
     <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
     <property name="ivy.settings.file" value="${ivy.jar.dir}/ivysettings.xml" />
     <property name="ivy.dep.file" value="${ivy.jar.dir}/ivy.xml" />
+	
+	<target name="print-version"> 
+	   <echo>Java/JVM version: ${ant.java.version}</echo> 
+	   <echo>Java/JVM detail version: ${java.version}</echo> 
+		<fail message="Unsupported Java version: ${ant.java.version}. 
+		  Make sure that the Java version is 1.8.">
+		  <condition>
+		  	<not>
+				<equals arg1="${ant.java.version}" arg2="1.8"/>
+			</not>
+		  </condition>
+		</fail>
+	</target>
+	
+	
     <!-- Download Ivy from Web Site so that it can be used without any special Installation -->
-    <target name="download-ivy" unless="skip.download">
+    <target name="download-ivy" depends="print-version" unless="skip.download">
         <mkdir dir="${ivy.jar.dir}"/>
         <echo message="installing ivy..."/>
         <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
