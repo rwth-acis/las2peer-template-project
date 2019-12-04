@@ -234,22 +234,42 @@ pause
         <delete dir="${tmp.junit}" />
     </target>
     
-    <target name="junit_tests" depends="init_junit, compile_all">
-        <junit fork="yes" haltonerror="yes" haltonfailure="yes" printsummary="yes">
-            <classpath>
-                <pathelement path="${tmp.classes}" />
-                <pathelement path="${tmp.junit}" />
-                <pathelement path="${lib.junit}" />
-                <path refid="libraries"/>
-            </classpath>
-            <formatter type="plain" />
-            <batchtest fork="yes" todir="${junit.report}">
-                <fileset dir="${tmp.junit}">
-                    <include name="**/*Test.class"/>
-                </fileset>
-            </batchtest>
-        </junit>
-    </target>
+	<target name="junit_tests" depends="init_junit, compile_all">
+	    	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml" classpathref="libraries"/>
+	    	<jacoco:coverage destfile="${export}/jacoco.exec" xmlns:jacoco="antlib:org.jacoco.ant">
+				<junit fork="yes" haltonerror="yes" haltonfailure="yes" printsummary="yes">
+		            <classpath>
+		                <pathelement path="${tmp.classes}" />
+		                <pathelement path="${tmp.junit}" />
+		                <pathelement path="${lib.junit}" />
+		                <path refid="libraries"/>
+		            </classpath>
+		            <formatter type="plain" />
+		            <batchtest fork="yes" todir="${junit.report}">
+		                <fileset dir="${tmp.junit}">
+		                    <include name="**/*Test.class"/>
+		                </fileset>
+		            </batchtest>
+		        </junit>
+	    	</jacoco:coverage>
+			<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml"  classpathref="libraries"/>
+	    	        <jacoco:report xmlns:jacoco="antlib:org.jacoco.ant">
+	    	            <executiondata>
+	    	                <file file="${export}/jacoco.exec" />
+	    	            </executiondata>
+	    	 
+	    	            <structure name="jacoco">
+	    	                <classfiles>
+	    	                    <fileset dir="${tmp.classes}" />
+	    	                </classfiles>
+	    	                <sourcefiles encoding="UTF-8">
+	    	                    <fileset dir="${src.main}" />
+	    	                </sourcefiles>
+	    	            </structure>
+	    	             
+	    	            <xml destfile="${export}/coverage.xml" />
+			</jacoco:report>
+	    </target>
     
     
     <!-- XML Agent Generation (Builds Jar first so that Generator is available)-->
