@@ -66,7 +66,7 @@
     <target name="download-ivy" depends="print-version" unless="skip.download">
         <mkdir dir="${ivy.jar.dir}"/>
         <echo message="installing ivy..."/>
-        <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
+        <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
             dest="${ivy.jar.file}" usetimestamp="true" skipexisting="true"/>
     </target>
     <!-- Try to load Ivy here from local Ivy directory -->
@@ -81,7 +81,7 @@
     <!-- Get Dependencies from our Maven Repository via Ivy -->
     <target name="get_deps" depends="install-ivy, init_deps" description="--> resolve dependencies">
         <ivy:settings>
-            <credentials host="role.dbis.rwth-aachen.de:9911/archiva"  realm="Repository internal"/>
+            <credentials host="archiva.dbis.rwth-aachen.de:9911"  realm="acis-internal"/>
         </ivy:settings>
     	<ivy:retrieve type="jar, bundle" conf="platform" pattern="${lib}/[artifact]-[revision].[ext]"/>
     	<ivy:retrieve type="jar, bundle" conf="bundle" pattern="${servicelib}/[artifact]-[revision].[ext]"/>
