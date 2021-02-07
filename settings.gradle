@@ -1,0 +1,2 @@
+rootProject.name = 'las2peer-template-project'
+include('template_project')
