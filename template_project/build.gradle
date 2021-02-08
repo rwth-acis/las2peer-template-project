@@ -1,6 +1,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'eclipse'
 }
 
 repositories {
@@ -197,4 +198,23 @@ task cleanAll {
 
     file("$rootDir/log").deleteDir()
     file("$rootDir/node-storage").deleteDir()
+}
+
+// configuration for eclipse (this allows to import las2peer as a gradle project in eclipse without any problems)
+eclipse {
+    classpath {
+      file {
+            whenMerged {
+                // change output directory for test, main, resources and default
+                def main = entries.find { it.path == "src/main/java" }
+                main.output = "output/main"
+
+                def test = entries.find { it.path == "src/test/java" }
+                test.output = "output/test"
+
+                def defaultEntry = entries.find { it.kind == "output" && it.path == "bin/default" }
+                defaultEntry.path = "output/default"
+            }
+        }
+    }
 }
