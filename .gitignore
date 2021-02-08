@@ -1,9 +1,9 @@
 /template_project/output/
-/export/
+/template_project/export/
 /node-storage/
 /.las2peer/
 /tmp/
-/log/
+/template_project/log/
 /lib/
 /etc/ivy/ivy.jar
 /service/

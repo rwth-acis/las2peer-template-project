@@ -2,6 +2,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
     id 'eclipse'
+    id 'jacoco'
 }
 
 repositories {
@@ -22,8 +23,6 @@ dependencies {
     // las2peer bundle which is not necessary in the runtime path
     // compileOnly will be moved into the lib dir afterwards
     compileOnly "i5:las2peer-bundle:${project.property('core.version')}"
-    // Jacoco
-    implementation "org.jacoco:org.jacoco.ant:0.8.6"
 
     // Add service dependencies here
     // example:
@@ -46,6 +45,11 @@ application {
     mainClassName = "i5.las2peer.tools.L2pNodeLauncher"
     sourceCompatibility = "${project.property('java.version')}"
     targetCompatibility = "${project.property('java.version')}"
+}
+
+// put all .jar files into export/jars folder
+tasks.withType(Jar) {
+    destinationDir = file("$projectDir/export/jars")
 }
 
 compileJava {
@@ -198,6 +202,28 @@ task cleanAll {
 
     file("$rootDir/log").deleteDir()
     file("$rootDir/node-storage").deleteDir()
+}
+
+jacoco {
+    toolVersion = "0.8.6"
+    reportsDirectory = file("$projectDir/export/jacoco")
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+
+    jacoco {
+        destinationFile = file("$projectDir/export/jacoco.exec")
+    }
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    // enable the xml report (html is also enabled)
+    reports {
+        xml.enabled true
+    }
 }
 
 // configuration for eclipse (this allows to import las2peer as a gradle project in eclipse without any problems)
