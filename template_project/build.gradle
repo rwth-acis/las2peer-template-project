@@ -36,9 +36,9 @@ configurations {
 
 application {
     // Define the main class for the application.
-    mainClass = "i5.las2peer.services.templateService.TemplateService"
+    mainClass = "${project.property('service.name')}.${project.property('service.class')}"
 
-    group = "i5.las2peer.services.templateService"
+    group = "${project.property('service.name')}"
     archivesBaseName = group
 
     version = "${project.property('service.version')}"
