@@ -27,7 +27,7 @@ las2peer uses **Java 14**.
 
 ### Build Dependencies
 
-* Apache ant
+* Gradle
 
 
 ## Quick Setup of your Service Development Environment
@@ -37,21 +37,18 @@ las2peer uses **Java 14**.
 tutorial for a more detailed guidance on how to use this template.*  
 
 Follow these five steps to setup your project:  
-1. If you use Eclipse, import this project or just create a new project in the same folder.  
-2. Run "ant get_deps" once to pull all dependencies (You can skip this but Eclipse will complain about missing libraries until you build the first time).  
-3. The service source code can be found at `i5.las2peer.services.servicePackage.TemplateService`.  
-(3.5 Optional: Change [etc/ant_configuration/service.properties](etc/ant_configuration/service.properties) and [etc/ant_configuration/user.properties](etc/ant_configuration/user.properties)
-according to the service you want to build. Rename your build directory structure according to the names you gave in 2.,
-you have to also correct the package declaration and the 'testTemplateService' constant in your source code files.)  
-4. Compile your service with `ant jar` or just `ant` (default target). This will also build the service jar.  
-5. Generate documentation, run your JUnit tests and generate service and user agent with `ant all` (If this did not run check that the policy files are working correctly).  
+1. If you use Eclipse (for our guides we are using version 2020-12), import this project (as Gradle -> Existing Gradle Project). Please make sure, that JavaSE-14 is available in Eclipse (check under Window -> Preferences -> Java -> Installed JREs -> Execution Environments).
+2. The service source code can be found at `i5.las2peer.services.templateService.TemplateService`.  
+(Optional: Change [gradle.properties](gradle.properties)
+according to the service you want to build. Rename your build directory structure according to the names you gave.
+3. Compile your service with `gradle clean jar`. This will also build the service jar.  
+4. Generate documentation, run your JUnit tests and generate service and user agent with `gradle clean build` (If this did not run check that the policy files are working correctly).  
 
-The jar file with your service will be in "export/" and "service/" and the generated agent XML files in "etc/startup/".
-You can find the JUnit reports in the folder "export/test_reports/".  
+The jar file with your service will be in "template_project/export/" and "service/" and the generated agent XML files in "etc/startup/".
+You can find the JUnit reports in the folder "template_project/build/reports/tests/".  
 
-If you decide to change the dependencies of your project, please make sure to run "ant clean_all" to remove all previously
-added libraries first.  
-
+If you decide to change the dependencies of your project, please make sure to refresh the Gradle project in Eclipse by right-clicking on your project and then choosing Gradle -> Refresh Gradle Project.
+Also run "gradle cleanAll" to remove all previously added libraries.
 
 ## Next Steps
 
