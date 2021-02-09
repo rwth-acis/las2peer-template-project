@@ -3,6 +3,7 @@
 /node-storage/
 /.las2peer/
 /tmp/
+/log/
 /template_project/log/
 /lib/
 /etc/ivy/ivy.jar

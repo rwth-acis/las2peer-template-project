@@ -211,8 +211,10 @@ clean.doLast {
 task cleanAll {
     dependsOn "clean"
 
-    file("$rootDir/log").deleteDir()
-    file("$rootDir/node-storage").deleteDir()
+    doLast {
+        file("$rootDir/log").deleteDir()
+        file("$rootDir/node-storage").deleteDir()
+    }
 }
 
 jacoco {
