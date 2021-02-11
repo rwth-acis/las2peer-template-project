@@ -18,6 +18,8 @@
 /etc/startup/
 *.secret
 archiva_credentials.xml
+.classpath
+.project
 
 # Ignore Gradle project-specific cache directory
 .gradle
