@@ -122,11 +122,11 @@ pause
 
 build.dependsOn "startscripts"
 
-def startup = "$rootDir\\etc\\startup"
-def userAgent1Path = "${startup}\\agent-user-${project.property('las2peer_user1.name')}.xml"
-def userAgent2Path = "${startup}\\agent-user-${project.property('las2peer_user2.name')}.xml"
-def userAgent3Path = "${startup}\\agent-user-${project.property('las2peer_user3.name')}.xml"
-def passphrasesPath = "${startup}\\passphrases.txt"
+def startup = "$rootDir/etc/startup"
+def userAgent1Path = "${startup}/agent-user-${project.property('las2peer_user1.name')}.xml"
+def userAgent2Path = "${startup}/agent-user-${project.property('las2peer_user2.name')}.xml"
+def userAgent3Path = "${startup}/agent-user-${project.property('las2peer_user3.name')}.xml"
+def passphrasesPath = "${startup}/passphrases.txt"
 
 task generateUserAgent1 {
     dependsOn "jar"
