@@ -34,6 +34,19 @@ configurations {
     testCompile.extendsFrom compileOnly
 }
 
+jar {
+    manifest {
+        attributes "Main-Class": "${project.property('service.name')}.${project.property('service.class')}"
+        attributes "Library-Version": "${project.property('core.version')}"
+        attributes "Library-SymbolicName": "${project.property('service.name')}"
+    }
+
+    from { (configurations.runtimeClasspath).collect { it.isDirectory() ? it : zipTree(it) } } {
+        // Exclude signatures to be able to natively bundle mqtt
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+    }
+}
+
 application {
     // Define the main class for the application.
     mainClass = "${project.property('service.name')}.${project.property('service.class')}"
