@@ -31,11 +31,11 @@ las2peer uses **Java 14**.
 [Step by Step - First Service](https://github.com/rwth-acis/las2peer-Template-Project/wiki/Step-By-Step:-First-Service)
 tutorial for a more detailed guidance on how to use this template.*  
 
-Follow these five steps to setup your project:  
+Follow these four steps to setup your project:  
 1. If you use Eclipse (for our guides we are using version 2020-12), import this project (as Gradle -> Existing Gradle Project). Please make sure, that JavaSE-14 is available in Eclipse (check under Window -> Preferences -> Java -> Installed JREs -> Execution Environments). During the import process, the .classpath files will be generated automatically.
 2. The service source code can be found at `i5.las2peer.services.templateService.TemplateService`.  
 (Optional: Change [gradle.properties](gradle.properties)
-according to the service you want to build. Rename your build directory structure according to the names you gave.
+according to the service you want to build. Rename your build directory structure according to the names you gave.)
 3. Compile your service with `gradle clean jar`. This will also build the service jar.  
 4. Generate documentation, run your JUnit tests and generate service and user agent with `gradle clean build` (If this did not run check that the policy files are working correctly).  
 
