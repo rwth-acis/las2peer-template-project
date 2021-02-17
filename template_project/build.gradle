@@ -12,6 +12,12 @@ repositories {
     // DBIS Archiva
     maven {
         url "https://archiva.dbis.rwth-aachen.de:9911/repository/internal/"
+        // ignore gradle metadata (otherwise we are getting problems with the las2peer-bundle)
+        metadataSources {
+            mavenPom()
+            artifact()
+            ignoreGradleMetadataRedirection()
+        }
     }
 }
 
@@ -37,7 +43,7 @@ configurations {
 jar {
     manifest {
         attributes "Main-Class": "${project.property('service.name')}.${project.property('service.class')}"
-        attributes "Library-Version": "${project.property('core.version')}"
+        attributes "Library-Version": "${project.property('service.version')}"
         attributes "Library-SymbolicName": "${project.property('service.name')}"
     }
 
