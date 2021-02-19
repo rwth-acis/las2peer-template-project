@@ -12,12 +12,6 @@ repositories {
     // DBIS Archiva
     maven {
         url "https://archiva.dbis.rwth-aachen.de:9911/repository/internal/"
-        // ignore gradle metadata (otherwise we are getting problems with the las2peer-bundle)
-        metadataSources {
-            mavenPom()
-            artifact()
-            ignoreGradleMetadataRedirection()
-        }
     }
 }
 
@@ -48,7 +42,7 @@ jar {
     }
 
     from { (configurations.runtimeClasspath).collect { it.isDirectory() ? it : zipTree(it) } } {
-        // Exclude signatures to be able to natively bundle mqtt
+        // Exclude signatures to be able to natively bundle signed jars
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
     }
 }
