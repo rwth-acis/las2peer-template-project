@@ -36,8 +36,8 @@ Follow these four steps to setup your project:
 2. The service source code can be found at `i5.las2peer.services.templateService.TemplateService`.  
 (Optional: Change [gradle.properties](gradle.properties)
 according to the service you want to build. Rename your build directory structure according to the names you gave.)
-3. Compile your service with `gradle clean jar`. This will also build the service jar.  
-4. Generate documentation, run your JUnit tests and generate service and user agent with `gradle clean build` (If this did not run check that the policy files are working correctly).  
+3. Compile your service with `./gradlew clean jar`. This will also build the service jar.  
+4. Generate documentation, run your JUnit tests and generate service and user agent with `./gradlew clean build` (If this did not run check that the policy files are working correctly).  
 
 The jar file with your service will be in "template_project/export/" and "service/" and the generated agent XML files in "etc/startup/".
 You can find the JUnit reports in the folder "template_project/build/reports/tests/".  
