@@ -20,10 +20,6 @@ Please follow the instructions of this ReadMe to setup your basic service develo
 
 las2peer uses **Java 14**.
 
-### Build Dependencies
-
-* Gradle
-
 
 ## Quick Setup of your Service Development Environment
 
