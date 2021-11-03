@@ -210,6 +210,14 @@ agent-user-${project.property('las2peer_user3.name')}.xml;${project.property('la
     }
 }
 
+task deleteStartup {
+
+        file("$rootDir/etc/startup").deleteDir()
+    
+}
+
+build.dependsOn "deleteStartup"
+
 build.dependsOn "generateAgents"
 
 clean.doLast {
