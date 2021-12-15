@@ -18,7 +18,7 @@ Please follow the instructions of this ReadMe to setup your basic service develo
 
 ### Java
 
-las2peer uses **Java 14**.
+las2peer uses **Java 17**.
 
 
 ## Quick Setup of your Service Development Environment
@@ -28,7 +28,7 @@ las2peer uses **Java 14**.
 tutorial for a more detailed guidance on how to use this template.*  
 
 Follow these four steps to setup your project:  
-1. If you use Eclipse (for our guides we are using version 2020-12), import this project (as Gradle -> Existing Gradle Project). Please make sure, that JavaSE-14 is available in Eclipse (check under Window -> Preferences -> Java -> Installed JREs -> Execution Environments). During the import process, the .classpath files will be generated automatically.
+1. If you use Eclipse (for our guides we are using version 2020-12), import this project (as Gradle -> Existing Gradle Project). Please make sure, that Java 17 is available in Eclipse. During the import process, the .classpath files will be generated automatically.
 2. The service source code can be found at `i5.las2peer.services.templateService.TemplateService`.  
 (Optional: Change [gradle.properties](gradle.properties)
 according to the service you want to build. Rename your build directory structure according to the names you gave.)
