@@ -20,7 +20,9 @@ dependencies {
     // Use JUnit test framework.
     testImplementation "junit:junit:4.13.2"
     
-    implementation "i5:las2peer-bundle:${project.property('core.version')}"
+    // las2peer bundle which is not necessary in the runtime path
+    // compileOnly will be moved into the lib dir afterwards
+    compileOnly "i5:las2peer-bundle:${project.property('core.version')}"
 
     // Add service dependencies here
     // example:
@@ -29,7 +31,7 @@ dependencies {
 
 configurations {
     // This ensures las2peer is available in the tests, but won't be bundled
-    testImplementation.extendsFrom implementation
+    testImplementation.extendsFrom compileOnly
 }
 
 jar {
