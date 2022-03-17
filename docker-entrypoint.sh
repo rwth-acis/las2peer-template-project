@@ -19,7 +19,6 @@ export SERVICE=${SERVICE_NAME}.${SERVICE_CLASS}@${SERVICE_VERSION}
 function set_in_service_config {
     sed -i "s?${1}[[:blank:]]*=.*?${1}=${2}?g" ${SERVICE_PROPERTY_FILE}
 }
-#cp $SERVICE_PROPERTY_FILE $SERVICE_PROPERTY_FILE
 
 
 # set defaults for optional service parameters
