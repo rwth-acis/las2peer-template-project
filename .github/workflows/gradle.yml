@@ -4,8 +4,9 @@
 name: Java CI with Gradle
 
 # Triggers the workflow on push or pull request events (on every branch)
-on: [push, pull_request]
-
+on:
+  push:
+    branches: [ master, develop]
 jobs:
   build:
 
