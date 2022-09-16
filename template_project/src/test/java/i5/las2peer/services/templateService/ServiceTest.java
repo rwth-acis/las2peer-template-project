@@ -2,6 +2,7 @@ package i5.las2peer.services.templateService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -125,6 +126,25 @@ public class ServiceTest {
 				// "testInput" name is part of response
 				Assert.assertTrue(result.getResponse().trim().contains("testInput"));
 				System.out.println("Result of 'testPost': " + result.getResponse().trim());
+			} catch (Exception e) {
+				e.printStackTrace();
+				Assert.fail(e.toString());
+			}
+		}
+
+		@Test
+		public void testEcho() {
+			try {
+				MiniClient client = new MiniClient();
+				client.setConnectorEndpoint(connector.getHttpEndpoint());
+				client.setLogin(testAgent.getIdentifier(), testPass);
+
+				ClientResponse result = client.sendRequest("GET",
+						mainPath + "echo?full=1&q=Needle in the Haystack", "", "*/*", "application/json",
+						new HashMap<String, String>());
+				Assert.assertEquals(200, result.getHttpCode());
+				Assert.assertEquals("Needle in the Haystack", result.getResponse().trim());// YOUR RESULT VALUE HERE
+				System.out.println("Result of 'testEcho': " + result.getResponse().trim());
 			} catch (Exception e) {
 				e.printStackTrace();
 				Assert.fail(e.toString());

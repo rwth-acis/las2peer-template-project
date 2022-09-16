@@ -2,13 +2,16 @@ package i5.las2peer.services.templateService;
 
 import java.net.HttpURLConnection;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import i5.las2peer.api.Context;
 import i5.las2peer.api.security.UserAgent;
@@ -94,6 +97,16 @@ public class TemplateService extends RESTService {
 		String returnString = "";
 		returnString += "Input " + myInput;
 		return Response.ok().entity(returnString).build();
+	}
+
+	@GET
+	@Path("/echo")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response echo(@QueryParam("full") @DefaultValue("1") int full,
+			@QueryParam("q") @DefaultValue("") String query) {
+
+		System.out.println("Query: " + query);
+		return Response.status(Status.OK).entity(query).build();
 	}
 
 	// TODO your own service methods, e. g. for RMI
