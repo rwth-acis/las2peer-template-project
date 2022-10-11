@@ -17,6 +17,12 @@ import i5.las2peer.p2p.LocalNodeManager;
 import i5.las2peer.security.UserAgentImpl;
 import i5.las2peer.testing.MockAgentFactory;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.net.URL;
+import java.io.InputStream;
+
 /**
  * Example Test Class demonstrating a basic JUnit test structure.
  *
