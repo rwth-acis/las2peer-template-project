@@ -74,6 +74,20 @@ public class TemplateService extends RESTService {
 		return Response.ok().entity(name).build();
 	}
 	
+	@GET
+	@Path("/dishes/{id}/ratings")
+	@Produces(MediaType.TEXT_PLAIN)
+	@ApiResponses(
+			value = { @ApiResponse(
+					code = HttpURLConnection.HTTP_OK,
+					message = "REPLACE THIS WITH YOUR OK MESSAGE"),
+			          @ApiResponse(
+					code = HttpURLConnection.HTTP_NOT_FOUND,
+					message = "REPLACE THIS WITH YOUR OK MESSAGE")})
+	public Response getX(@PathParam("id") int id) {
+	    	return Response.ok().build();
+	}
+	
 
 	/**
 	 * Template of a post function.
