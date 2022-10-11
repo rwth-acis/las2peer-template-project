@@ -60,6 +60,10 @@ public class ServiceTest {
 			logStream = new ByteArrayOutputStream();
 			connector.setLogStream(new PrintStream(logStream));
 			connector.start(node);
+			
+			// download swagger.json
+InputStream in = new URL(connector.getHttpEndpoint() + "/" + mainPath + "swagger.json").openStream();
+Files.copy(in, Paths.get("export/swagger.json"), StandardCopyOption.REPLACE_EXISTING);
 		}
 
 		/**
