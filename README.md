@@ -18,8 +18,8 @@ Please follow the instructions of this ReadMe to setup your basic service develo
 
 ### Java
 
+las2peer template uses **Java 14**.
 las2peer uses **Java 17**.
-
 
 ## Quick Setup of your Service Development Environment
 
