@@ -108,7 +108,26 @@ public class ServiceTest {
 		}
 
 		/**
-		 * 
+		 *
+		 * Tests that the get method rejects anonymous requests instead of failing.
+		 *
+		 */
+		@Test
+		public void testGetAnonymous() {
+			try {
+				MiniClient client = new MiniClient();
+				client.setConnectorEndpoint(connector.getHttpEndpoint());
+
+				ClientResponse result = client.sendRequest("GET", mainPath + "get", "");
+				Assert.assertEquals(401, result.getHttpCode());
+			} catch (Exception e) {
+				e.printStackTrace();
+				Assert.fail(e.toString());
+			}
+		}
+
+		/**
+		 *
 		 * Test the example method that consumes one path parameter which we give the value "testInput" in this test.
 		 * 
 		 */

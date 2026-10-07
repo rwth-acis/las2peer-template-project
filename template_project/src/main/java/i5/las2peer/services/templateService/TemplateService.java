@@ -67,8 +67,15 @@ public class TemplateService extends RESTService {
 	@ApiResponses(
 			value = { @ApiResponse(
 					code = HttpURLConnection.HTTP_OK,
-					message = "REPLACE THIS WITH YOUR OK MESSAGE") })
+					message = "REPLACE THIS WITH YOUR OK MESSAGE"),
+					@ApiResponse(
+							code = HttpURLConnection.HTTP_UNAUTHORIZED,
+							message = "Not logged in") })
 	public Response getTemplate() {
+		// anonymous requests are executed by an AnonymousAgent, which is not a UserAgent
+		if (!(Context.getCurrent().getMainAgent() instanceof UserAgent)) {
+			return Response.status(Response.Status.UNAUTHORIZED).entity("Please log in").build();
+		}
 		UserAgent userAgent = (UserAgent) Context.getCurrent().getMainAgent();
 		String name = userAgent.getLoginName();
 		return Response.ok().entity(name).build();
